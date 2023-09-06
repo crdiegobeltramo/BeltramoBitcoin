@@ -1,0 +1,30 @@
+
+		body {
+			background-image: url("https://img.freepik.com/fotos-premium/monedas-criptomoneda-bitcoin-btc-sobre-fondo-negro_35652-2620.jpg?w=740");
+			background-repeat: no-repeat;
+			background-size: cover;
+			}
+			 p {
+                color: white;
+                font-family: 'Open Sans', sans-serif;
+            }
+			 h2 {
+                color: crimson;
+                font-family: 'Open Sans', sans-serif;
+            }
+			h3 {
+                color: crimson;
+                font-family: 'Open Sans', sans-serif;
+            }
+			li {
+                color: white;
+                font-family: 'Open Sans', sans-serif;
+            }
+			.btn-primary {
+                             background-color: crimson;
+                             border-color: crimson;
+                             font-family: 'Caprasimo', sans-serif;
+                             font-size: 18px;
+                               }
+                            
+		

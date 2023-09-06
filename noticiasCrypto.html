@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Noticias Crypto</title>
+	<link rel="stylesheet" href="styles.css">
+</head>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <section>
+    <div class="b-example-divider"></div>
+
+    <header class="p-3 text-bg-dark">
+      <div class="container">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+          <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+            <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"/></svg>
+          </a>
+  
+          <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+            <li><a href="index.html" class="nav-link px-2 text-secondary">Home</a></li>
+            <li><a href="quienesSomos.html" class="nav-link px-2 text-white">Quienes Somos</a></li>
+            <li><a href="capacitacionCripto.html" class="nav-link px-2 text-white">Capacitación</a></li>
+            <li><a href="noticiasCrypto.html" class="nav-link px-2 text-white">Noticias</a></li>
+            <li><a href="mineria.html" class="nav-link px-2 text-white">Minería</a></li>
+            <li><a href="metricasCrypto.html" class="nav-link px-2 text-white">Métricas</a></li>
+            <li><a href="exchanges.html" class="nav-link px-2 text-white">Exchanges</a></li>
+            <li><a href="galeriaVideos.html" class="nav-link px-2 text-white">Galeria de Videos</a></li>
+            <li><a href="#" class="nav-link px-2 text-white">Libros</a></li>
+            <li><a href="DesarrolloBlockchainWeb3.html" class="nav-link px-2 text-white">Desarrollo Blockchain</a></li>
+            <li><a href="interesGeneral.html" class="nav-link px-2 text-white">Interés General</a></li>
+            <li><a href="wallets.html" class="nav-link px-2 text-white">Wallets</a></li>
+          </ul>
+  
+          <!--  <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+            <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..." aria-label="Search">
+          </form>-->
+  
+          <div class="text-end">
+            <button type="button" class="btn btn-outline-light me-2">Login</button>
+            <button type="button" class="btn btn-warning"><a href="https://cryptopanic.com/news/18867701/Genesis-Global-And-DCG-Strike-Crucial-Deal-With-Creditors-90-Recovery-Imminent">Info</button></a>
+          </div>
+        </div>
+      </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+  
+  
+    <style>
+		body {
+			background-image: url("https://www.shutterstock.com/image-illustration/bitcoin-blockchain-crypto-currency-digital-600w-1896598609.jpg");
+			background-repeat: no-repeat;
+			background-size: cover;
+			}
+			 p {
+                color: white;
+                font-family: 'Open Sans', sans-serif;
+            }
+			 h2 {
+                color: crimson;
+                font-family: 'Open Sans', sans-serif;
+            }
+			h3 {
+                color: crimson;
+                font-family: 'Open Sans', sans-serif;
+            }
+			li {
+                color: white;
+                font-family: 'Open Sans', sans-serif;
+            }
+		  
+		</style>
+        <h2>Noticias</h2>
+		<p>¡Bienvenidos a la sección de noticias Crypto en nuestra página web! Aquí encontrarás las últimas novedades, tendencias y eventos que están sacudiendo el mundo de las criptomonedas. Nuestro equipo de expertos en blockchain y finanzas se encarga de recopilar y analizar información actualizada para ofrecerte una visión completa y objetiva del panorama cripto. Desde anuncios de importantes proyectos hasta regulaciones gubernamentales, desde avances tecnológicos hasta oportunidades de inversión, nuestra sección de noticias Crypto te mantendrá al día con todo lo que necesitas saber para tomar decisiones informadas. ¡Únete a nosotros y mantente a la vanguardia de la revolución financiera del siglo XXI!
+
+		</p>
+    <ul>
+        <li><h3><a href="https://bitcoinmagazine.com//">Bitcoin Magazine</a></h3></li> 
+        <li><h3><a href="https://www.coindesk.com">Coindesk</a></h3></li>
+        <li><h3><a href="https://www.diariobitcoin.com">Diario Bitcoin</a></h3></li>
+        <li><h3><a href="https://www.criptonoticias.com/">Criptonoticias</a></h3></li>
+        <li><h3><a href="https://www.bloomberglinea.com/cripto/">Bloomberg Linea</a></h3></li>
+        <li><h3><a href="https://es.tradingview.com/news/markets/?category=crypto">Trading View</a></h3></li>
+        <li><h3><a href="https://www.bloomberg.com/">Bloomberg</a></h3></li>
+        <li><h3><a href="https://www.binance.com/es-LA/feed/news">Binance News</a></h3></li>
+      </ul>
+  
+	<h1>Últimas noticias de CryptoCompare</h1>
+
+	<div id="noticias"></div>
+
+	<script>
+
+	// Hacer una solicitud a la API
+	fetch('https://min-api.cryptocompare.com/data/v2/news/?lang=ES')
+	.then(response => response.json())
+	.then(data => {
+
+		// Analizar los datos JSON
+		const noticias = data.Data;
+
+		// Mostrar los datos en el sitio web
+		noticias.forEach(noticia => {
+			const div = document.createElement('div');
+			div.innerHTML = `
+				<h2>${noticia.title}</h2>
+				<p>${noticia.body}</p>
+				<p><a href="${noticia.url}" target="_blank">Leer más</a></p>
+			`;
+			document.getElementById('noticias').appendChild(div);
+		});
+
+	})
+	.catch(error => console.error(error));
+
+	</script>
+ <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+ <script src="https://cdn.jsdelivr.net/npm/@glidejs/glide@3.4.1/dist/glide.min.js"></script>
+</body>
+<footer>
+  <div class="footer-alpiso">
+    <footer class="w3-center w3-black w3-padding-64">
+    <a href="https://www.facebook.com/diego.beltramo" class="w3-button w3-light-grey"><i class="fab fa-facebook-f"></i></a>
+    <a href="https://twitter.com/diego_beltramo" class="w3-button w3-light-grey"><i class="fab fa-twitter"></i></a>
+    <a href="https://www.instagram.com/crdiegobeltramo/" class="w3-button w3-light-grey"><i class="fab fa-instagram"></i></a>
+    <a href="https://www.linkedin.com/in/diego-eduardo-beltramo-027600127/" class="w3-button w3-light-grey"><i class="fab fa-linkedin"></i></a>
+    <a href="https://www.youtube.com/@diegoeduardobeltramo5936" class="w3-button w3-light-grey"><i class="fab fa-brands fa-youtube"></i></a>
+    <a href="https://github.com/crdiegobeltramo" class="w3-button w3-light-grey"><i class="fab fa-brands fa-github-alt"></i></a>
+    <a href="https://medium.com/@crdiegobeltramo" class="w3-button w3-light-grey"><i class="fab fa fa-brands fa-medium"></i></a>
+    <a href="https://wa.link/p2aj53" target="_blank"><i class="btn-flotante"></i><img src="C:\Users\diego\Desktop\BeltramoBitcoin\WhatsappDiegoBeltramo.png"width="30px"	></a>
+    <p>Cr Diego Eduardo Beltramo</p>
+    <p>Queremos enfatizar que toda la información proporcionada en este sitio web tiene únicamente fines educativos y de entretenimiento. En ningún caso debe considerarse como asesoramiento financiero o consejo de inversión. Las criptomonedas y los activos digitales son altamente volátiles y conllevan riesgos significativos. Antes de tomar cualquier decisión de inversión, es esencial realizar tu propio análisis exhaustivo e investigación. No nos hacemos responsables de ninguna pérdida o daño que pueda resultar de la confianza en la información presentada aquí. Te animamos a buscar asesoramiento profesional y a tomar decisiones informadas y responsables en relación con tus inversiones en criptoactivos.</p>
+    </footer>
+  
+ </div>
+ 
+	 <script
+		 src="https://kit.fontawesome.com/183f2a4aef.js"
+		 crossorigin="anonymous"
+	 ></script>
+</body>
+</html>
