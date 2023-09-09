@@ -1,92 +1,149 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Beltramo Bitcoin</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <link rel="stylesheet" href="styles.css">
-  </head>
-  <body>
-    <section>
-    <div class="b-example-divider"></div>
+    <style>
+        body {
+            background-color: black;
+            background-repeat: no-repeat;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            color: white;
+            font-family: 'Open Sans', sans-serif;
+        }
+        h2 {
+            color: crimson;
+            font-family: 'Open Sans', sans-serif;
+        }
+        
+        .container {
+            max-width: 100%;
+        }
+        .navbar {
+            background-color: #343a40;
+        }
+        .navbar-dark .navbar-toggler-icon {
+            background-color: #fff;
+        }
+        .navbar-dark .navbar-nav .nav-link {
+            color: #fff;
+        }
+        .navbar-dark .navbar-toggler {
+            border-color: #fff;
+        }
+        .footer-alpiso {
+            background-color: #343a40;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container">
+                <a class="navbar-brand" href="/">
+                    <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
+                        <use xlink:href="#bootstrap"/>
+                    </svg>Beltramo Bitcoin
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="quienesSomos.html">Quienes Somos</a></li>
+                        <li class="nav-item"><a class="nav-link" href="capacitacionCripto.html">Capacitación</a></li>
+                        <li class="nav-item"><a class="nav-link" href="noticiasCrypto.html">Noticias</a></li>
+                        <li class="nav-item"><a class="nav-link" href="mineria.html">Minería</a></li>
+                        <li class="nav-item"><a class="nav-link" href="metricasCrypto.html">Métricas</a></li>
+                        <li class="nav-item"><a class="nav-link" href="exchanges.html">Exchanges</a></li>
+                        <li class="nav-item"><a class="nav-link" href="galeriaVideos.html">Galería de Videos</a></li>
+                        <li class="nav-item"><a class="nav-link" href="libros.html">Libros</a></li>
+                        <li class="nav-item"><a class="nav-link" href="DesarrolloBlockchainWeb3.html">Desarrollo Blockchain</a></li>
+                        <li class="nav-item"><a class="nav-link" href="interesGeneral.html">Interés General</a></li>
+                        <li class="nav-item"><a class="nav-link" href="wallets.html">Wallets</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
 
-    <header class="p-3 text-bg-dark">
-      <div class="container">
-        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-          <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-            <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"/></svg>
-          </a>
-  
-          <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-            <li><a href="index.html" class="nav-link px-2 text-secondary">Home</a></li>
-            <li><a href="quienesSomos.html" class="nav-link px-2 text-white">Quienes Somos</a></li>
-            <li><a href="capacitacionCripto.html" class="nav-link px-2 text-white">Capacitación</a></li>
-            <li><a href="noticiasCrypto.html" class="nav-link px-2 text-white">Noticias</a></li>
-            <li><a href="mineria.html" class="nav-link px-2 text-white">Minería</a></li>
-            <li><a href="metricasCrypto.html" class="nav-link px-2 text-white">Métricas</a></li>
-            <li><a href="exchanges.html" class="nav-link px-2 text-white">Exchanges</a></li>
-            <li><a href="galeriaVideos.html" class="nav-link px-2 text-white">Galeria de Videos</a></li>
-            <li><a href="libros.html" class="nav-link px-2 text-white">Libros</a></li>
-            <li><a href="DesarrolloBlockchainWeb3.html" class="nav-link px-2 text-white">Desarrollo Blockchain</a></li>
-            <li><a href="interesGeneral.html" class="nav-link px-2 text-white">Interés General</a></li>
-            <li><a href="wallets.html" class="nav-link px-2 text-white">Wallets</a></li>
-          </ul>
-  
-          <!--  <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-            <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..." aria-label="Search">
-          </form>-->
-  
-          <div class="text-end">
-            <button type="button" class="btn btn-outline-light me-2"><a href="https://bitcoin.org/es/">Bitcoin.org </button></a>
-            <button type="button" class="btn btn-warning"><a href="https://bitcoin.org/es/bitcoin-documento">Whitepaper</button></a>
-          </div>
+    <div class="container mt-5">
+        <h1>Diego Beltramo Bitcoin y Criptoactivos</h1>
+        <h2>Bitcoin es un banco en el ciberespacio, administrado por software incorruptible, que ofrece una cuenta de ahorros global, asequible, simple y segura a miles de millones de personas que no tienen la opción o el deseo de administrar su propio fondo de cobertura.</h2>
+    </div>
+    <div style="font-size: 100px; font-weight:bold;">
+        <script type="text/javascript">
+            baseUrl = "https://widgets.cryptocompare.com/";
+            var scripts = document.getElementsByTagName("script");
+            var embedder = scripts[ scripts.length - 1 ];
+            var cccTheme = {"General":{"enableMarquee":false}};
+            (function (){
+            var appName = encodeURIComponent(window.location.hostname);
+            if(appName==""){appName="local";}
+            var s = document.createElement("script");
+            s.type = "text/javascript";
+            s.async = true;
+            var theUrl = baseUrl+'serve/v3/coin/header?fsyms=BTC,ETH,XMR,LTC,DASH,XRP,ZEC,BCH,TRX,NEO,ETC,ADA,BNB&tsyms=USD';
+            s.src = theUrl + ( theUrl.indexOf("?") >= 0 ? "&" : "?") + "app=" + appName;
+            embedder.parentNode.appendChild(s);
+            })();
+            setTimeout(function(){
+              var elementToAppendTo = document.getElementsByClassName("ccc-coin-header-v3-container")[0];
+              var totalElements = elementToAppendTo.childNodes.length;
+                    var insertBefore = [];
+              for(var i =0; i< totalElements;i++){
+                if(i%3==0){
+                  insertBefore.push(i);
+                }
+              }
+              for(var i=0;i<insertBefore.length;i++){
+                var priceDiv                   = document.createElement("div");
+                priceDiv.className             = "ccc-header-v3-ccc-price-container";
+                priceDiv.innerHTML             = '<img src="https://www.cryptocompare.com/media/351338/crypto-compare-400-100.png" style="display:inline-box; height: 80px; vertical-align: middle; margin-right:5px; margin-left:20px;margin-top:0px"/>'
+        
+                elementToAppendTo.insertBefore(priceDiv, elementToAppendTo.childNodes[insertBefore[i]]);
+              }
+              new scrollIfNeeded(elementToAppendTo);
+            },5000);
+          </script>
+        </div>   
+    
+    <img src="IMG/BitcoinfotoIzquierda.webp" alt="Bitcoin" width="1300">
+
+    <footer class="footer-alpiso">
+        <div class="container">
+            <footer class="w3-center w3-black w3-padding-64">
+              <a href="https://www.facebook.com/diego.beltramo" class="w3-button w3-light-grey"><i class="fab fa-facebook-f"></i></a>
+              <a href="https://twitter.com/diego_beltramo" class="w3-button w3-light-grey"><i class="fab fa-twitter"></i></a>
+              <a href="https://www.instagram.com/crdiegobeltramo/" class="w3-button w3-light-grey"><i class="fab fa-instagram"></i></a>
+              <a href="https://www.linkedin.com/in/diego-eduardo-beltramo-027600127/" class="w3-button w3-light-grey"><i class="fab fa-linkedin"></i></a>
+              <a href="https://www.youtube.com/@diegoeduardobeltramo5936" class="w3-button w3-light-grey"><i class="fab fa-brands fa-youtube"></i></a>
+              <a href="https://github.com/crdiegobeltramo" class="w3-button w3-light-grey"><i class="fab fa-brands fa-github-alt"></i></a>
+              <a href="https://medium.com/@crdiegobeltramo" class="w3-button w3-light-grey"><i class="fab fa fa-brands fa-medium"></i></a>
+              <a href="https://wa.link/p2aj53" target="_blank"><i class="btn-flotante"></i><img src="IMG/WhatsappDiegoBeltramo.png" width="30px"></a>
+              <p>Cr Diego Eduardo Beltramo</p>
+              <p>Queremos enfatizar que toda la información proporcionada en este sitio web tiene únicamente fines educativos y de entretenimiento. En ningún caso debe considerarse como asesoramiento financiero o consejo de inversión. Las criptomonedas y los activos digitales son altamente volátiles y conllevan riesgos significativos. Antes de tomar cualquier decisión de inversión, es esencial realizar tu propio análisis exhaustivo e investigación. No nos hacemos responsables de ninguna pérdida o daño que pueda resultar de la confianza en la información presentada aquí. Te animamos a buscar asesoramiento profesional y a tomar decisiones informadas y responsables en relación con tus inversiones en criptoactivos.</p>
+              </footer>
+            </div>
+            </footer>
+                <script
+                    src="https://kit.fontawesome.com/183f2a4aef.js"
+                    crossorigin="anonymous"
+                ></script>
         </div>
-      </div>
-      
-    
+    </footer>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
-  
-  
-  <h1>Diego Beltramo Bitcoin y Criptoactivos</h1>
-  <h2>Bitcoin es un banco en el ciberespacio, administrado por software incorruptible, que ofrece una cuenta de ahorros global, asequible, simple y segura a miles de millones de personas que no tienen la opción o el deseo de administrar su propio fondo de cobertura.</h2>
-  <img src="IMG/bitcoin-1241867.jpg" alt="Bitcoin" width="1300">
-    
-  </body>
-  
-  <style>
-		body {
-			background-image: url("https://th.bing.com/th/id/OIP.fq8IokqKBtNkpxF-UOn57QHaEd?pid=ImgDet&w=766&h=462&rs=1");
-			background-repeat: no-repeat;
-			background-size: cover;
-			}
-		  
-		</style>
-  
-
-
-<footer>
-	<footer th:replace="~{/fragments/footer :: footer}"></footer>
-	<footer>
-<div class="footer-alpiso">
-  <footer class="w3-center w3-black w3-padding-64">
-	<a href="https://www.facebook.com/diego.beltramo" class="w3-button w3-light-grey"><i class="fab fa-facebook-f"></i></a>
-	<a href="https://twitter.com/diego_beltramo" class="w3-button w3-light-grey"><i class="fab fa-twitter"></i></a>
-	<a href="https://www.instagram.com/crdiegobeltramo/" class="w3-button w3-light-grey"><i class="fab fa-instagram"></i></a>
-	<a href="https://www.linkedin.com/in/diego-eduardo-beltramo-027600127/" class="w3-button w3-light-grey"><i class="fab fa-linkedin"></i></a>
-  <a href="https://www.youtube.com/@diegoeduardobeltramo5936" class="w3-button w3-light-grey"><i class="fab fa-brands fa-youtube"></i></a>
-  <a href="https://github.com/crdiegobeltramo" class="w3-button w3-light-grey"><i class="fab fa-brands fa-github-alt"></i></a>
-  <a href="https://medium.com/@crdiegobeltramo" class="w3-button w3-light-grey"><i class="fab fa fa-brands fa-medium"></i></a>
-  <a href="https://wa.link/p2aj53" target="_blank"><i class="btn-flotante"></i><img src="IMG/WhatsappDiegoBeltramo.png" width="30px"></a>
-  <p>Cr Diego Eduardo Beltramo</p>
-  <p>Queremos enfatizar que toda la información proporcionada en este sitio web tiene únicamente fines educativos y de entretenimiento. En ningún caso debe considerarse como asesoramiento financiero o consejo de inversión. Las criptomonedas y los activos digitales son altamente volátiles y conllevan riesgos significativos. Antes de tomar cualquier decisión de inversión, es esencial realizar tu propio análisis exhaustivo e investigación. No nos hacemos responsables de ninguna pérdida o daño que pueda resultar de la confianza en la información presentada aquí. Te animamos a buscar asesoramiento profesional y a tomar decisiones informadas y responsables en relación con tus inversiones en criptoactivos.</p>
-  </footer>
-</div>
-</footer>
-	<script
-		src="https://kit.fontawesome.com/183f2a4aef.js"
-		crossorigin="anonymous"
-	></script>
-    
-  
+</body>
 </html>

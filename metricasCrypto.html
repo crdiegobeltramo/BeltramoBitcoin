@@ -143,34 +143,25 @@
         ]
         }
         </script></div>  <!-- TradingView Widget END --> 
-        
-        <h1>Precios de criptomonedas</h1>
-        <table>
-          <thead>
-            <tr>
-              <th>Nombre</th>
-              <th>Precio</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Bitcoin</td>
-              <td id="bitcoin"></td>
-            </tr>
-            <tr>
-              <td>Ethereum</td>
-              <td id="ethereum"></td>
-            </tr>
-            <tr>
-              <td>Cardano</td>
-              <td id="cardano"></td>
-            </tr>
-          </tbody>
-        </table>
-        
+        <section>
+        <script type="text/javascript">
+          baseUrl = "https://widgets.cryptocompare.com/";
+          var scripts = document.getElementsByTagName("script");
+          var embedder = scripts[ scripts.length - 1 ];
+          (function (){
+          var appName = encodeURIComponent(window.location.hostname);
+          if(appName==""){appName="local";}
+          var s = document.createElement("script");
+          s.type = "text/javascript";
+          s.async = true;
+          var theUrl = baseUrl+'serve/v3/coin/chart?fsym=BTC&tsyms=USD,EUR,CNY,GBP';
+          s.src = theUrl + ( theUrl.indexOf("?") >= 0 ? "&" : "?") + "app=" + appName;
+          embedder.parentNode.appendChild(s);
+          })();
+          </script>
+          
         <div id="chart-container" style="width:100%">
-          <h2> Bitcoin versus S&P500, DJI, Tesla, and Apple </h2>
-          <h5> Percentage Gain / Loss </h5>
+         
           <a href="https://www.lookintobitcoin.com/bitcoin-price-live/" target="_blank">
           <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
           <div id="stocks-and-indices-chart"></div></a>
@@ -206,6 +197,7 @@
         // Aquí manejas los errores
         });
         </script> 
+        </section>
            <p>Bitcoin es la primera criptomoneda y fue creada en 2009.
         
             Bitcoin es un sistema de pago peer-to-peer. Cuando las transacciones se envían en la red Bitcoin, se envían directamente entre usuarios, no se requiere ningún tercero como un banco o una compañía de remesas. Esto es importante ya que significa que Bitcoin no tiene permiso. No necesita permiso de un tercero como un banco para realizar un pago y ese pago no puede ser detenido o interferido por un tercero.
@@ -272,7 +264,7 @@
     <a href="https://www.youtube.com/@diegoeduardobeltramo5936" class="w3-button w3-light-grey"><i class="fab fa-brands fa-youtube"></i></a>
     <a href="https://github.com/crdiegobeltramo" class="w3-button w3-light-grey"><i class="fab fa-brands fa-github-alt"></i></a>
     <a href="https://medium.com/@crdiegobeltramo" class="w3-button w3-light-grey"><i class="fab fa fa-brands fa-medium"></i></a>
-    <a href="https://wa.link/p2aj53" target="_blank"><i class="btn-flotante"></i><img src="C:\Users\diego\Desktop\BeltramoBitcoin\WhatsappDiegoBeltramo.png"width="30px"	></a>
+    <a href="https://wa.link/p2aj53" target="_blank"><i class="btn-flotante"></i><img src="IMG/WhatsappDiegoBeltramo.png" width="30px"></a>
     <p>Cr Diego Eduardo Beltramo</p>
     <p>Queremos enfatizar que toda la información proporcionada en este sitio web tiene únicamente fines educativos y de entretenimiento. En ningún caso debe considerarse como asesoramiento financiero o consejo de inversión. Las criptomonedas y los activos digitales son altamente volátiles y conllevan riesgos significativos. Antes de tomar cualquier decisión de inversión, es esencial realizar tu propio análisis exhaustivo e investigación. No nos hacemos responsables de ninguna pérdida o daño que pueda resultar de la confianza en la información presentada aquí. Te animamos a buscar asesoramiento profesional y a tomar decisiones informadas y responsables en relación con tus inversiones en criptoactivos.</p>
     </footer>

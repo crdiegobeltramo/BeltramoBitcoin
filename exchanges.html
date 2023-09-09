@@ -49,8 +49,28 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
         
     <h2>Exchanges</h2>
-  
+    <br>
+    
+
  <h4>¡Bienvenidos a la sección de Exchanges en nuestra página web dedicada a Bitcoin y criptomonedas! Aquí encontrarás información detallada y actualizada sobre los exchanges más destacados en el mundo de las criptomonedas. Los exchanges son plataformas donde puedes comprar, vender e intercambiar criptomonedas de manera segura y eficiente. En esta sección, te proporcionaremos reseñas completas de los exchanges más populares, destacando sus características, comisiones, seguridad y variedad de criptomonedas disponibles. También te guiaremos en el proceso de selección de un exchange que se adapte a tus necesidades y preferencias. Ya sea que seas un trader experimentado en busca de una plataforma avanzada o un principiante que busca una interfaz amigable, nuestra sección de Exchanges te brindará la información necesaria para tomar decisiones informadas en tus transacciones con criptomonedas. ¡Explora y elige el exchange adecuado para comenzar a operar en el emocionante mundo de Bitcoin y criptomonedas!</h4>
+ <section>
+  <script type="text/javascript">
+    baseUrl = "https://widgets.cryptocompare.com/";
+    var scripts = document.getElementsByTagName("script");
+    var embedder = scripts[ scripts.length - 1 ];
+    var cccTheme = {"General":{"background":"#000"}};
+    (function (){
+    var appName = encodeURIComponent(window.location.hostname);
+    if(appName==""){appName="local";}
+    var s = document.createElement("script");
+    s.type = "text/javascript";
+    s.async = true;
+    var theUrl = baseUrl+'serve/v1/coin/converter?fsym=BTC&tsyms=USD,EUR,CNY,GBP';
+    s.src = theUrl + ( theUrl.indexOf("?") >= 0 ? "&" : "?") + "app=" + appName;
+    embedder.parentNode.appendChild(s);
+    })();
+    </script>
+    </section>
  <img src="https://th.bing.com/th/id/OIP.fq8IokqKBtNkpxF-UOn57QHaEd?pid=ImgDet&w=766&h=462&rs=1" width = "1300px"alt="Bitcoin">
  <style>
 		body {
