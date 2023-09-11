@@ -12,7 +12,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">
 </head>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-    <link rel="stylesheet" href="styles.css">
+    
   </head>
   <body>
     <section>
@@ -47,6 +47,8 @@
           <div class="text-end">
             <button type="button" class="btn btn-outline-light me-2"><a href="https://www.coingecko.com/">Coingecko</button></a>
             <button type="button" class="btn btn-warning"><a href="https://coinmarketcap.com/">Coinmarketcap</button></a>
+            <a href="https://presearch.com/" class="search-link" target="_blank">
+              <img src="IMG/lupa.png" alt="Presearch" class="search-icon"></a>
           </div>
         </div>
       </div>
@@ -79,6 +81,26 @@
                              font-family: 'Caprasimo', sans-serif;
                              font-size: 18px;
                                }
+                               .search-link {
+            text-decoration: none; /* Elimina la subrayado predeterminado */
+            color: #333; /* Color del texto del enlace */
+            font-weight: bold; /* Estilo de fuente en negrita */
+        }
+
+        /* Estilo para el enlace al pasar el mouse */
+        .search-link:hover {
+            color: #007bff; /* Cambia el color del texto al pasar el mouse */
+        }
+
+        /* Estilo para el ícono de lupa */
+        .search-icon {
+            width: 50px; /* Ancho del ícono */
+            height: 50px; /* Altura del ícono */
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 5px; /* Espacio entre el ícono y el texto */
+            cursor: pointer;
+        }
                             
 </style>
 
