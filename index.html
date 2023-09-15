@@ -8,18 +8,18 @@
     <link rel="stylesheet" href="styles.css">
     <style>
         body {
-            background-color: black;
+            background-color: white;
             background-repeat: no-repeat;
             background-size: cover;
             margin: 0;
             padding: 0;
         }
-        h1 {
-            color: white;
+        h1,h6 {
+            color: black;
             font-family: 'Open Sans', sans-serif;
         }
         h2 {
-            color: crimson;
+            color: blue;
             font-family: 'Open Sans', sans-serif;
         }
         
@@ -44,9 +44,13 @@
             text-align: center;
             padding: 20px;
         }
+        li{
+            color: blue;
+        }
     </style>
 </head>
 <body>
+   
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark">
             <div class="container">
@@ -88,47 +92,13 @@
   </div>
 </div>
 
-    <div class="container mt-5">
-        <h1>Diego Beltramo Bitcoin y Criptoactivos</h1>
-        <h2>Bitcoin es un banco en el ciberespacio, administrado por software incorruptible, que ofrece una cuenta de ahorros global, asequible, simple y segura a miles de millones de personas que no tienen la opción o el deseo de administrar su propio fondo de cobertura.</h2>
-    </div>
-    <div style="font-size: 100px; font-weight:bold;">
-        <script type="text/javascript">
-            baseUrl = "https://widgets.cryptocompare.com/";
-            var scripts = document.getElementsByTagName("script");
-            var embedder = scripts[ scripts.length - 1 ];
-            var cccTheme = {"General":{"enableMarquee":false}};
-            (function (){
-            var appName = encodeURIComponent(window.location.hostname);
-            if(appName==""){appName="local";}
-            var s = document.createElement("script");
-            s.type = "text/javascript";
-            s.async = true;
-            var theUrl = baseUrl+'serve/v3/coin/header?fsyms=BTC,ETH,XMR,LTC,DASH,XRP,ZEC,BCH,TRX,NEO,ETC,ADA,BNB&tsyms=USD';
-            s.src = theUrl + ( theUrl.indexOf("?") >= 0 ? "&" : "?") + "app=" + appName;
-            embedder.parentNode.appendChild(s);
-            })();
-            setTimeout(function(){
-              var elementToAppendTo = document.getElementsByClassName("ccc-coin-header-v3-container")[0];
-              var totalElements = elementToAppendTo.childNodes.length;
-                    var insertBefore = [];
-              for(var i =0; i< totalElements;i++){
-                if(i%3==0){
-                  insertBefore.push(i);
-                }
-              }
-              for(var i=0;i<insertBefore.length;i++){
-                var priceDiv                   = document.createElement("div");
-                priceDiv.className             = "ccc-header-v3-ccc-price-container";
-                priceDiv.innerHTML             = '<img src="https://www.cryptocompare.com/media/351338/crypto-compare-400-100.png" style="display:inline-box; height: 80px; vertical-align: middle; margin-right:5px; margin-left:20px;margin-top:0px"/>'
-        
-                elementToAppendTo.insertBefore(priceDiv, elementToAppendTo.childNodes[insertBefore[i]]);
-              }
-              new scrollIfNeeded(elementToAppendTo);
-            },5000);
-          </script>
-        </div> 
+<script src="https://widgets.coingecko.com/coingecko-coin-price-marquee-widget.js"></script>
+<coingecko-coin-price-marquee-widget  coin-ids="bitcoin,eos,ethereum,litecoin,ripple,binancecoin,polkadot,cardano,avalanche-2,solana,bitcoin-cash,monero,stellar" currency="usd" background-color="#ffffff" locale="en"></coingecko-coin-price-marquee-widget>
         <br>
+        <div class="container mt-5">
+            <h1>Diego Beltramo Bitcoin y Criptoactivos</h1>
+            <h2>Bitcoin es un banco en el ciberespacio, administrado por software incorruptible, que ofrece una cuenta de ahorros global, asequible, simple y segura a miles de millones de personas que no tienen la opción o el deseo de administrar su propio fondo de cobertura.</h2>
+        </div>
         <section>
             <script type="text/javascript">
                 baseUrl = "https://widgets.cryptocompare.com/";
@@ -174,12 +144,12 @@
         }
        </style>
 
-      <p>Desde 3 de enero de 2009, surgió un activo monetario y un protocolo monetario que separaba el dinero del Estado y posee estas propiedades: </p>
+      <h6>Desde 3 de enero de 2009, surgió un activo monetario y un protocolo monetario que separaba el dinero del Estado y posee estas propiedades:</h6>
 <ul>
 <li>Esta red monetaria, conocida como Bitcoin, tiene un límite de 21.000.000 de unidades.</li> 
 <li>Esta red monetaria está descentralizada y permite a cualquiera verificar la integridad de la propiedad y transferencia de la unidad. </li>
 <li>Cada unidad es divisible en 100.000.000 de piezas llamadas satoshis. </li>
-<li>Que cualquiera, sin permiso, puede poseer una subunidad tan pequeña como un satoshi</li>. 
+<li>Que cualquiera, sin permiso, puede poseer una subunidad tan pequeña como un satoshi.</li> 
 <li>El Protocolo Bitcoin/Protocolo Lightning Network (LNP/BP) es la primera capa monetaria nativa de Internet.</li> 
 <li>Esta red monetaria no está controlada ni favorece a ningún gobierno. </li>
 <li>Esta red monetaria es un activo digital demostrable y verificablemente escaso. </li>
