@@ -64,6 +64,11 @@ body, html {
             margin-right: 5px; /* Espacio entre el ícono y el texto */
             cursor: pointer;
         }
+        iframe {
+        width: 100%;
+        max-width: 400px;
+        border: 0;  /* to remove default border */
+    }
 </style>
 </head>
 <body>
@@ -78,7 +83,7 @@ body, html {
       <a href="#team" class="w3-bar-item w3-button"><i class="fa fa-user"></i> Acerca de mi</a>
       <a href="#work" class="w3-bar-item w3-button"><i class="fa fa-th"></i> Videos</a>
       <a href="#pricing" class="w3-bar-item w3-button"><i class="fa fa-usd"></i> Exchanges</a>
-      <a href="#contact" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i> Contactanos</a>
+      <a href="#contact" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i> E-mail</a>
     </div>
     <!-- Hide right-floated links on small screens and replace them with a menu icon -->
 
@@ -95,7 +100,7 @@ body, html {
   <a href="#team" onclick="w3_close()" class="w3-bar-item w3-button">Acerca de mi</a>
   <a href="#work" onclick="w3_close()" class="w3-bar-item w3-button">Videos</a>
   <a href="#pricing" onclick="w3_close()" class="w3-bar-item w3-button">Exchanges</a>
-  <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button">Contactanos</a>
+  <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button">E-mail</a>
 </nav>
 
 <!-- Header with full-height image -->
@@ -111,7 +116,7 @@ body, html {
     <a href="https://www.instagram.com/crdiegobeltramo"><i class="fa fa-instagram w3-hover-opacity"></i></a>
     <a href="https://twitter.com/diego_beltramo"><i class="fa fa-twitter w3-hover-opacity"></i></a>
     <a href="https://www.linkedin.com/in/diego-eduardo-beltramo-027600127/"><i class="fa fa-linkedin w3-hover-opacity"></i></a>
-    <a href="https://wa.link/p2aj53" target="_blank"><i class="btn-flotante"></i><img src="IMG/WhatsappDiegoBeltramo.png" width="50px"></a>
+   
   </div>
 </header>
 <div class="text-end">
@@ -242,7 +247,7 @@ body, html {
           <h3>Diego Eduardo Beltramo</h3>
           <p class="w3-opacity">CEO & Founder</p>
           <p>Mi nombre es Diego Eduardo Beltramo, soy Contador Público graduado en la Universidad Nacional de Villa María, Provincia de Córdoba, República Argentina. Además, soy asesor idóneo en el Mercado de Capitales, matriculado en la CNV.</p>
-          <button type="button" class="btn btn-warning"><a href="https://www.linkedin.com/in/diego-eduardo-beltramo-027600127/">Mi Linkedin</button></a>
+          <p><button class="w3-button w3-light-grey w3-block"><a href="https://www.linkedin.com/in/diego-eduardo-beltramo-027600127/"><i class="fa fa-envelope"></i> Linkedin</button></p></a>
         </div>
       </div>
     </div>
@@ -253,7 +258,7 @@ body, html {
           <h3></h3>
           <p class="w3-opacity"></p>
           <p>Desde el año 2017, me convertí en un entusiasta apasionado de Bitcoin y los criptoactivos. Mi búsqueda por el conocimiento y la innovación me llevó a embarcarme en el aprendizaje de las Finanzas Descentralizadas, la programación web y actualmente dando mis primeros pasos en Solidity, el lenguaje de contratos inteligentes de Ethereum.</p>
-          <p><button class="w3-button w3-light-grey w3-block"><i class="fa fa-envelope"></i> Contact</button></p>
+          <p><button class="w3-button w3-light-grey w3-block"><a href="https://medium.com/@crdiegobeltramo"><i class="fa fa-envelope"></i> Medium</button></p></a>
         </div>
       </div>
     </div>
@@ -264,7 +269,7 @@ body, html {
           <h3></h3>
           <p class="w3-opacity"></p>
           <p>La misión que guía esta página web es reunir una amplia gama de recursos y herramientas en línea para compartir el conocimiento sobre Bitcoin y criptoactivos, facilitando la búsqueda de información para aquellos que deseen explorar este emocionante mundo.</p>
-          <p><button class="w3-button w3-light-grey w3-block"><i class="fa fa-envelope"></i> Contact</button></p>
+          <p><button class="w3-button w3-light-grey w3-block"><a href="https://wa.link/p2aj53"><i class="fa fa-envelope"></i> Contacto</button></p></a>
         </div>
       </div>
     </div>
@@ -309,20 +314,7 @@ body, html {
 
   <iframe width="560" height="315" src="https://www.youtube.com/embed/puhbtcjHsDA?si=6Nf-1ubdp9odL0zE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
   <iframe width="560" height="315" src="https://www.youtube.com/embed/DxXMNf7NSK4?si=etKBBe7sDUkIs8eB&amp;start=18" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-  <div class="w3-row-padding w3-section">
-    <div class="w3-col l3 m6">
-      <img src="/w3images/tech_tablet.jpg" style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="A tablet">
-    </div>
-    <div class="w3-col l3 m6">
-      <img src="/w3images/tech_camera.jpg" style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="A camera">
-    </div>
-    <div class="w3-col l3 m6">
-      <img src="/w3images/tech_typewriter.jpg" style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="A typewriter">
-    </div>
-    <div class="w3-col l3 m6">
-      <img src="/w3images/tech_tableturner.jpg" style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="A tableturner">
-    </div>
-  </div>
+  
 </div>
 
 <!-- Modal for full size images on click-->
@@ -363,12 +355,12 @@ body, html {
 
 <!-- Pricing Section -->
 <div class="w3-container w3-center w3-dark-grey" style="padding:128px 16px" id="pricing">
- 
-  <h2><a href="https://bitcoin.org/es/intercambios">Exchanges</h2></a>
+  <h2>Exchanges</h2>
+  
 <div class="d-grid gap-2 col-6 mx-auto">
   <button class="btn btn-primary" type="button"><a class="nav-link" href="https://coinmonitor.info">Exchanges Locales</button></a>
   <button class="btn btn-primary" type="button"><a class="nav-link" href="https://www.coingecko.com/en/exchanges">Exchanges Internacionales</button></a>
-  
+  <h2><a href="https://bitcoin.org/es/intercambios">Listado de Exchanges</h2></a>
 </div>
   <p class="w3-large">Ingrese <a href="exchanges.html">aquí</a> para consultar los distintos exchanges.</p>
   <div class="col-sm-4 col-md-3 vertical-align">
@@ -376,7 +368,7 @@ body, html {
   </div>
   <br>
   <div class="col-sm-4 col-md-3 vertical-align">
-    <a href="https://nexo.com/ref/yfc7r0vhjp?src=android-link" target="_blank"><img loading="lazy" alt="Nexo" src="IMG/NexoPromo.jpeg"width = "350px"></a>
+    <a href="https://nexo.com/ref/yfc7r0vhjp?src=android-link" target="_blank"><img loading="lazy" alt="Nexo" src="IMG/NexoReferido.jpg"width = "350px"></a>
   </div>
   <br>
   <div class="col-sm-4 col-md-3 vertical-align">
@@ -459,13 +451,13 @@ body, html {
     <div class="w3-third w3-section">
       <ul class="w3-ul w3-white w3-hover-shadow">
         <li class="w3-black w3-xlarge w3-padding-32">Premium</li>
-        <li class="w3-padding-16"><b>50GB</b> Storage</li>
-        <li class="w3-padding-16"><b>50</b> Emails</li>
-        <li class="w3-padding-16"><b>50</b> Domains</li>
-        <li class="w3-padding-16"><b>Endless</b> Support</li>
+        <li class="w3-padding-16"><button><a href="https://solscan.io/account/Hja6Rin2fH9qcUZNjD4oxedzxcnxEEr6qGCWrP377vEv"class="btn btn-primary">Solana</button></a> 
+        <li class="w3-padding-16"><button><a href="https://polkadot.subscan.io/account/126G6rU7fXTihp1CXpfw3nGs2Ts76a9gULZFgXS1Q64CtyeD"class="btn btn-primary">Polkadot</button></a> 
+        <li class="w3-padding-16"><button><a href="https://bscscan.com/address/0x04dc7fbBbE96E17933a1AD41Df025a95306F8088"class="btn btn-primary">BNB</button></a> 
+        <li class="w3-padding-16"><button><a href="https://polygonscan.com/address/0x04dc7fbBbE96E17933a1AD41Df025a95306F8088"class="btn btn-primary">Polygon</button></a> 
         <li class="w3-padding-16">
-          <h2 class="w3-wide">$ 50</h2>
-          <span class="w3-opacity">per month</span>
+          <h2 class="w3-wide"></h2>
+          <span class="w3-opacity"><button><a href="https://blockstream.info/address/bc1qrgkm7jg80ypu4useqmlpf57x6ch978aw8a9uc7"class="btn btn-primary">Bitcoin</button></a> 
         </li>
         <li class="w3-light-grey w3-padding-24">
           <button class="w3-button w3-black w3-padding-large">Gracias</button>
