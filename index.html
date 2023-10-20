@@ -145,25 +145,8 @@ body, html {
         <h1></h1>
         <h2>Bitcoin es un banco en el ciberespacio, administrado por software incorruptible, que ofrece una cuenta de ahorros global, asequible, simple y segura a miles de millones de personas que no tienen la opción o el deseo de administrar su propio fondo de cobertura.</h2>
     </div>
-    <section>
-        <script type="text/javascript">
-            baseUrl = "https://widgets.cryptocompare.com/";
-            var scripts = document.getElementsByTagName("script");
-            var embedder = scripts[ scripts.length - 1 ];
-            (function (){
-            var appName = encodeURIComponent(window.location.hostname);
-            if(appName==""){appName="local";}
-            var s = document.createElement("script");
-            s.type = "text/javascript";
-            s.async = true;
-            var theUrl = baseUrl+'serve/v1/coin/feed?fsym=BTC&tsym=USD';
-            s.src = theUrl + ( theUrl.indexOf("?") >= 0 ? "&" : "?") + "app=" + appName;
-            embedder.parentNode.appendChild(s);
-            })();
-            </script>
-            
-            
-    </section>
+    <script src="https://widgets.coingecko.com/coingecko-coin-ticker-widget.js"></script>
+    <coingecko-coin-ticker-widget  coin-id="bitcoin" currency="usd" locale="es"></coingecko-coin-ticker-widget>
 <!-- About Section -->
 <div class="w3-container" style="padding:128px 16px" id="about">
   <h3 class="w3-center">Capacitación</h3>
@@ -186,10 +169,6 @@ body, html {
        <br>
        <br>
        <br>
-    
-  
-    
-      
     </div>
     <div class="w3-quarter">
       <i class="fa fa-heart w3-margin-bottom w3-jumbo"></i>
@@ -203,7 +182,10 @@ body, html {
       <br>
       
       <button class="btn btn-primary" type="button"><a class="nav-link" href="DesarrolloBlockchainWeb3.html">Desarrollo Blockchain</button></a>
-       <br>
+      <br>
+      <br>
+      <button class="btn btn-primary" type="button"><a class="nav-link" href="https://academy.binance.com/es">Binance Academy</button></a>
+     
        
     </div>
     <br>
@@ -256,6 +238,25 @@ body, html {
       <img class="w3-image w3-round-large" src="IMG/bitcoin-1241867.jpg" alt="Buildings" width="700" height="394">
     </div>
   </div>
+  <section>
+    <script type="text/javascript">
+        baseUrl = "https://widgets.cryptocompare.com/";
+        var scripts = document.getElementsByTagName("script");
+        var embedder = scripts[ scripts.length - 1 ];
+        (function (){
+        var appName = encodeURIComponent(window.location.hostname);
+        if(appName==""){appName="local";}
+        var s = document.createElement("script");
+        s.type = "text/javascript";
+        s.async = true;
+        var theUrl = baseUrl+'serve/v1/coin/feed?fsym=BTC&tsym=USD';
+        s.src = theUrl + ( theUrl.indexOf("?") >= 0 ? "&" : "?") + "app=" + appName;
+        embedder.parentNode.appendChild(s);
+        })();
+        </script>
+        
+        
+</section>
 </div>
 
 <!-- Team Section -->
@@ -378,6 +379,8 @@ body, html {
    <br>
    <br>
    <button class="btn btn-primary" type="button"><a class="nav-link" href="podcasts.html">Podcasts</button></a>
+   <button class="btn btn-primary" type="button"><a class="nav-link" href="https://lunaticoin.com/l159-si-volviera-a-empezar-en-bitcoin-que-aprenderia-primero">Volver a empezar</button></a>
+   
 </div>
 
 <!-- Pricing Section -->
