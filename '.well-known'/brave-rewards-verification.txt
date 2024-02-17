@@ -1,0 +1,4 @@
+This is a Brave Creators publisher verification file.
+
+Domain: diegobeltramobitcoin.netlify.app
+Token: add67f221a404f4d94c519e8b7e396dfbcb0dd01c7deeba973c89795d0c8782a
