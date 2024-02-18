@@ -279,56 +279,17 @@
   <br>
   <p>Aquí tienes un ejemplo básico en JavaScript utilizando la biblioteca BitcoinJS para crear un Covenant donde los Bitcoin solo pueden ser gastados hacia una dirección específica:</p>
 <br>
-<p>
-  const bitcoin = require('bitcoinjs-lib');
-
-// Clave privada y dirección de la billetera que recibirá los fondos
-const receiverPrivateKey = 'L2N5P9MYnAkjoPn8wCQJpFY8HNC1pSaf5PthdqR5zGg9cwSj4AnS';
-const receiverAddress = '1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2';
-
-// Crear una transacción de salida con un Covenant
-const txb = new bitcoin.TransactionBuilder();
-
-// Definir el monto a enviar
-const amountToSend = 100000; // En satoshis
-
-// Añadir una salida a la transacción con el monto y la dirección del receptor
-txb.addOutput(receiverAddress, amountToSend);
-
-// Script de bloqueo: garantiza que los Bitcoin solo pueden ser gastados hacia la dirección del receptor
-const lockingScript = bitcoin.script.compile([
-    bitcoin.opcodes.OP_DUP,
-    bitcoin.opcodes.OP_HASH160,
-    Buffer.from('hash160_de_la_direccion_del_receptor', 'hex'), // Hash160 de la dirección del receptor
-    bitcoin.opcodes.OP_EQUALVERIFY,
-    bitcoin.opcodes.OP_CHECKSIG
-]);
-
-// Añadir el script de bloqueo a la salida de la transacción
-txb.addOutput(lockingScript, amountToSend);
-
-// Firmar la transacción con la clave privada del receptor
-const keyPair = bitcoin.ECPair.fromPrivateKey(Buffer.from(receiverPrivateKey, 'hex'));
-for (let i = 0; i < txb.__inputs.length; i++) {
-    txb.sign(i, keyPair);
-}
-
-// Obtener la transacción serializada y hex
-const tx = txb.build();
-const txHex = tx.toHex();
-
-console.log("Transacción construida:");
-console.log(txHex);
-
-</p>
+<img src="IMG/CovenantsJavaScript.jfif" alt="Javascript" width="350px">
+<img src="IMG/CovenantsJavascript2.jfif" alt="Javascript" width="350px">
+<br>
 <p>En este ejemplo, la transacción se configura de tal manera que los Bitcoin solo pueden ser gastados hacia la dirección especificada receiverAddress. Esto se logra mediante la creación de un script de bloqueo que verifica que la dirección de destino coincida con la dirección especificada en el script. Una vez que se crea la transacción, se firma con la clave privada del receptor para autorizar el gasto de los fondos.</p>
-  <br>
-  <p>Recuerda reemplazar hash160_de_la_direccion_del_receptor con el hash160 de la dirección del receptor en formato hexadecimal y receiverPrivateKey con la clave privada del receptor en formato hexadecimal. Además, asegúrate de tener la biblioteca bitcoinjs-lib instalada en tu entorno de desarrollo para que el código funcione correctamente.
-
-
-
-
-  </p>
+<p>Recuerda reemplazar hash160_de_la_direccion_del_receptor con el hash160 de la dirección del receptor en formato hexadecimal y receiverPrivateKey con la clave privada del receptor en formato hexadecimal. Además, asegúrate de tener la biblioteca bitcoinjs-lib instalada en tu entorno de desarrollo para que el código funcione correctamente.</p>
+<br>
+<a href="https://www.criptonoticias.com/tecnologia/jameson-lopp-explica-bitcoin-incluir-covenants/">Jameson Lopp explica por qué Bitcoin debería incluir covenants</a>
+<br>
+<a href="https://www.criptonoticias.com/tecnologia/desarrolladores-revisan-polemico-softfork-covenants-bitcoin/">Se dividen las opiniones frente a una actualización que integraría covenants en Bitcoin</a>
+<br>
+  
 </div>
 <br>
 
