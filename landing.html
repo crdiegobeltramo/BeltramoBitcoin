@@ -4,6 +4,8 @@
 <title>Diego Beltramo Bitcoin y Criptoactivos</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -359,6 +361,78 @@ PayButton.render(document.getElementById('my_button'), config);
     <br></strong><a href="https://solscan.io/account/Hja6Rin2fH9qcUZNjD4oxedzxcnxEEr6qGCWrP377vEv">Hja6Rin2fH9qcUZNjD4oxedzxcnxEEr6qGCWrP377vEv</li></a> 
   </div>
 </div>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+  }
+  .promo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: #333;
+    color: white;
+    padding: 64px 0;
+  }
+  .promo-item {
+    flex: 1;
+    padding: 10px;
+  }
+  .promo-item span {
+    font-size: 2.5em;
+    display: block;
+    margin-bottom: 10px;
+  }
+</style>
+</head>
+<body>
+
+<div class="promo-container">
+<div class="promo-item">
+  <span id="counter-sections">12</span>
+  Secciones
+</div>
+<div class="promo-item">
+  <span id="counter-videos">55</span>
+  Horas de Video
+</div>
+<div class="promo-item">
+  <span id="counter-sites">89</span>
+  Sitios Web consultados
+</div>
+<div class="promo-item">
+  <span id="counter-podcasts">150</span>
+  Horas de Podcasts
+</div>
+</div>
+
+<script>
+function animateCounter(id, target, duration) {
+  let start = 0;
+  const increment = target / (duration / 10);
+  const element = document.getElementById(id);
+  
+  const counter = setInterval(() => {
+    start += increment;
+    if (start >= target) {
+      start = target;
+      clearInterval(counter);
+    }
+    element.textContent = Math.floor(start) + '+';
+  }, 10);
+}
+
+// Initialize counters
+window.onload = () => {
+  animateCounter('counter-sections', 12, 2000);
+  animateCounter('counter-videos', 55, 2000);
+  animateCounter('counter-sites', 89, 2000);
+  animateCounter('counter-podcasts', 150, 2000);
+};
+</script>
 
 <!-- Work Section -->
 <div class="w3-container" style="padding:128px 16px" id="work">
@@ -457,7 +531,79 @@ PayButton.render(document.getElementById('my_button'), config);
 
   </ul>
   
+  <title>Promo Section with Counter</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+    .promo-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      background-color: #333;
+      color: white;
+      padding: 64px 0;
+    }
+    .promo-item {
+      flex: 1;
+      padding: 10px;
+    }
+    .promo-item span {
+      font-size: 2.5em;
+      display: block;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
 
+<div class="promo-container">
+  <div class="promo-item">
+    <span id="counter-sections">0</span>
+    Secciones
+  </div>
+  <div class="promo-item">
+    <span id="counter-videos">0</span>
+    Horas de Video
+  </div>
+  <div class="promo-item">
+    <span id="counter-sites">0</span>
+    Sitios Web consultados
+  </div>
+  <div class="promo-item">
+    <span id="counter-podcasts">0</span>
+    Horas de Podcasts
+  </div>
+</div>
+
+<script>
+  function animateCounter(id, target, duration) {
+    let start = 0;
+    const increment = target / (duration / 10);
+    const element = document.getElementById(id);
+    
+    const counter = setInterval(() => {
+      start += increment;
+      if (start >= target) {
+        start = target;
+        clearInterval(counter);
+      }
+      element.textContent = Math.floor(start) + '+';
+    }, 10);
+  }
+
+  // Initialize counters
+  window.onload = () => {
+    animateCounter('counter-sections', 12, 2000);
+    animateCounter('counter-videos', 55, 2000);
+    animateCounter('counter-sites', 89, 2000);
+    animateCounter('counter-podcasts', 150, 2000);
+  };
+</script>
 
 
 <!-- Modal for full size images on click-->
