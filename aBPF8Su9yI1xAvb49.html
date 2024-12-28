@@ -1,0 +1,210 @@
+<html><head><base href="localhost:3000"><title>Bitcoin Chatbot</title><meta name="viewport" content="width=device-width, initial-scale=1"><style>
+:root {
+    --bitcoin-orange: #f2a900;
+    --dark-bg: #1a1a1a;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background: var(--dark-bg);
+    color: #ffffff;
+}
+
+#chat-container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: #2d2d2d;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(242, 169, 0, 0.2);
+    overflow: hidden;
+}
+
+#chat-header {
+    background: var(--bitcoin-orange);
+    padding: 20px;
+    text-align: center;
+    color: #000;
+}
+
+#chat-messages {
+    height: 400px;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+.message {
+    margin-bottom: 15px;
+    padding: 10px 15px;
+    border-radius: 10px;
+    max-width: 80%;
+}
+
+.user-message {
+    background: #4a4a4a;
+    margin-left: auto;
+}
+
+.bot-message {
+    background: var(--bitcoin-orange);
+    color: #000;
+}
+
+#input-container {
+    display: flex;
+    padding: 20px;
+    background: #2d2d2d;
+    border-top: 1px solid #404040;
+}
+
+#user-input {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 25px;
+    margin-right: 10px;
+    background: #404040;
+    color: #fff;
+}
+
+#send-button {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 25px;
+    background: var(--bitcoin-orange);
+    color: #000;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+#send-button:hover {
+    background: #d49000;
+}
+
+.typing-indicator {
+    display: flex;
+    padding: 10px;
+    gap: 5px;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    background: var(--bitcoin-orange);
+    border-radius: 50%;
+    animation: bounce 1.5s infinite;
+}
+
+.dot:nth-child(2) { animation-delay: 0.2s; }
+.dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes bounce {
+    0%, 60%, 100% { transform: translateY(0); }
+    30% { transform: translateY(-5px); }
+}
+</style></head><body>
+
+<div id="chat-container">
+    <div id="chat-header">
+        <h2>🤖 Bitcoin AI Chatbot</h2>
+        <p>Pregúntame cualquier cosa sobre Bitcoin</p>
+    </div>
+    <div id="chat-messages"></div>
+    <div id="input-container">
+        <input type="text" id="user-input" placeholder="Escribe tu pregunta sobre Bitcoin...">
+        <button id="send-button">Enviar</button>
+    </div>
+</div>
+
+<script>
+const responses = {
+    "precio": "El precio de Bitcoin es dinámico y cambia constantemente. Te sugiero consultar en tiempo real en sitios como CoinGecko o CoinMarketCap.",
+    "que es bitcoin": "Bitcoin es una criptomoneda descentralizada creada en 2009 por Satoshi Nakamoto. Es la primera y más conocida implementación de dinero digital que utiliza tecnología blockchain.",
+    "como comprar": "Puedes comprar Bitcoin en exchanges regulados como Binance, Coinbase, o Bitso. También existen cajeros Bitcoin y métodos P2P. Ingresando este enlace https://criptoya.com/ puedes ver en tiempo real todos los exchanges de Argentina con actualización del precio en tiempo real",
+    "seguridad": "Bitcoin utiliza criptografía de clave pública y el algoritmo SHA-256. Es extremadamente seguro cuando se siguen buenas prácticas de seguridad.",
+    "mineria": "La minería de Bitcoin es el proceso de validar transacciones y crear nuevos bitcoins utilizando poder computacional. Los mineros compiten por resolver complejos problemas matemáticos.",
+    "halving": "El halving de Bitcoin es un evento que ocurre aproximadamente cada 4 años donde la recompensa por minería se reduce a la mitad. El próximo halving será en 2024.",
+    "blockchain": "Blockchain es la tecnología detrás de Bitcoin. Es un libro contable distribuido que registra todas las transacciones de forma inmutable y transparente.",
+    "satoshi": "Satoshi Nakamoto es el seudónimo del creador o creadores de Bitcoin. Su identidad real sigue siendo un misterio hasta hoy.",
+    "default": "Gracias por tu pregunta. Para obtener información más detallada y actualizada sobre Bitcoin, te sugiero consultar recursos como https://diegobeltramobitcoin.netlify.app/, Bitcoin.org o Binance Academy.",
+    "wallet": "Una wallet de criptomonedas es esencialmente tu billetera digital para almacenar y gestionar las llaves privadas de tus criptoactivos. Funcionan de manera similar a una cuenta bancaria, pero con importantes diferencias. En lugar de almacenar moneda física, las wallets almacenan las claves privadas necesarias para acceder y gestionar tus fondos de manera segura.",
+
+
+
+
+
+
+
+};
+
+const chatMessages = document.getElementById('chat-messages');
+const userInput = document.getElementById('user-input');
+const sendButton = document.getElementById('send-button');
+
+function addMessage(message, isUser = false) {
+    const messageDiv = document.createElement('div');
+    messageDiv.classList.add('message');
+    messageDiv.classList.add(isUser ? 'user-message' : 'bot-message');
+    messageDiv.textContent = message;
+    chatMessages.appendChild(messageDiv);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+function showTypingIndicator() {
+    const indicator = document.createElement('div');
+    indicator.classList.add('typing-indicator');
+    indicator.innerHTML = `
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+    `;
+    chatMessages.appendChild(indicator);
+    return indicator;
+}
+
+function getBotResponse(userMessage) {
+    const message = userMessage.toLowerCase();
+    let response = responses.default;
+    
+    for (let key in responses) {
+        if (message.includes(key)) {
+            response = responses[key];
+            break;
+        }
+    }
+    
+    return response;
+}
+
+function handleUserInput() {
+    const message = userInput.value.trim();
+    if (message) {
+        addMessage(message, true);
+        userInput.value = '';
+        
+        const typingIndicator = showTypingIndicator();
+        
+        setTimeout(() => {
+            typingIndicator.remove();
+            const botResponse = getBotResponse(message);
+            addMessage(botResponse);
+        }, 1500);
+    }
+}
+
+sendButton.addEventListener('click', handleUserInput);
+userInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+        handleUserInput();
+    }
+});
+
+// Mensaje de bienvenida
+setTimeout(() => {
+    addMessage("¡Hola! Soy el Bitcoin AI Chatbot. Puedo ayudarte con información sobre Bitcoin, su tecnología, precio, minería y más. ¿Qué te gustaría saber?");
+}, 1000);
+</script>
+
+</body></html>

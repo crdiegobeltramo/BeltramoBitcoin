@@ -1,0 +1,442 @@
+<html><head><base href="." />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Espacio Oncativo Bitcoin - Centro de Educación y Servicios Bitcoin</title>
+
+<style>
+:root {
+  --primary: #f7931a; /* Bitcoin orange */
+  --secondary: #4d3b27;
+  --accent: #ffd700;  /* Gold */
+  --light: #fafafa;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+}
+
+body {
+  background-color: var(--light);
+}
+
+.header {
+  background-color: var(--primary);
+  color: white;
+  padding: 1rem 0;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.nav {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.logo::before {
+  content: "₿";
+  font-size: 1.8rem;
+  color: var(--accent);
+}
+
+.hamburger {
+  display: none;
+  cursor: pointer;
+  padding: 10px;
+}
+
+.hamburger div {
+  width: 25px;
+  height: 3px;
+  background-color: white;
+  margin: 5px 0;
+  transition: all 0.3s ease;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: var(--accent);
+}
+
+.hero {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: linear-gradient(rgba(247,147,26,0.95), rgba(247,147,26,0.95)),
+              url('https://images.unsplash.com/photo-1518546305927-5a555bb7020d?auto=format&fit=crop&w=1920&q=80');
+  background-size: cover;
+  background-position: center;
+  color: white;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(247,147,26,0.97) 0%, rgba(77,59,39,0.95) 100%);
+  z-index: 1;
+}
+
+.hero-content {
+  max-width: 800px;
+  position: relative;
+  z-index: 2;
+}
+
+.hero h1 {
+  font-size: 3.5rem;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.hero p {
+  font-size: 1.4rem;
+  margin-bottom: 2.5rem;
+  line-height: 1.6;
+  font-weight: 300;
+}
+
+.btn {
+  display: inline-block;
+  padding: 1.2rem 2.5rem;
+  background-color: var(--accent);
+  color: white;
+  text-decoration: none;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 15px rgba(255,215,0,0.3);
+}
+
+.btn:hover {
+  background-color: var(--secondary);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255,215,0,0.4);
+}
+
+.services {
+  padding: 5rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.services h2 {
+  text-align: center;
+  margin-bottom: 3rem;
+  color: var(--primary);
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+}
+
+.service-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+  border-left: 4px solid var(--primary);
+}
+
+.service-card:hover {
+  transform: translateY(-5px);
+}
+
+.service-card h3 {
+  color: var(--primary);
+  margin-bottom: 1rem;
+}
+
+.contact {
+  background: linear-gradient(rgba(247,147,26,0.95), rgba(247,147,26,0.95)),
+              url('https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=1920&q=80');
+  background-size: cover;
+  background-position: center;
+  color: white;
+  padding: 5rem 2rem;
+}
+
+.contact-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.contact h2 {
+  margin-bottom: 2rem;
+}
+
+.contact-info {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.whatsapp-float {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 1000;
+  animation: float 2s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+.whatsapp-float svg {
+  width: 60px;
+  height: 60px;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+}
+
+.whatsapp-float:hover {
+  transform: scale(1.1);
+  transition: transform 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .hamburger {
+    display: block;
+  }
+
+  .nav-links {
+    display: none;
+    width: 100%;
+  }
+
+  .nav-links.active {
+    display: flex;
+  }
+
+  .nav {
+    padding: 1rem;
+  }
+
+  .nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+
+  .hamburger.active .line1 {
+    transform: rotate(-45deg) translate(-5px, 6px);
+  }
+
+  .hamburger.active .line2 {
+    opacity: 0;
+  }
+
+  .hamburger.active .line3 {
+    transform: rotate(45deg) translate(-5px, -6px);
+  }
+
+  .nav {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .nav-links {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .hero h1 {
+    font-size: 2rem;
+  }
+}
+</style>
+
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header class="header">
+  <nav class="nav">
+    <div class="nav-container">
+      <div class="logo">Espacio Oncativo Bitcoin</div>
+      <div class="hamburger">
+        <div class="line1"></div>
+        <div class="line2"></div>
+        <div class="line3"></div>
+      </div>
+    </div>
+    <div class="nav-links">
+      <a href="#inicio">Inicio</a>
+      <a href="#servicios">Servicios</a>
+      <a href="#contacto">Contacto</a>
+    </div>
+  </nav>
+</header>
+
+<section id="inicio" class="hero">
+  <div class="hero-content">
+    <h1>Espacio Oncativo Bitcoin</h1>
+    <p>Tu centro de referencia para educación, asesoría y servicios relacionados con Bitcoin en Córdoba</p>
+    <a href="#contacto" class="btn">Contactanos</a>
+  </div>
+</section>
+
+<section id="servicios" class="services">
+  <h2>Nuestros Servicios</h2>
+  <div class="services-grid">
+    <div class="service-card">
+      <h3>Educación Bitcoin</h3>
+      <p>• Cursos introductorios</p>
+      <p>• Workshops técnicos</p>
+      <p>• Seguridad de billeteras</p>
+      <p>• Lightning Network</p>
+    </div>
+    
+    <div class="service-card">
+      <h3>Asesoría</h3>
+      <p>• Compra/venta de Bitcoin</p>
+      <p>• Custodia segura</p>
+      <p>• Configuración de billeteras</p>
+      <p>• Planes de ahorro en BTC</p>
+    </div>
+    
+    <div class="service-card">
+      <h3>Servicios Técnicos</h3>
+      <p>• Configuración de nodos</p>
+      <p>• Hardware wallets</p>
+      <p>• Multisig setups</p>
+      <p>• Recuperación de claves</p>
+    </div>
+    
+    <div class="service-card">
+      <h3>Empresas</h3>
+      <p>• Integración de pagos</p>
+      <p>• Tesorería en Bitcoin</p>
+      <p>• Contabilidad crypto</p>
+      <p>• Cumplimiento regulatorio</p>
+    </div>
+  </div>
+</section>
+
+<section id="contacto" class="contact">
+  <div class="contact-content">
+    <h2>Contacto</h2>
+    <p>¿Interesado en aprender sobre Bitcoin? Contáctanos para más información.</p>
+    <br>
+    <button><a href="https://polygonscan.com/token/0x9Fb6B456C4df044b9D9883C833C3abdA1b87c2FB"class="btn btn-primary">Oncativo Coin</button></a> 
+    <br>
+    <div class="contact-info">
+      <div>
+        <h3>Ubicación</h3>
+        <p>Oncativo 1234</p>
+        <p>Córdoba, Argentina</p>
+      </div>
+      
+      <div>
+        <h3>Contacto</h3>
+        <p>Tel: (351) 123-4567</p>
+        <p>Email: info@espaciooncativo.com</p>
+      </div>
+      
+      <div>
+        <h3>Horarios</h3>
+        <p>Lunes a Viernes</p>
+        <p>9:00 - 18:00</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<a href="https://wa.me/5493511234567" target="_blank" class="whatsapp-float" aria-label="Contactar por WhatsApp">
+  <svg viewBox="0 0 32 32" fill="#25D366">
+    <path d=" M16 2C8.28 2 2 8.28 2 16c0 2.888.875 5.573 2.37 7.8L2.05 29.5l5.7-2.32A13.94 13.94 0 0 0 16 30c7.72 0 14-6.28 14-14S23.72 2 16 2zm0 25.5c-2.347 0-4.518-.71-6.332-1.924l-4.43 1.804 1.83-4.38A11.41 11.41 0 0 1 4.5 16C4.5 9.66 9.66 4.5 16 4.5S27.5 9.66 27.5 16 22.34 27.5 16 27.5zm6.11-8.17c-.302-.15-1.774-.874-2.05-.973-.274-.099-.475-.148-.676.15-.2.297-.776.972-.95 1.17-.176.198-.35.223-.652.074-1.775-.887-2.94-1.583-4.11-3.59-.31-.533.31-.494.888-1.644.098-.198.05-.37-.025-.518-.074-.148-.676-1.628-.927-2.23-.244-.584-.49-.505-.676-.505-.174-.002-.373-.002-.573-.002-.2 0-.523.074-.797.372-.273.297-1.05.973-1.05 2.377 0 1.404 1.025 2.758 1.173 2.957.148.197 2.074 3.17 5.024 4.44.7.303 1.246.483 1.673.618.703.223 1.345.191 1.85.116.564-.085 1.774-.726 2.025-1.43.25-.704.25-1.305.175-1.43-.075-.124-.275-.198-.575-.347z"/>
+  </svg>
+</a>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Hamburger menu functionality
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.querySelector('.nav-links');
+    
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        navLinks.classList.toggle('active');
+    });
+
+    // Close menu when clicking a link
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            navLinks.classList.remove('active');
+        });
+    });
+
+    // Smooth scroll para los enlaces internos
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+
+    // Animación del header al hacer scroll
+    let header = document.querySelector('.header');
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 50) {
+            header.style.backgroundColor = 'rgba(247,147,26,0.95)';
+        } else {
+            header.style.backgroundColor = 'var(--primary)';
+        }
+    });
+});
+</script>
+
+</body>
+</html>
