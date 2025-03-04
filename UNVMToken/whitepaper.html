@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Whitepaper del UNVM Token</title>
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Barra de navegación */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #1017e6;
+            padding: 10px 20px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+        .navbar-brand {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        .navbar-menu {
+            display: flex;
+            gap: 20px;
+        }
+        .navbar-menu a {
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+        .navbar-menu a:hover {
+            text-decoration: underline;
+        }
+
+        /* Menú hamburguesa (responsive) */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin: 3px 0;
+        }
+        @media (max-width: 768px) {
+            .navbar-menu {
+                display: none;
+                flex-direction: column;
+                background-color: #0f13e7;
+                position: absolute;
+                top: 60px;
+                right: 0;
+                width: 100%;
+                padding: 10px;
+            }
+            .navbar-menu.active {
+                display: flex;
+            }
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        /* Encabezado */
+        header {
+            background: url('logofondo.png') no-repeat center center/cover;
+            color: white;
+            text-align: center;
+            padding: 150px 20px 50px;
+            position: relative;
+        }
+        header img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 5px solid white;
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        header h1 {
+            font-size: 3rem;
+            margin-top: 100px;
+            color: #0a0a0a;
+        }
+        header p {
+            font-size: 1.2rem;
+            color: #0b0b0b;
+        }
+
+        /* Contenido principal */
+        main {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #007bff;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+        }
+        h3 {
+            color: #dc3545;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .section {
+            margin-bottom: 40px;
+        }
+
+        /* Pie de página */
+        footer {
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        footer a {
+            color: white;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- Barra de navegación -->
+    <nav class="navbar">
+        
+         <div class="navbar-menu" id="navbarMenu">
+             <a href="index.html">Inicio</a>
+             <a href="#sobre-el-token">Sobre el Token</a>
+             <a href="#laboratorio-blockchain">Laboratorio Blockchain</a>
+             <a href="#dao-universitaria">DAO Universitaria</a>
+             <a href="#">Contacto</a>
+             
+         </div>
+         <a href="index.html" class="navbar-brand"><img src="IAPSociales.jpg" alt=""></a>
+         <div class="menu-toggle" id="menuToggle">
+             <span></span>
+             <span></span>
+             <span></span>
+         </div>
+     </nav>
+
+    <!-- Encabezado -->
+    <header>
+        <img src="descarga (1).png" alt="Logo UNVM">
+        <h1>Whitepaper del UNVM Token</h1>
+        <p>Universidad Nacional de Villa María – Córdoba, Argentina</p>
+    </header>
+
+    <!-- Contenido principal -->
+    <main>
+        <div class="section" id="inicio">
+            <h2>1. Introducción</h2>
+            <p>El UNVM Token es un token de utilidad y gobernanza basado en la blockchain de Polygon, diseñado para la Universidad Nacional de Villa María (UNVM), ubicada en la provincia de Córdoba, Argentina. Este token busca transformar la educación universitaria mediante la adopción de tecnología blockchain, brindando nuevas oportunidades para estudiantes, docentes, investigadores y la comunidad en general.</p>
+            <p>El proyecto también servirá como pilar para la creación del Laboratorio Blockchain de la UNVM, un espacio destinado a la formación, desarrollo y experimentación en blockchain, contratos inteligentes e inteligencia artificial, áreas fundamentales en la próxima revolución tecnológica.</p>
+            <p>Además de su función educativa, el UNVM Token permitirá la implementación de un sistema de gobernanza descentralizada (DAO) dentro de la universidad, donde los poseedores del token podrán participar en votaciones sobre proyectos académicos, asignación de recursos y otras decisiones institucionales.</p>
+        </div>
+
+        <div class="section" id="sobre-el-token">
+            <h2>2. Objetivos del Proyecto</h2>
+            <h3>2.1. Educación y Capacitación en Blockchain</h3>
+            <ul>
+                <li>Integrar blockchain en la currícula académica de la UNVM.</li>
+                <li>Crear cursos, talleres y certificaciones sobre blockchain y contratos inteligentes.</li>
+                <li>Ofrecer incentivos en UNVM Tokens a estudiantes y docentes que participen en actividades de formación.</li>
+            </ul>
+            <h3>2.2. Laboratorio Blockchain UNVM</h3>
+            <ul>
+                <li>Crear un centro de innovación y desarrollo en blockchain e inteligencia artificial.</li>
+                <li>Impulsar proyectos de investigación con financiamiento en UNVM Tokens.</li>
+                <li>Desarrollar herramientas y aplicaciones descentralizadas (dApps) para la universidad.</li>
+            </ul>
+            <h3>2.3. Gobernanza Descentralizada (DAO Universitaria)</h3>
+            <ul>
+                <li>Implementar un modelo de gobernanza basado en una DAO.</li>
+                <li>Permitir que estudiantes, docentes y personal administrativo participen en la toma de decisiones mediante votaciones con UNVM Tokens.</li>
+                <li>Financiar proyectos comunitarios y académicos a través de la DAO.</li>
+            </ul>
+        </div>
+
+        <div class="section" id="laboratorio-blockchain">
+            <h2>3. Utilidad del UNVM Token</h2>
+            <p>El UNVM Token tendrá múltiples usos dentro de la UNVM y la comunidad universitaria:</p>
+            <ul>
+                <li><strong>Acceso a Recursos Educativos:</strong> Pago de cursos, talleres y certificaciones sobre blockchain. Acceso a contenido exclusivo en plataformas de educación descentralizada.</li>
+                <li><strong>Incentivos y Recompensas:</strong> Recompensas para estudiantes y docentes que completen cursos y proyectos de blockchain. Becas y financiamiento de investigaciones académicas.</li>
+                <li><strong>Laboratorio Blockchain:</strong> Uso del token para el acceso a servicios del Laboratorio Blockchain UNVM. Financiación de proyectos en blockchain e inteligencia artificial.</li>
+                <li><strong>Sistema de Gobernanza (DAO Universitaria):</strong> Votación de propuestas académicas y asignación de recursos. Participación en decisiones estratégicas de la universidad.</li>
+                <li><strong>Eventos y Conferencias:</strong> Pago de entradas a eventos y conferencias organizadas por la UNVM. Acceso a contenido premium y networking con expertos en blockchain.</li>
+            </ul>
+        </div>
+
+        <div class="section" id="dao-universitaria">
+            <h2>4. Tokenomics (Economía del Token)</h2>
+            <p>El UNVM Token sigue el estándar ERC-20 y se emite en la blockchain de Polygon con un suministro total de 100,000,000 UNVM.</p>
+            <table>
+                <tr>
+                    <th>Categoría</th>
+                    <th>Porcentaje</th>
+                    <th>Cantidad de Tokens</th>
+                </tr>
+                <tr>
+                    <td>Fondos de Desarrollo y Liquidez</td>
+                    <td>40%</td>
+                    <td>40,000,000 UNVM</td>
+                </tr>
+                <tr>
+                    <td>Incentivos y Recompensas</td>
+                    <td>20%</td>
+                    <td>20,000,000 UNVM</td>
+                </tr>
+                <tr>
+                    <td>Equipo y Colaboradores</td>
+                    <td>15%</td>
+                    <td>15,000,000 UNVM</td>
+                </tr>
+                <tr>
+                    <td>Ecosistema y Comunidad</td>
+                    <td>15%</td>
+                    <td>15,000,000 UNVM</td>
+                </tr>
+                <tr>
+                    <td>Reserva para DAO Universitaria</td>
+                    <td>10%</td>
+                    <td>10,000,000 UNVM</td>
+                </tr>
+            </table>
+            <h3>Desbloqueo de Tokens</h3>
+            <ul>
+                <li><strong>Fondos de Desarrollo:</strong> Desbloqueo progresivo en 2 años.</li>
+                <li><strong>Incentivos y Recompensas:</strong> Liberación según logros educativos.</li>
+                <li><strong>Equipo y Colaboradores:</strong> Desbloqueo en 4 años.</li>
+                <li><strong>Ecosistema y Comunidad:</strong> Uso gradual para integración en la UNVM.</li>
+                <li><strong>DAO Universitaria:</strong> Liberación según votaciones y proyectos.</li>
+            </ul>
+        </div>
+        <div class="section">
+            <h2>5. Roadmap (Hoja de Ruta)</h2>
+            <p><strong>Fase 1:</strong> Planificación y Diseño (Q1-Q2 2026)</p>
+            <p><strong>Fase 2:</strong> Desarrollo y Prueba Piloto (Q3-Q4 2026)</p>
+            <p><strong>Fase 3:</strong> Lanzamiento Oficial (Q1-Q2 2027)</p>
+            <p><strong>Fase 4:</strong> Expansión y Alianzas Estratégicas (2027 en adelante)</p>
+        </div>
+
+        <div class="section">
+            <h2>6. Implementación Técnica</h2>
+            <p>Blockchain: Polygon (baja comisión y alta escalabilidad).</p>
+            <p>Contratos Inteligentes: Basados en el estándar ERC-20.</p>
+            <p>Seguridad: Auditorías de código para garantizar la transparencia.</p>
+            <p>Plataforma de Gobernanza: DAO para la toma de decisiones con UNVM Tokens.</p>
+        </div>
+        <div class="section" id="conclusion">
+            <h2>7. Conclusión</h2>
+            <p>El UNVM Token es una iniciativa innovadora que posicionará a la Universidad Nacional de Villa María como un referente en el uso de blockchain en educación. A través del Laboratorio Blockchain, la DAO Universitaria y la adopción de nuevas tecnologías, este proyecto sentará las bases para la integración de la Web3 en la educación superior.</p>
+            <p>Con la combinación de blockchain e inteligencia artificial, la UNVM podrá aprovechar la revolución tecnológica que se avecina, promoviendo una educación más accesible, transparente y descentralizada.</p>
+            <p>Este es solo el comienzo de un ecosistema educativo descentralizado que beneficiará no solo a la comunidad universitaria, sino también a la sociedad en general.</p>
+        </div>
+
+
+
+        <div class="section" id="contacto">
+            <h2>8. Contacto</h2>
+            <p>Para más información sobre el proyecto UNVM Token, puedes comunicarte con:</p>
+            <p><strong>Universidad Nacional de Villa María</strong></p>
+            <p>Sitio web: <a href="#">[Insertar sitio web]</a></p>
+            <p>Email de contacto: <a href="mailto:info@unvm.edu.ar">[Insertar email]</a></p>
+            <p>Redes sociales: <a href="#">[Insertar enlaces]</a></p>
+            <p> <a href="https://polygonscan.com/token/0x736b093b454a759b62fab0e9d4e4cbbde31c8fee">Contrato</a></p>
+        </div>
+    </main>
+
+    <!-- Pie de página -->
+    <footer>
+        <p>&copy; 2025 Universidad Nacional de Villa María. Todos los derechos reservados.</p>
+        <p><a href="#">Política de Privacidad</a> | <a href="#">Términos y Condiciones</a></p>
+    </footer>
+
+    <!-- Script para el menú hamburguesa -->
+    <script>
+        const menuToggle = document.getElementById('menuToggle');
+        const navbarMenu = document.getElementById('navbarMenu');
+
+        menuToggle.addEventListener('click', () => {
+            navbarMenu.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>
