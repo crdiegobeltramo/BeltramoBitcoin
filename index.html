@@ -598,6 +598,32 @@ body, html {
     <img src="/w3images/map.jpg" class="w3-image w3-greyscale" style="width:100%;margin-top:48px">
   </div>
 </div>
+<script src='https://cdn.jotfor.ms/s/umd/latest/for-embedded-agent.js'></script>
+<script>
+  window.addEventListener("DOMContentLoaded", function() {
+    window.AgentInitializer.init({
+      agentRenderURL: "https://agent.jotform.com/01957f5c986f7e1ca7edebd2539b79c35015",
+      rootId: "JotformAgent-01957f5c986f7e1ca7edebd2539b79c35015",
+      formID: "01957f5c986f7e1ca7edebd2539b79c35015",
+      queryParams: ["skipWelcome=1", "maximizable=1"],
+      domain: "https://www.jotform.com",
+      isDraggable: false,
+      background: "linear-gradient(180deg, #0F53B4 0%, #0F53B4 100%)",
+      buttonBackgroundColor: "#246506",
+      buttonIconColor: "#FFFFFF",
+      variant: false,
+      customizations: {
+        "greeting": "Yes",
+        "greetingMessage": "Hola, ¿cómo puedo ayudarle?",
+        "openByDefault": "No",
+        "pulse": "Yes",
+        "position": "right",
+        "autoOpenChatIn": "1"
+      },
+      isVoice: undefined
+    });
+  });
+</script>
 <div id="disqus_thread"></div>
 <script>
     /**
