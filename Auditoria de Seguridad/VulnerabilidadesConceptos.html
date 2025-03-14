@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vulnerabilidades Blockchain</title>
+    <style>
+        /* Mantiene los mismos estilos CSS de los ejemplos anteriores */
+        /* (Copia aquí el CSS de los ejemplos previos) */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        /* Barra de navegación */
+        .navbar {
+            background: linear-gradient(90deg, #2c3e50, #3498db);
+            color: white;
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar h1 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        /* Menú lateral */
+        .sidebar {
+            position: fixed;
+            top: 60px;
+            left: 0;
+            width: 250px;
+            height: calc(100vh - 60px);
+            background: #ffffff;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            padding: 1rem;
+            overflow-y: auto;
+        }
+
+        .sidebar a {
+            display: block;
+            color: #2c3e50;
+            text-decoration: none;
+            padding: 0.5rem;
+            margin: 0.5rem 0;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        .sidebar a:hover {
+            background: #f1f1f1;
+        }
+
+        .sidebar .section-title {
+            font-weight: bold;
+            margin-top: 1rem;
+            color: #3498db;
+        }
+
+        /* Contenido principal */
+        .content {
+            margin-left: 270px;
+            padding: 2rem;
+            max-width: 900px;
+        }
+
+        h2 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 0.5rem;
+        }
+
+        .card {
+            background: white;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .card ul {
+            list-style: disc;
+            margin-left: 1.5rem;
+        }
+
+        .highlight {
+            background: #ffffcc;
+            padding: 1rem;
+            border-radius: 4px;
+            margin: 1rem 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                position: static;
+                width: 100%;
+                height: auto;
+                margin-top: 1rem;
+            }
+
+            .content {
+                margin-left: 0;
+                padding: 1rem;
+            }
+        }
+
+        /* Dark mode */
+        body.dark-mode {
+            background: #2c3e50;
+            color: white;
+        }
+
+        body.dark-mode .sidebar {
+            background: #34495e;
+        }
+
+        body.dark-mode .card {
+            background: #2c3e50;
+            color: white;
+        }
+
+        body.dark-mode .highlight {
+            background: #1a252f;
+        }
+    </style>
+</head>
+<body>
+    <!-- Barra de navegación -->
+    <div class="navbar">
+        <h1>Vulnerabilidades Comunes en Blockchain</h1>
+        <button onclick="toggleDarkMode()" class="dark-mode-toggle">🌙</button>
+    </div>
+
+    <!-- Menú lateral -->
+    <div class="sidebar" id="sidebar">
+        <div class="section-title">Vulnerabilidades</div>
+        <a href="#reentrancy">Reentrancy</a>
+        <a href="#integer-overflow">Integer Overflow/Underflow</a>
+        <a href="#timestamp">Timestamp Dependence</a>
+        <a href="#delegatecall">Delegatecall</a>
+        <a href="#dos">Denial of Service</a>
+        <a href="#recursos">Recursos</a>
+    </div>
+
+    <!-- Contenido principal -->
+    <div class="content">
+        <section id="reentrancy" class="card">
+            <h2>1. Reentrancy</h2>
+            <div class="highlight">
+                <h3>¿Qué es?</h3>
+                <p>Ataque donde un contrato malicioso llama repetidamente a una función vulnerable antes de que finalice su ejecución.</p>
+                
+                <h3>Ejemplo en Solidity</h3>
+                <pre class="code-example">
+// Código vulnerable
+function withdraw() public {
+    uint amount = balances[msg.sender];
+    (bool success, ) = msg.sender.call{value: amount}("");
+    require(success);
+    balances[msg.sender] = 0;
+}</pre>
+
+                <h3>Mitigación</h3>
+                <ul>
+                    <li>Seguir el patrón Checks-Effects-Interactions</li>
+                    <li>Usar ReentrancyGuard de OpenZeppelin</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="integer-overflow" class="card">
+            <h2>2. Integer Overflow/Underflow</h2>
+            <div class="highlight">
+                <p>Condición donde una operación numérica excede los límites del tipo de dato.</p>
+                <pre class="code-example">
+// Vulnerabilidad (Solidity < 0.8)
+uint8 a = 255;
+a++; // ¡a ahora es 0!</pre>
+
+                <h3>Solución</h3>
+                <ul>
+                    <li>Usar SafeMath de OpenZeppelin</li>
+                    <li>Versiones Solidity ≥0.8 (comprobación automática)</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="timestamp" class="card">
+            <h2>3. Timestamp Dependence</h2>
+            <div class="highlight">
+                <p>Depender de <code>block.timestamp</code> para lógica crítica.</p>
+                <pre class="code-example">
+// Ejemplo peligroso
+function claimReward() public {
+    require(block.timestamp > deadline);
+    // ...
+}</pre>
+
+                <h3>Riesgos</h3>
+                <ul>
+                    <li>Mineros pueden manipular timestamps</li>
+                    <li>Condiciones de carrera</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="delegatecall" class="card">
+            <h2>4. Delegatecall</h2>
+            <div class="highlight">
+                <p>Ejecuta código externo en el contexto del contrato llamador, manteniendo el estado local.</p>
+                <pre class="code-example">
+// Uso peligroso
+function execute(address _target) public {
+    _target.delegatecall(msg.data);
+}</pre>
+
+                <h3>Riesgos</h3>
+                <ul>
+                    <li>Modificación no intencional de variables de estado</li>
+                    <li>Ataques de inyección de código</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="dos" class="card">
+            <h2>5. Denial of Service (DoS)</h2>
+            <div class="highlight">
+                <p>Hacer que un contrato sea inutilizable mediante:</p>
+                <ul>
+                    <li>Bloqueo de funciones críticas</li>
+                    <li>Consumo excesivo de gas</li>
+                </ul>
+
+                <h3>Ejemplo</h3>
+                <pre class="code-example">
+// Vulnerabilidad
+function withdraw() public {
+    require(msg.sender.call.value(balances[msg.sender])());
+}</pre>
+            </div>
+        </section>
+
+        <section id="recursos" class="card">
+            <h2>Recursos Especializados</h2>
+            <ul>
+                <li><a href="https://swcregistry.io/" target="_blank">Smart Contract Weakness Registry</a></li>
+                <li><a href="https://github.com/crytic/awesome-ethereum-security" target="_blank">Awesome Ethereum Security</a></li>
+                <li><a href="https://consensys.github.io/smart-contract-best-practices/" target="_blank">Consensys Best Practices</a></li>
+            </ul>
+        </section>
+    </div>
+
+    <script>
+        // Mantiene el mismo script JS de ejemplos anteriores
+        // (Copia aquí el script de desplazamiento suave y modo oscuro)
+    </script>
+</body>
+</html>

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proceso de Auditoría Blockchain</title>
+    <style>
+        /* Mantiene los mismos estilos CSS de los ejemplos anteriores */
+        /* (Copia aquí el CSS de los ejemplos previos) */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        /* Barra de navegación */
+        .navbar {
+            background: linear-gradient(90deg, #2c3e50, #3498db);
+            color: white;
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar h1 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        /* Menú lateral */
+        .sidebar {
+            position: fixed;
+            top: 60px;
+            left: 0;
+            width: 250px;
+            height: calc(100vh - 60px);
+            background: #ffffff;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            padding: 1rem;
+            overflow-y: auto;
+        }
+
+        .sidebar a {
+            display: block;
+            color: #2c3e50;
+            text-decoration: none;
+            padding: 0.5rem;
+            margin: 0.5rem 0;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        .sidebar a:hover {
+            background: #f1f1f1;
+        }
+
+        .sidebar .section-title {
+            font-weight: bold;
+            margin-top: 1rem;
+            color: #3498db;
+        }
+
+        /* Contenido principal */
+        .content {
+            margin-left: 270px;
+            padding: 2rem;
+            max-width: 900px;
+        }
+
+        h2 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 0.5rem;
+        }
+
+        .card {
+            background: white;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .card ul {
+            list-style: disc;
+            margin-left: 1.5rem;
+        }
+
+        .highlight {
+            background: #ffffcc;
+            padding: 1rem;
+            border-radius: 4px;
+            margin: 1rem 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                position: static;
+                width: 100%;
+                height: auto;
+                margin-top: 1rem;
+            }
+
+            .content {
+                margin-left: 0;
+                padding: 1rem;
+            }
+        }
+
+        /* Dark mode */
+        body.dark-mode {
+            background: #2c3e50;
+            color: white;
+        }
+
+        body.dark-mode .sidebar {
+            background: #34495e;
+        }
+
+        body.dark-mode .card {
+            background: #2c3e50;
+            color: white;
+        }
+
+        body.dark-mode .highlight {
+            background: #1a252f;
+        }
+
+        /* Estilos adicionales para videos */
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .code-example {
+            background: #f5f5f5;
+            padding: 1rem;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <!-- Barra de navegación -->
+    <div class="navbar">
+        <h1>Proceso de Auditoría Blockchain</h1>
+        <button onclick="toggleDarkMode()" class="dark-mode-toggle">🌙</button>
+    </div>
+
+    <!-- Menú lateral -->
+    <div class="sidebar" id="sidebar">
+        <div class="section-title">Fases</div>
+        <a href="#revision">Revisión de Código</a>
+        <a href="#analisis">Análisis Estático/Dinámico</a>
+        <a href="#pruebas">Pruebas de Penetración</a>
+        <a href="#informe">Generación de Informe</a>
+        <a href="#verificacion">Verificación</a>
+        <a href="#recursos">Recursos</a>
+    </div>
+
+    <!-- Contenido principal -->
+    <div class="content">
+        <section id="revision" class="card">
+            <h2>1. Revisión de Código Fuente</h2>
+            <div class="highlight">
+                <h3>Metodología</h3>
+                <ol>
+                    <li>Lectura completa del código</li>
+                    <li>Identificación de patrones vulnerables</li>
+                    <li>Verificación de flujos de fondos</li>
+                    <li>Análisis de lógica de negocio</li>
+                </ol>
+
+                <div class="video-container">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/JWis0Ie0fw8?si=7qCA4TI-OKsc9wJc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    </iframe>
+                </div>
+            </div>
+        </section>
+
+        <section id="analisis" class="card">
+            <h2>2. Análisis Estático y Dinámico</h2>
+            <div class="highlight">
+                <h3>Estático</h3>
+                <ul>
+                    <li>Herramientas: Slither, <a href="https://mythril-classic.readthedocs.io/en/master/">Mythril</a>, Solhint</li> <a href="https://diligence.consensys.io/tools/">Ver</a>
+                    <li>Detección automática de vulnerabilidades</li>
+                    <li>Análisis de dependencias</li>
+                    <li><a href="Seguridadyanalisis.html">Seguridad y Análisis</a></li>
+                </ul>
+
+                <h3>Dinámico</h3>
+                <ul>
+                    <li>Pruebas en entorno de testnet</li>
+                    <li>Simulación de ataques</li>
+                    <li>Uso de Echidna para fuzzing</li>
+                </ul>
+
+                <div class="video-container">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/RRFFwqld1qg?si=o14BGZPwnADEGpkT" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+            </div>
+        </section>
+
+        <section id="pruebas" class="card">
+            <h2>3. Pruebas de Penetración</h2>
+            <div class="highlight">
+                <h3>Técnicas comunes</h3>
+                <ul>
+                    <li>Ataques de reentrancia</li>
+                    <li>Manipulación de oráculos</li>
+                    <li>Explotación de race conditions</li>
+                </ul>
+
+                <h3>Herramientas</h3>
+                <ul>
+                    <li>Metasploit para Ethereum</li>
+                    <li>Truffle Suite para pruebas</li>
+                    <li>Custom exploits development</li>
+                </ul>
+
+                <div class="video-container">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/rrvU3DSbXKo?si=Kiw_rdZTSMOglcHZ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+                <div class="video-container">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/MxxwxHc2pmM?si=J_wQ4lELVYyR3YuY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+            </div>
+        </section>
+
+        <section id="informe" class="card">
+            <h2>4. Generación de Informe</h2>
+            <div class="highlight">
+                <h3>Estructura profesional</h3>
+                <ol>
+                    <li>Resumen ejecutivo</li>
+                    <li>Lista de hallazgos (Critical/High/Medium/Low)</li>
+                    <li>PoC (Proof of Concept)</li>
+                    <li>Recomendaciones</li>
+                </ol>
+
+                <div class="code-example">
+                    <strong>Ejemplo de hallazgo:</strong>
+                    <pre>
+Vulnerabilidad: Reentrancy en función withdraw()
+Severidad: Critical
+Recomendación: Aplicar Checks-Effects-Interactions
+PoC: 
+1. Atacante llama a withdraw() con saldo > 0
+2. Contrato envía fondos antes de actualizar balance
+3. Atacante reentra antes de finalizar la transacción
+                    </pre>
+                </div>
+            </div>
+        </section>
+
+        <section id="verificacion" class="card">
+            <h2>5. Verificación de Correcciones</h2>
+            <div class="highlight">
+                <h3>Pasos críticos</h3>
+                <ul>
+                    <li>Revisión de parches aplicados</li>
+                    <li>Pruebas de regresión</li>
+                    <li>Análisis de impacto en el ecosistema</li>
+                    <li>Validación con herramientas formales</li>
+                </ul>
+
+                <div class="video-container">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/tNUniPh1DkM?si=Ir_JU2WAhOK9xQZZ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+            </div>
+        </section>
+
+        <section id="recursos" class="card">
+            <h2>Recursos Especializados</h2>
+            <ul>
+                <li><a href="https://github.com/crytic/slither" target="_blank">Slither Documentation</a></li>
+                <li><a href="https://mythril-classic.readthedocs.io/" target="_blank">Mythril Docs</a></li>
+                <li><a href="https://www.trufflesuite.com/docs" target="_blank">Truffle Suite</a></li>
+                <li><a href="https://consensys.github.io/smart-contract-best-practices/" target="_blank">ConsenSys Best Practices</a></li>
+            </ul>
+        </section>
+    </div>
+
+    <script>
+        // Mantiene el mismo script JS de ejemplos anteriores
+        // (Copia aquí el script de desplazamiento suave y modo oscuro)
+    </script>
+</body>
+</html>

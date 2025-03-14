@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introducción a la Auditoría Blockchain</title>
+    <style>
+        /* Mantiene los mismos estilos del código anterior */
+        /* (Copia aquí los estilos CSS del código anterior) */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        /* Barra de navegación */
+        .navbar {
+            background: linear-gradient(90deg, #2c3e50, #3498db);
+            color: white;
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar h1 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        /* Menú lateral */
+        .sidebar {
+            position: fixed;
+            top: 60px;
+            left: 0;
+            width: 250px;
+            height: calc(100vh - 60px);
+            background: #ffffff;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            padding: 1rem;
+            overflow-y: auto;
+        }
+
+        .sidebar a {
+            display: block;
+            color: #2c3e50;
+            text-decoration: none;
+            padding: 0.5rem;
+            margin: 0.5rem 0;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        .sidebar a:hover {
+            background: #f1f1f1;
+        }
+
+        .sidebar .section-title {
+            font-weight: bold;
+            margin-top: 1rem;
+            color: #3498db;
+        }
+
+        /* Contenido principal */
+        .content {
+            margin-left: 270px;
+            padding: 2rem;
+            max-width: 900px;
+        }
+
+        h2 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 0.5rem;
+        }
+
+        .card {
+            background: white;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .card ul {
+            list-style: disc;
+            margin-left: 1.5rem;
+        }
+
+        .highlight {
+            background: #ffffcc;
+            padding: 1rem;
+            border-radius: 4px;
+            margin: 1rem 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                position: static;
+                width: 100%;
+                height: auto;
+                margin-top: 1rem;
+            }
+
+            .content {
+                margin-left: 0;
+                padding: 1rem;
+            }
+        }
+
+        /* Dark mode */
+        body.dark-mode {
+            background: #2c3e50;
+            color: white;
+        }
+
+        body.dark-mode .sidebar {
+            background: #34495e;
+        }
+
+        body.dark-mode .card {
+            background: #2c3e50;
+            color: white;
+        }
+
+        body.dark-mode .highlight {
+            background: #1a252f;
+        }
+    </style>
+</head>
+<body>
+    <!-- Barra de navegación -->
+    <div class="navbar">
+        <h1>Introducción a la Auditoría Blockchain</h1>
+        <button onclick="toggleDarkMode()" class="dark-mode-toggle">🌙</button>
+    </div>
+
+    <!-- Menú lateral -->
+    <div class="sidebar" id="sidebar">
+        <a href="#que-es">¿Qué es?</a>
+        <a href="#importancia">Importancia</a>
+        <a href="#tipos-auditoria">Tipos de Auditoría</a>
+        <a href="#proceso-basico">Proceso Básico</a>
+        <a href="#herramientas-basicas">Herramientas Iniciales</a>
+        <a href="#recursos">Recursos</a>
+    </div>
+
+    <!-- Contenido principal -->
+    <div class="content">
+        <section id="que-es" class="card">
+            <h2>¿Qué es la Auditoría Blockchain?</h2>
+            <p>Proceso sistemático para:</p>
+            <ul>
+                <li>Verificar la integridad del código de contratos inteligentes</li>
+                <li>Identificar vulnerabilidades de seguridad</li>
+                <li>Validar el cumplimiento de estándares</li>
+                <li>Garantizar la correcta implementación de lógica de negocio</li>
+            </ul>
+        </section>
+
+        <section id="importancia" class="card">
+            <h2>¿Por qué es crucial?</h2>
+            <div class="highlight">
+                <h3>Riesgos de omitir auditorías</h3>
+                <ul>
+                    <li>Pérdida de fondos cripto (ej: US$600M en Ronin Bridge 2022)</li>
+                    <li>Daño reputacional</li>
+                    <li>Falta de confianza en el ecosistema</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="tipos-auditoria" class="card">
+            <h2>Tipos de Auditoría</h2>
+            <table>
+                <tr>
+                    <th>Tipo</th>
+                    <th>Enfoque</th>
+                </tr>
+                <tr>
+                    <td>Auditoría de Código</td>
+                    <td>Revisión línea por línea del contrato</td>
+                </tr>
+                <tr>
+                    <td>Auditoría de Arquitectura</td>
+                    <td>Evaluación de diseño del sistema</td>
+                </tr>
+                <tr>
+                    <td>Auditoría de Gas</td>
+                    <td>Optimización de costos de transacciones</td>
+                </tr>
+            </table>
+        </section>
+
+        <section id="proceso-basico" class="card">
+            <h2>Proceso Simplificado</h2>
+            <ol>
+                <li>Revisión de especificaciones</li>
+                <li>Análisis estático con herramientas</li>
+                <li>Pruebas unitarias</li>
+                <li>Simulación de ataques</li>
+                <li>Informe de hallazgos</li>
+            </ol>
+        </section>
+
+        <section id="herramientas-basicas" class="card">
+            <h2>Herramientas para Principiantes</h2>
+            <div class="highlight">
+                <ul>
+                    <li><strong>Remix IDE</strong>: Entorno de desarrollo con análisis integrado</li>
+                    <li><strong>Ethlint</strong>: Linter para Solidity</li>
+                    <li><strong>Tenderly</strong>: Monitoreo de transacciones</li>
+                    <li><strong>OpenZeppelin Contracts</strong>: Bibliotecas seguras</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="recursos" class="card">
+            <h2>Material Recomendado</h2>
+            <ul>
+                <li><a href="https://ethereum.org/es/developers/" target="_blank">Documentación Ethereum</a></li>
+                <li><a href="https://solidity-by-example.org/" target="_blank">Solidity by Example</a></li>
+                <li><a href="https://www.coursera.org/learn/ethereum-blockchain-developers" target="_blank">Curso de Coursera</a></li>
+            </ul>
+        </section>
+    </div>
+
+    <script>
+        // Mantiene el mismo script del código anterior
+        // (Copia aquí el script JS del código anterior)
+    </script>
+</body>
+</html>

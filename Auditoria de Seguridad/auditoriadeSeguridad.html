@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auditoría de Seguridad en Blockchain</title>
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        /* Barra de navegación */
+        .navbar {
+            background: linear-gradient(90deg, #2c3e50, #3498db);
+            color: white;
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar h1 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        /* Menú lateral */
+        .sidebar {
+            position: fixed;
+            top: 60px;
+            left: 0;
+            width: 250px;
+            height: calc(100vh - 60px);
+            background: #ffffff;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            padding: 1rem;
+            overflow-y: auto;
+        }
+
+        .sidebar a {
+            display: block;
+            color: #2c3e50;
+            text-decoration: none;
+            padding: 0.5rem;
+            margin: 0.5rem 0;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        .sidebar a:hover {
+            background: #f1f1f1;
+        }
+
+        .sidebar .section-title {
+            font-weight: bold;
+            margin-top: 1rem;
+            color: #3498db;
+        }
+
+        /* Contenido principal */
+        .content {
+            margin-left: 270px;
+            padding: 2rem;
+            max-width: 900px;
+        }
+
+        h2 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 0.5rem;
+        }
+
+        .card {
+            background: white;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .card ul {
+            list-style: disc;
+            margin-left: 1.5rem;
+        }
+
+        .highlight {
+            background: #ffffcc;
+            padding: 1rem;
+            border-radius: 4px;
+            margin: 1rem 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                position: static;
+                width: 100%;
+                height: auto;
+                margin-top: 1rem;
+            }
+
+            .content {
+                margin-left: 0;
+                padding: 1rem;
+            }
+        }
+
+        /* Dark mode */
+        body.dark-mode {
+            background: #2c3e50;
+            color: white;
+        }
+
+        body.dark-mode .sidebar {
+            background: #34495e;
+        }
+
+        body.dark-mode .card {
+            background: #2c3e50;
+            color: white;
+        }
+
+        body.dark-mode .highlight {
+            background: #1a252f;
+        }
+    </style>
+</head>
+<body>
+    <!-- Barra de navegación -->
+    <div class="navbar">
+        <h1>Auditoría de Seguridad en Blockchain</h1>
+        <button onclick="toggleDarkMode()" class="dark-mode-toggle">🌙</button>
+    </div>
+
+    <!-- Menú lateral -->
+    <div class="sidebar" id="sidebar">
+        <a href="#introduccion">Introducción</a>
+        <a href="#conceptos-clave">Conceptos Clave</a>
+        <a href="#proceso-auditoria">Proceso de Auditoría</a>
+        <a href="#herramientas">Herramientas</a>
+        <a href="#casos-reales">Casos de Estudio</a>
+        <a href="#mejores-practicas">Mejores Prácticas</a>
+        <a href="#recursos">Recursos</a>
+    </div>
+
+    <!-- Contenido principal -->
+    <div class="content">
+        <section id="introduccion" class="card">
+            <h2><a href="IntroAuditoriaBlockchain.html">Introducción a la Auditoría Blockchain</a></h2>
+            <p>La auditoría de seguridad en blockchain es un proceso crítico para:</p>
+            <ul>
+                <li>Identificar vulnerabilidades en contratos inteligentes</li>
+                <li>Prevenir exploits y pérdidas económicas</li>
+                <li>Garantizar el cumplimiento de estándares</li>
+                <li>Proteger a usuarios y desarrolladores</li>
+            </ul>
+        </section>
+
+        <section id="conceptos-clave" class="card">
+            <h2><a href="VulnerabilidadesConceptos.html">Conceptos Clave</a></h2>
+            <div class="highlight">
+                <h3>Vulnerabilidades Comunes</h3>
+                <ul>
+                    <li>Reentrancy</li>
+                    <li>Integer Overflow/Underflow</li>
+                    <li>Timestamp Dependence</li>
+                    <li>Delegatecall</li>
+                    <li>Denial of Service</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="proceso-auditoria" class="card">
+            <h2><a href="Procesodeauditoria.html">Proceso de Auditoría</a></h2>
+            <ol>
+                <li>Revisión de código fuente</li>
+                <li>Análisis estático y dinámico</li>
+                <li>Pruebas de penetración</li>
+                <li>Generación de informe</li>
+                <li>Verificación de correcciones</li>
+            </ol>
+        </section>
+
+        <section id="herramientas" class="card">
+            <h2>Herramientas Profesionales</h2>
+            <div class="highlight">
+                <h3><a href="Seguridadyanalisis.html">Herramientas Automatizadas</a></h3>
+                <ul>
+                    <li>Slither (Crytic)</li>
+                    <li>Mythril</li>
+                    <li>Truffle Suite</li>
+                    <li>OpenZeppelin Defender</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="casos-reales" class="card">
+            <h2>Casos de Estudio</h2>
+            <table>
+                <tr>
+                    <th>Proyecto</th>
+                    <th>Vulnerabilidad</th>
+                    <th>Solución</th>
+                </tr>
+                <tr>
+                    <td>The DAO (2016)</td>
+                    <td>Reentrancy</td>
+                    <td>Hard fork de Ethereum</td>
+                </tr>
+                <tr>
+                    <td>Poly Network (2021)</td>
+                    <td>Exploit de contrato cruzado</td>
+                    <td>Recuperación de fondos</td>
+                </tr>
+            </table>
+        </section>
+
+        <section id="mejores-practicas" class="card">
+            <h2>Mejores Prácticas</h2>
+            <ul>
+                <li>Seguir estándares ERC (EIP)</li>
+                <li>Implementar Checks-Effects-Interactions</li>
+                <li>Usar bibliotecas auditadas (OpenZeppelin)</li>
+                <li>Realizar auditorías multi-etapa</li>
+                <li>Mantener código abierto</li>
+            </ul>
+        </section>
+
+        <section id="recursos" class="card">
+            <h2>Recursos Recomendados</h2>
+            <ul>
+                <li><a href="https://soliditylang.org/docs" target="_blank">Documentación Solidity</a></li>
+                <li><a href="https://github.com/crytic/slither" target="_blank">Slither GitHub</a></li>
+                <li><a href="https://consensys.github.io/smart-contract-best-practices/" target="_blank">Consensys Best Practices</a></li>
+            </ul>
+        </section>
+    </div>
+
+    <script>
+        // Smooth scrolling
+        document.querySelectorAll('.sidebar a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Dark mode
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

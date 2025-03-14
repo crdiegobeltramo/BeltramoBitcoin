@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Herramientas de Seguridad Blockchain</title>
+    <style>
+        /* Mantiene los mismos estilos CSS de los ejemplos anteriores */
+        /* (Copia aquí el CSS de los ejemplos previos) */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        /* Barra de navegación */
+        .navbar {
+            background: linear-gradient(90deg, #2c3e50, #3498db);
+            color: white;
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar h1 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        /* Menú lateral */
+        .sidebar {
+            position: fixed;
+            top: 60px;
+            left: 0;
+            width: 250px;
+            height: calc(100vh - 60px);
+            background: #ffffff;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            padding: 1rem;
+            overflow-y: auto;
+        }
+
+        .sidebar a {
+            display: block;
+            color: #2c3e50;
+            text-decoration: none;
+            padding: 0.5rem;
+            margin: 0.5rem 0;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        .sidebar a:hover {
+            background: #f1f1f1;
+        }
+
+        .sidebar .section-title {
+            font-weight: bold;
+            margin-top: 1rem;
+            color: #3498db;
+        }
+
+        /* Contenido principal */
+        .content {
+            margin-left: 270px;
+            padding: 2rem;
+            max-width: 900px;
+        }
+
+        h2 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 0.5rem;
+        }
+
+        .card {
+            background: white;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .card ul {
+            list-style: disc;
+            margin-left: 1.5rem;
+        }
+
+        .highlight {
+            background: #ffffcc;
+            padding: 1rem;
+            border-radius: 4px;
+            margin: 1rem 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                position: static;
+                width: 100%;
+                height: auto;
+                margin-top: 1rem;
+            }
+
+            .content {
+                margin-left: 0;
+                padding: 1rem;
+            }
+        }
+
+        /* Dark mode */
+        body.dark-mode {
+            background: #2c3e50;
+            color: white;
+        }
+
+        body.dark-mode .sidebar {
+            background: #34495e;
+        }
+
+        body.dark-mode .card {
+            background: #2c3e50;
+            color: white;
+        }
+
+        body.dark-mode .highlight {
+            background: #1a252f;
+        }
+
+        /* Estilos adicionales para videos */
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .code-example {
+            background: #f5f5f5;
+            padding: 1rem;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+        .tool-card {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .tool-card h3 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+
+        .tool-card a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .tool-card a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- Barra de navegación -->
+    <div class="navbar">
+        <h1>Herramientas de Seguridad y Análisis</h1>
+        <button onclick="toggleDarkMode()" class="dark-mode-toggle">🌙</button>
+    </div>
+
+    <!-- Menú lateral -->
+    <div class="sidebar" id="sidebar">
+        <div class="section-title">Herramientas</div>
+        <a href="#seguridad-analisis">Seguridad y Análisis</a>
+        <a href="#consensus">Consensus</a>
+        <a href="#monitoreo">Monitoreo</a>
+        <a href="#auditores">Auditores Profesionales</a>
+    </div>
+
+    <!-- Contenido principal -->
+    <div class="content">
+        <section id="seguridad-analisis" class="card">
+            <h2>1. Seguridad y Análisis</h2>
+            
+            <div class="tool-card">
+                <h3>Trail Of Bits</h3>
+                <p>Empresa líder en auditorías blockchain. Ofrecen:</p>
+                <ul>
+                    <li>Verificación formal</li>
+                    <li>Análisis criptográfico</li>
+                    <li>Pruebas de penetración</li>
+                </ul>
+                <a href="https://www.trailofbits.com/" target="_blank">Sitio oficial</a>
+            </div>
+
+            <div class="tool-card">
+                <h3>Slither</h3>
+                <p>Análisis estático para Solidity</p>
+                <ul>
+                    <li>Detecta vulnerabilidades comunes</li>
+                    <li>Integración con CI/CD</li>
+                </ul>
+                <a href="https://github.com/crytic/slither" target="_blank">GitHub</a>
+            </div>
+
+            <div class="tool-card">
+                <h3>Manticore</h3>
+                <p>Ejecución simbólica para EVM</p>
+                <ul>
+                    <li>Exploración de caminos de ejecución</li>
+                    <li>Detección de estados inseguros</li>
+                </ul>
+                <a href="https://github.com/trailofbits/manticore" target="_blank">GitHub</a>
+            </div>
+
+            <div class="tool-card">
+                <h3>Echidna</h3>
+                <p>Pruebas de fuzzing para contratos</p>
+                <ul>
+                    <li>Generación automática de casos de prueba</li>
+                    <li>Integración con Slither</li>
+                </ul>
+                <a href="https://github.com/crytic/echidna" target="_blank">GitHub</a>
+            </div>
+        </section>
+
+        <section id="consensus" class="card">
+            <h2>2. Consensus Tools</h2>
+            
+            <div class="tool-card">
+                <h3>MythX</h3>
+                <p>Plataforma profesional de análisis (Pago)</p>
+                <ul>
+                    <li>Escaneo de vulnerabilidades</li>
+                    <li>Informes detallados</li>
+                </ul>
+                <a href="https://mythx.io/" target="_blank">Sitio oficial</a>
+            </div>
+
+            <div class="tool-card">
+                <h3>Mythril</h3>
+                <p>Herramienta open-source de análisis</p>
+                <ul>
+                    <li>Detección de vulnerabilidades</li>
+                    <li>Compatible con múltiples blockchains</li>
+                </ul>
+                <a href="https://github.com/ConsenSys/mythril" target="_blank">GitHub</a>
+            </div>
+
+            <div class="tool-card">
+                <h3>Securify</h3>
+                <p>Scanner de seguridad automático</p>
+                <ul>
+                    <li>Análisis de cumplimiento</li>
+                    <li>Verificación de patrones seguros</li>
+                </ul>
+                <a href="https://github.com/eth-sri/securify2" target="_blank">GitHub</a>
+            </div>
+        </section>
+
+        <section id="monitoreo" class="card">
+            <h2>3. Monitoreo y Mantenimiento</h2>
+            
+            <div class="tool-card">
+                <h3>OpenZeppelin Defender</h3>
+                <p>Plataforma de seguridad activa</p>
+                <ul>
+                    <li>Monitoreo 24/7</li>
+                    <li>Gestión de upgrades</li>
+                </ul>
+                <a href="https://www.openzeppelin.com/defender" target="_blank">Sitio oficial</a>
+            </div>
+
+            <div class="tool-card">
+                <h3>Tenderly</h3>
+                <p>Monitoreo y debugging</p>
+                <ul>
+                    <li>Alertas en tiempo real</li>
+                    <li>Análisis de transacciones</li>
+                </ul>
+                <a href="https://tenderly.co/" target="_blank">Sitio oficial</a>
+            </div>
+
+            <div class="tool-card">
+                <h3>Forta Network</h3>
+                <p>Red de detección de amenazas</p>
+                <ul>
+                    <li>Monitoreo descentralizado</li>
+                    <li>Alertas basadas en bots</li>
+                </ul>
+                <a href="https://forta.org/" target="_blank">Sitio oficial</a>
+            </div>
+        </section>
+
+        <section id="auditores" class="card">
+            <h2>4. Auditores Profesionales</h2>
+            <div class="highlight">
+                <h3>Empresas recomendadas</h3>
+                <ul>
+                    <li><a href="https://www.trailofbits.com/" target="_blank">Trail of Bits</a></li>
+                    <li><a href="https://openzeppelin.com/" target="_blank">OpenZeppelin</a></li>
+                    <li><a href="https://consensys.net/" target="_blank">ConsenSys Diligence</a></li>
+                    <li><a href="https://www.certik.com/" target="_blank">CertiK</a></li>
+                    <li><a href="https://bscheck.eu/bsc" target="_blank">BscCheck</a></li>
+                </ul>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Mantiene el mismo script JS de ejemplos anteriores
+        // (Copia aquí el script de desplazamiento suave y modo oscuro)
+    </script>
+</body>
+</html>
