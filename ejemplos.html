@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tokenización de Propiedad Inmobiliaria</title>
+    <style>
+        /* Estilos Generales */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e88e5, #42a5f5);
+            text-align: center;
+            padding: 20px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #1f1f1f;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.1);
+        }
+
+        h2 {
+            color: #42a5f5;
+            border-bottom: 2px solid #42a5f5;
+            padding-bottom: 5px;
+        }
+
+        .code-box {
+            background: #232323;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            overflow-x: auto;
+            border-left: 4px solid #42a5f5;
+        }
+
+        .collapsible {
+            background: #333;
+            color: #fff;
+            cursor: pointer;
+            padding: 10px;
+            width: 100%;
+            text-align: left;
+            border: none;
+            outline: none;
+            font-size: 18px;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+
+        .content {
+            display: none;
+            padding: 15px;
+            background: #2b2b2b;
+            margin-top: 5px;
+            border-radius: 5px;
+        }
+
+        .collapsible:after {
+            content: '\25B6'; /* Icono de flecha */
+            float: right;
+        }
+
+        .active:after {
+            content: '\25BC'; /* Icono de flecha abajo */
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            background: #1e88e5;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>Tokenización de Propiedad Inmobiliaria</header>
+
+    <div class="container">
+
+        <h2>📌 Introducción</h2>
+        <p>La tokenización de activos inmobiliarios permite convertir propiedades en tokens digitales en la blockchain. Este proyecto integra contratos inteligentes para gestionar la propiedad, actualizaciones automáticas con Chainlink y un mercado descentralizado.</p>
+
+        <button class="collapsible">💡 Explicación del Proyecto</button>
+        <div class="content">
+            <p>Este contrato inteligente permite la creación de tokens ERC-721 o ERC-20 representando la propiedad de un inmueble. Se implementa un fideicomiso legal para garantizar los derechos de los inversionistas.</p>
+        </div>
+
+        <button class="collapsible">💻 Código Solidity del Contrato</button>
+        <div class="content">
+            <div class="code-box">
+                // { <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;// // SPDX-License-Identifier: MIT
+                pragma solidity ^0.8.20;
+                
+                import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+                import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+                import "@openzeppelin/contracts/access/Ownable.sol";
+                import "@openzeppelin/contracts/utils/Counters.sol";
+                import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
+                import "@chainlink/contracts/src/v0.8/KeeperCompatible.sol";
+                
+                contract TokenizacionEdificio is ERC721, Ownable, KeeperCompatibleInterface {
+                    using Counters for Counters.Counter;
+                    Counters.Counter private _tokenIdCounter;
+                
+                    struct Unidad {
+                        string descripcion;
+                        uint256 metrosCuadrados;
+                        uint256 valorEstimadoUSD;
+                        address propietario;
+                        string ipfsHash;  // Documento legal en IPFS
+                    }
+                
+                    string public nombreEdificio;
+                    string public ubicacion;
+                    mapping(uint256 => Unidad) public unidades;
+                    AggregatorV3Interface internal priceFeed;
+                
+                    mapping(uint256 => bool) public enVenta;
+                    mapping(uint256 => uint256) public precioVenta;
+                
+                    constructor(string memory _nombre, string memory _ubicacion, address _priceFeed) 
+                        ERC721("TokenEdificio", "TKE") 
+                    {
+                        nombreEdificio = _nombre;
+                        ubicacion = _ubicacion;
+                        priceFeed = AggregatorV3Interface(_priceFeed);
+                    }
+                
+                    function setDetallesEdificio(string memory _nombre, string memory _ubicacion) public onlyOwner {
+                        nombreEdificio = _nombre;
+                        ubicacion = _ubicacion;
+                    }
+                
+                    function tokenizarUnidad(
+                        string memory _descripcion, 
+                        uint256 _metrosCuadrados, 
+                        uint256 _valorEstimadoUSD, 
+                        address _propietario,
+                        string memory _ipfsHash
+                    ) public onlyOwner {
+                        _tokenIdCounter.increment();
+                        uint256 newTokenId = _tokenIdCounter.current();
+                        _mint(_propietario, newTokenId);
+                        unidades[newTokenId] = Unidad(_descripcion, _metrosCuadrados, _valorEstimadoUSD, _propietario, _ipfsHash);
+                    }
+                
+                    function obtenerDetallesUnidad(uint256 tokenId) public view returns (string memory, uint256, uint256, address, string memory) {
+                        require(_exists(tokenId), "Unidad no existe");
+                        Unidad memory unidad = unidades[tokenId];
+                        return (unidad.descripcion, unidad.metrosCuadrados, unidad.valorEstimadoUSD, unidad.propietario, unidad.ipfsHash);
+                    }
+                
+                    function obtenerPrecioUSD() public view returns (int) {
+                        (, int price, , , ) = priceFeed.latestRoundData();
+                        return price;
+                    }
+                
+                    function actualizarValorUnidad(uint256 tokenId) public onlyOwner {
+                        require(_exists(tokenId), "Unidad no existe");
+                        int precioUSD = obtenerPrecioUSD();
+                        require(precioUSD > 0, "Precio invalido");
+                
+                        uint256 nuevoValor = unidades[tokenId].metrosCuadrados * uint256(precioUSD) / 1e8;
+                        unidades[tokenId].valorEstimadoUSD = nuevoValor;
+                    }
+                
+                    function ponerEnVenta(uint256 tokenId, uint256 precio) public {
+                        require(ownerOf(tokenId) == msg.sender, "No eres el propietario");
+                        enVenta[tokenId] = true;
+                        precioVenta[tokenId] = precio;
+                    }
+                
+                    function comprarUnidad(uint256 tokenId) public payable {
+                        require(enVenta[tokenId], "Unidad no está en venta");
+                        require(msg.value >= precioVenta[tokenId], "Fondos insuficientes");
+                
+                        address vendedor = ownerOf(tokenId);
+                        payable(vendedor).transfer(msg.value);
+                        _transfer(vendedor, msg.sender, tokenId);
+                
+                        enVenta[tokenId] = false;
+                        unidades[tokenId].propietario = msg.sender;
+                    }
+                
+                    function checkUpkeep(bytes calldata /*checkData*/) external view override returns (bool upkeepNeeded, bytes memory /*performData*/) {
+                        upkeepNeeded = true;  // Siempre activado
+                    }
+                
+                    function performUpkeep(bytes calldata /*performData*/) external override {
+                        for (uint256 i = 1; i <= _tokenIdCounter.current(); i++) {
+                            actualizarValorUnidad(i);
+                        }
+                    }
+                }
+                
+                contract TokenFraccionario is ERC20, Ownable {
+                    address public edificio;
+                    
+                    constructor(address _edificio) ERC20("Token Fraccionario Edificio", "TFE") {
+                        edificio = _edificio;
+                    }
+                
+                    function emitirTokens(address _destinatario, uint256 _cantidad) external onlyOwner {
+                        _mint(_destinatario, _cantidad);
+                    }
+                }
+                 <br>
+                } <br>
+            </div>
+        </div>
+        <button class="collapsible">📖 Explicación del Código Solidity</button>
+        <div class="content">
+            <p>El contrato <strong>TokenizacionEdificio</strong> permite tokenizar activos inmobiliarios en blockchain. Se basa en ERC-721 para representar unidades inmobiliarias y ERC-20 para fraccionar inversión.</p>
+        </div>
+        
+        <button class="collapsible">🔍 Explicación Línea por Línea</button>
+        <div class="content">
+            <div class="code-box">
+                <strong>1. Importación de librerías:</strong> <br>
+                <code>import "@openzeppelin/contracts/token/ERC721/ERC721.sol";</code>  // Usa estándar NFT <br>
+                <code>import "@openzeppelin/contracts/token/ERC20/IERC20.sol";</code>  // Usa estándar ERC-20 <br>
+                <code>import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";</code> // Oráculo de precios <br>
+                <br>
+                <strong>2. Declaración del contrato:</strong> <br>
+                <code>contract TokenizacionEdificio is ERC721, Ownable</code> // Hereda funciones NFT y permisos <br>
+                <br>
+                <strong>3. Variables clave:</strong> <br>
+                <code>mapping(uint256 => Unidad) public unidades;</code> // Mapea ID a unidad <br>
+                <code>AggregatorV3Interface internal priceFeed;</code> // Oráculo de precios <br>
+                <br>
+                <strong>4. Funciones principales:</strong> <br>
+                <code>function tokenizarUnidad(uint256 id, string memory detalles, uint256 valorUSD)</code>  // Crea unidad NFT <br>
+                <code>function actualizarValor(uint256 id)</code>  // Obtiene precio actualizado con Chainlink <br>
+                <code>function ponerEnVenta(uint256 id, uint256 precio)</code>  // Pone unidad en venta <br>
+                <code>function comprarUnidad(uint256 id)</code>  // Compra la unidad en marketplace <br>
+                <code>function emitirTokens(uint256 cantidad)</code>  // Crea fracciones de inversión con ERC-20 <br>
+            </div>
+        </div>
+        
+        <button class="collapsible">⚙️ Funcionalidades Clave</button>
+        <div class="content">
+            <ul>
+                <li>🏠 <strong>Tokenización de Unidades:</strong> Convierte cada unidad en NFT ERC-721.</li>
+                <li>📊 <strong>Valor en Tiempo Real:</strong> Usa Chainlink para actualizar el precio.</li>
+                <li>🛒 <strong>Marketplace Descentralizado:</strong> Compra y vende propiedades con criptomonedas.</li>
+                <li>💰 <strong>Inversión Fraccionada:</strong> Emite tokens ERC-20 para dividir inversiones.</li>
+            </ul>
+        </div>
+        
+        <button class="collapsible">🚀 ¿Cómo Usar el Contrato?</button>
+        <div class="content">
+            <ol>
+                <li><strong>Desplegar TokenizacionEdificio:</strong>  
+                    <br>Se necesita una dirección de price feed de Chainlink. Ejemplo en Ethereum:  
+                    <br><code>0x5f4ec3df9cbd43714fe2740f5e3616155c5b8419</code>
+                </li>
+                <li><strong>Registrar unidades con tokenizarUnidad:</strong>  
+                    <br>Ejemplo: <code>tokenizarUnidad(1, "Departamento A", 200000)</code>
+                </li>
+                <li><strong>Activar Chainlink Keepers:</strong>  
+                    <br>Automatiza <code>performUpkeep</code> para actualizar valores.
+                </li>
+                <li><strong>Comercio de propiedades:</strong>  
+                    <br>Vender: <code>ponerEnVenta(1, 250000)</code>  
+                    <br>Comprar: <code>comprarUnidad(1)</code>
+                </li>
+                <li><strong>Inversión Fraccionada:</strong>  
+                    <br>Emitir tokens ERC-20 con <code>emitirTokens(1000000)</code>
+                </li>
+            </ol>
+        </div>
+        
+        <script>
+            let coll = document.querySelectorAll(".collapsible");
+            coll.forEach(btn => {
+                btn.addEventListener("click", function() {
+                    this.classList.toggle("active");
+                    let content = this.nextElementSibling;
+                    content.style.display = (content.style.display === "block") ? "none" : "block";
+                });
+            });
+        </script>
+        
+        
+        
+                    <h3>CONTRATO DE FIDEICOMISO PARA TOKENIZACIÓN INMOBILIARIA</h3>
+                    <p><strong>PRIMERO: OBJETO DEL CONTRATO</strong></p>
+                    <p>El presente contrato tiene como finalidad la tokenización de un inmueble mediante la emisión de tokens en la blockchain, representando la propiedad fraccionada del activo.</p>
+        
+                    <p><strong>SEGUNDO: TRANSMISIÓN DEL INMUEBLE</strong></p>
+                    <p>El fiduciante transfiere la propiedad del inmueble a la entidad fiduciaria, la cual gestionará los derechos digitales de los beneficiarios.</p>
+        
+                    <p><strong>TERCERO: EMISIÓN DE TOKENS</strong></p>
+                    <p>Los tokens ERC-721 representan unidades específicas del inmueble, mientras que los tokens ERC-20 fraccionan su propiedad para inversión.</p>
+        
+                    <p><strong>CUARTO: DERECHOS DE LOS BENEFICIARIOS</strong></p>
+                    <p>Los poseedores de tokens tendrán derechos sobre la propiedad, distribución de ingresos y derecho a voto en decisiones clave.</p>
+        
+                    <p><strong>QUINTO: VENTA Y LIQUIDACIÓN</strong></p>
+                    <p>El fideicomiso podrá liquidar el activo en caso de votación favorable del 75% de los tenedores de tokens.</p>
+                </div>
+            </div>
+        
+           
+            
+                    <h3>EXPLICACIÓN DEL CONTRATO</h3>
+                    <p><strong>🔹 Objeto:</strong> Define el propósito de tokenizar la propiedad.</p>
+                    <p><strong>🔹 Transmisión del Inmueble:</strong> Legalmente el activo pasa al fideicomiso, asegurando derechos de los inversores.</p>
+                    <p><strong>🔹 Emisión de Tokens:</strong> Se generan NFTs para representar cada unidad y ERC-20 para fraccionar la inversión.</p>
+                    <p><strong>🔹 Derechos:</strong> Los poseedores de tokens tienen beneficios financieros y de gobernanza.</p>
+                    <p><strong>🔹 Liquidación:</strong> Si los inversores deciden vender, el fideicomiso gestiona la operación y distribución de fondos.</p>
+                
+            
+        </div>
+        
+        <div>       
+        
+        <script>
+        
+            coll.forEach(btn => {
+                btn.addEventListener("click", function() {
+                    this.classList.toggle("active");
+                    let content = this.nextElementSibling;
+                    content.style.display = (content.style.display === "block") ? "none" : "block";
+                });
+            });
+        </script>
+        
+<br>
+<br>
+<h1><a href="fideicomiso.html">Ver el contrato completo</a></h1>
+
+    
+</div>
+<h1>Tokenomics</h1>
+        <div>
+            <ul>
+                <li>🔹 Total de Tokens: 10,000</li>
+                <li>🔹 Precio Inicial: USD 100/token</li>
+                <li>🔹 Distribución:</li>
+                <ul>
+                    <li>📌 80% Venta Pública</li>
+                    <li>📌 10% Fiduciante</li>
+                    <li>📌 5% Fondo de Reserva</li>
+                    <li>📌 5% Desarrollo</li>
+                </ul>
+                <li>🔹 Liquidación: Conversión a dinero en caso de venta del inmueble.</li>
+            </ul>
+        </div>
+
+    </div>
+
+    <script>
+       
+        coll.forEach(btn => {
+            btn.addEventListener("click", function() {
+                this.classList.toggle("active");
+                let content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                    content.style.display = "none";
+                } else {
+                    content.style.display = "block";
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

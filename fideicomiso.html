@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contrato de Fideicomiso - Tokenización Inmobiliaria</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+        .collapsible {
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            padding: 10px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 18px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        .active, .collapsible:hover {
+            background-color: #0056b3;
+        }
+        .content {
+            display: none;
+            overflow: hidden;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Contrato de Fideicomiso</h1>
+        <h2>Tokenización de Propiedad Inmobiliaria</h2>
+        
+        <button class="collapsible">📜 Ver Contrato Completo</button>
+        <div class="content">
+            <p><strong>Entre:</strong></p>
+            <p><strong>Fiduciante:</strong> (Nombre de la empresa o persona que transfiere la propiedad), en adelante “el Fiduciante”.</p>
+            <p><strong>Fiduciario:</strong> (Entidad que administra el fideicomiso), en adelante “el Fiduciario”.</p>
+            <p><strong>Beneficiarios:</strong> Los titulares de los tokens digitales representativos de la propiedad.</p>
+            <br>
+            <p><strong>1. OBJETO DEL CONTRATO</strong></p>
+            <p>Administración y representación digital de un inmueble mediante tokens en blockchain.</p>
+            <p><strong>Ubicación:</strong> (Dirección) | <strong>Superficie:</strong> (m²) | <strong>Matrícula:</strong> (Número) | <strong>Valor:</strong> (USD)</p>
+            <br>
+            <p><strong>2. TRANSMISIÓN DEL INMUEBLE</strong></p>
+            <p>El Fiduciante transfiere el inmueble al Fiduciario, quien lo inscribe en el registro público.</p>
+            <br>
+            <p><strong>3. EMISIÓN DE TOKENS</strong></p>
+            <p>Detalles del token digital representativo de la propiedad inmobiliaria.</p>
+            <p><strong>Nombre:</strong> (Ej. RETX) | <strong>Símbolo:</strong> (Ej. RETX) | <strong>Estándar:</strong> ERC-721 o ERC-20</p>
+            <br>
+            <p><strong>4. DERECHOS DE LOS BENEFICIARIOS</strong></p>
+            <p>Incluye propiedad digital, transferencia, ingresos por alquiler, derecho a voto y liquidación.</p>
+            <br>
+            <p><strong>5. ADMINISTRACIÓN DEL INMUEBLE</strong></p>
+            <p>El Fiduciario mantiene, administra y distribuye ingresos del inmueble tokenizado.</p>
+            <br>
+            <p><strong>6. VENTA O LIQUIDACIÓN</strong></p>
+            <p>Si el 75% de Beneficiarios vota a favor, el Fiduciario procede con la venta.</p>
+            <br>
+            <p><strong>7. TOKENOMICS</strong></p>
+            <p>Distribución y valorización del token en relación con el inmueble.</p>
+            <p><strong>Fiduciante:</strong> 10% | <strong>Venta Pública:</strong> 80% | <strong>Reserva:</strong> 5% | <strong>Equipo:</strong> 5%</p>
+            <br>
+            <p><strong>8. REGULACIONES Y CUMPLIMIENTO</strong></p>
+            <p>El fideicomiso cumplirá con las regulaciones inmobiliarias y de valores financieros.</p>
+            <br>
+            <p><strong>9. RESOLUCIÓN DE CONFLICTOS</strong></p>
+            <p>Los conflictos se resolverán mediante arbitraje en (Ciudad/País).</p>
+            <br>
+            <p><strong>10. FIRMA DE LAS PARTES</strong></p>
+            <p>Fiduciante: ___________________________</p>
+            <p>Fiduciario: ___________________________</p>
+            <p>Testigos: ___________________________</p>
+        </div>
+    </div>
+    
+    <script>
+        let coll = document.querySelectorAll(".collapsible");
+        coll.forEach(btn => {
+            btn.addEventListener("click", function() {
+                this.classList.toggle("active");
+                let content = this.nextElementSibling;
+                content.style.display = (content.style.display === "block") ? "none" : "block";
+            });
+        });
+    </script>
+</body>
+</html>
