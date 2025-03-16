@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curso: Tokenización de Activos con Blockchain</title>
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        /* Barra de navegación */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(90deg, #2c3e50, #3498db);
+            color: white;
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .navbar h1 {
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+        .navbar .logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        /* Menú lateral */
+        .sidebar {
+            position: fixed;
+            top: 60px;
+            left: 0;
+            width: 250px;
+            height: calc(100vh - 60px);
+            background: #ffffff;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            padding: 1rem;
+            overflow-y: auto;
+        }
+
+        .sidebar a {
+            display: block;
+            color: #2c3e50;
+            text-decoration: none;
+            padding: 0.5rem;
+            margin: 0.5rem 0;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        .sidebar a:hover {
+            background: #f1f1f1;
+        }
+
+        .sidebar .section-title {
+            font-weight: bold;
+            margin-top: 1rem;
+            color: #3498db;
+        }
+
+        /* Contenido principal */
+        .content {
+            margin-left: 270px;
+            padding: 2rem;
+            max-width: 900px;
+        }
+
+        h2 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 0.5rem;
+        }
+
+        .card {
+            background: white;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .highlight {
+            background: #ffffcc;
+            padding: 1rem;
+            border-radius: 4px;
+            margin: 1rem 0;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .resource-link {
+            display: flex;
+            align-items: center;
+            margin: 0.5rem 0;
+        }
+
+        .resource-link img {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .sidebar {
+                position: static;
+                width: 100%;
+                height: auto;
+                margin-top: 1rem;
+            }
+
+            .content {
+                margin-left: 0;
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Barra de navegación -->
+    <div class="navbar">
+        <div class="logo-container">
+            <img src="IMG/BELCOIN.jpg" alt="Logo Curso">
+            <h1>Tokenización de Activos con Blockchain</h1>
+        </div>
+        <button onclick="toggleDarkMode()" class="dark-mode-toggle">🌙</button>
+    </div>
+
+    <!-- Menú lateral -->
+    <div class="sidebar" id="sidebar">
+        <a href="#presentacion">Presentación</a>
+        <a href="#introduccion">Introducción</a>
+        <a href="#conceptos-clave">Conceptos Clave</a>
+        <a href="#tipos-tokenizacion">Tipos de Tokenización</a>
+        <a href="#ejemplos-reales">Casos de Éxito</a>
+        <a href="#recursos-multimedia">Recursos Multimedia</a>
+        <a href="#pdfs">PDFs Recomendados</a>
+        <a href="#podcasts">Podcasts</a>
+    </div>
+
+    <!-- Contenido principal -->
+    <div class="content">
+        <section id="presentacion" class="card">
+            <h2>Presentación</h2>
+            <p>Bienvenido al curso especializado en <strong>Tokenización de Activos con Blockchain</strong>. Este curso está diseñado para brindarte una comprensión profunda de cómo la tecnología blockchain permite la representación digital de activos físicos y financieros, optimizando su gestión, transferencia y seguridad.</p>
+        </section>
+
+        <section id="introduccion" class="card">
+            <h2>Introducción</h2>
+            <p>La tokenización es el proceso de convertir derechos de propiedad sobre un activo en tokens digitales que se pueden intercambiar en una blockchain. Esta tecnología revoluciona sectores como bienes raíces, arte, finanzas y más, permitiendo:</p>
+            <ul>
+                <li>Fractional ownership (propiedad fraccionada)</li>
+                <li>Liquidez instantánea</li>
+                <li>Transparencia y trazabilidad</li>
+                <li>Reducción de intermediarios</li>
+            </ul>
+        </section>
+
+        <section id="conceptos-clave" class="card">
+            <h2>Conceptos Clave</h2>
+            <div class="highlight">
+                <h3>¿Qué es un Token?</h3>
+                <p>Un token es una unidad de valor digital que representa un activo, servicio o utilidad específica. Ejemplo: Tokens ERC-20 en Ethereum.</p>
+            </div>
+            <div class="highlight">
+                <h3>Blockchain como Infraestructura</h3>
+                <p>La blockchain proporciona la infraestructura para emitir, gestionar y transferir tokens de forma segura y descentralizada.</p>
+            </div>
+        </section>
+
+        <section id="tipos-tokenizacion" class="card">
+            <h2>Tipos de Tokenización</h2>
+            <h3>1. Bienes Raíces</h3>
+            <p>Dividir propiedades inmobiliarias en tokens para facilitar la inversión. Ejemplo: Propiedad comercial tokenizada en RealT.</p>
+
+            <h3>2. Arte y Colectibles</h3>
+            <p>Convertir obras de arte en NFTs (Non-Fungible Tokens). Ejemplo: Beeple's "Everydays" vendido por $69M en Christie's.</p>
+
+            <h3>3. Finanzas</h3>
+            <p>Representar acciones, bonos o derivados como tokens. Ejemplo: STOs (Security Token Offerings).</p>
+        </section>
+
+        <section id="ejemplos-reales" class="card">
+            <h2>Casos de Éxito</h2>
+            <div class="highlight">
+                <h3> <a href="https://realt.co/">RealT</a> </h3>
+                <p>Plataforma que permite invertir en propiedades inmobiliarias tokenizadas.</p>
+            </div>
+            <div class="highlight">
+                <h3> <a href="https://nbatopshot.com/">NBA Top Shot</a> </h3>
+                <p>Plataforma de coleccionables digitales basados en blockchain.</p>
+            </div>
+        </section>
+
+        <section id="recursos-multimedia" class="card">
+            <h2>Recursos Multimedia</h2>
+            <div class="video-container">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/zdFtiTnWVH8?si=baHwzuzjUtpT0tak" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+            <div class="video-container">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/Qy_ooGW8SSE?si=lsRrqEw9D1Nrl-AQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+        </section>
+             <section>
+                <h5><a href="https://www.youtube.com/playlist?list=PLIsQsKe5PxetrZdBFLwG_TN_DsioecCYX">Lista de reproducción</a> </h5>
+             </section>
+        <section id="pdfs" class="card">
+            <h2>PDFs Recomendados</h2>
+            <div class="resource-link">
+                <img src="https://via.placeholder.com/20" alt="PDF Icon">
+                <a href="https://example.com/tokenizacion.pdf" target="_blank">Guía de Tokenización de Activos</a>
+            </div>
+            <div class="resource-link">
+                <img src="https://via.placeholder.com/20" alt="PDF Icon">
+                <a href="https://example.com/blockchain.pdf" target="_blank">Fundamentos de Blockchain</a>
+            </div>
+        </section>
+
+        <section id="podcasts" class="card">
+            <h2>Podcasts</h2>
+            <div class="resource-link">
+                <img src="https://via.placeholder.com/20" alt="Spotify Icon">
+                <a href="https://open.spotify.com/show/PODCAST_ID_1" target="_blank">Episodio 1: Introducción a la Tokenización</a>
+            </div>
+            <div class="resource-link">
+                <img src="https://via.placeholder.com/20" alt="Spotify Icon">
+                <a href="https://open.spotify.com/show/PODCAST_ID_2" target="_blank">Episodio 2: Casos de Uso Reales</a>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Smooth scrolling
+        document.querySelectorAll('.sidebar a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Dark mode
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>
