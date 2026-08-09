@@ -1,0 +1,58 @@
+<!-- Buscador avanzado para insertar en diegobeltramobitcoin.netlify.app -->
+<section id="radar-cripto" class="radar-cripto" aria-labelledby="radar-cripto-titulo">
+  <div class="radar-cripto-head">
+    <p class="radar-kicker">Actualización permanente</p>
+    <h2 id="radar-cripto-titulo">Buscador normativo y técnico</h2>
+    <p>Filtrá las novedades sobre Bitcoin y criptoactivos por organismo, rango de fechas y tema.</p>
+  </div>
+
+  <form id="radar-filtros" class="radar-filtros">
+    <label>Organismo
+      <select id="radar-organismo">
+        <option value="">Todos</option><option value="ARCA">ARCA</option>
+        <option value="CNV">CNV</option><option value="UIF">UIF</option>
+        <option value="GAFI">GAFI</option><option value="IASB / NIIF">IASB / NIIF</option>
+        <option value="FACPCE">FACPCE</option><option value="Internacional">Internacional</option>
+        <option value="Jurisprudencia">Jurisprudencia</option>
+      </select>
+    </label>
+    <label>Desde<input id="radar-desde" type="date"></label>
+    <label>Hasta<input id="radar-hasta" type="date"></label>
+    <label class="radar-tema">Tema, norma o palabra clave
+      <input id="radar-busqueda" type="search" placeholder="Ej.: PSAV, NIIF, stablecoins...">
+    </label>
+    <button type="button" id="radar-limpiar">Limpiar filtros</button>
+  </form>
+
+  <p id="radar-estado" class="radar-estado" aria-live="polite"></p>
+  <div id="radar-resultados" class="radar-resultados"></div>
+  <p class="radar-fuente">Las actualizaciones completas y sus fuentes están disponibles en <a href="https://site.zapia.com/s9kx4iws" target="_blank" rel="noopener noreferrer">el boletín normativo permanente</a>.</p>
+</section>
+
+<style>
+.radar-cripto{max-width:1100px;margin:2rem auto;padding:1.5rem;color:#edf2ff;background:#0b1020;border:1px solid #2a3a5d;border-radius:16px;font:16px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif}.radar-kicker{margin:0 0 .35rem;color:#f7931a;font-size:.8rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase}.radar-cripto h2{margin:0 0 .5rem;font-size:clamp(1.6rem,3vw,2.3rem);line-height:1.15}.radar-cripto p{color:#adbad5}.radar-filtros{display:grid;grid-template-columns:repeat(4,minmax(140px,1fr));gap:12px;align-items:end;margin:1.4rem 0}.radar-filtros label{display:flex;flex-direction:column;gap:5px;color:#adbad5;font-size:.85rem}.radar-filtros input,.radar-filtros select,.radar-filtros button{width:100%;min-height:42px;padding:9px;border:1px solid #2a3a5d;border-radius:8px;background:#141e36;color:#edf2ff;font:inherit}.radar-filtros button{cursor:pointer;background:#f7931a;color:#0b1020;font-weight:700}.radar-tema{grid-column:span 2}.radar-estado{font-size:.9rem}.radar-resultados{display:grid;gap:12px}.radar-item{padding:16px;border:1px solid #2a3a5d;border-radius:11px;background:#141e36}.radar-item h3{margin:5px 0}.radar-meta{color:#f7931a;font-size:.85rem;font-weight:700}.radar-item p{margin:5px 0}.radar-item a,.radar-fuente a{color:#ffc46e}.radar-fuente{margin-bottom:0;font-size:.9rem}@media(max-width:700px){.radar-cripto{margin:1rem 0;padding:1rem;border-radius:10px}.radar-filtros{grid-template-columns:1fr 1fr}.radar-tema{grid-column:span 2}}
+</style>
+
+<script>
+(function () {
+  const registros = [
+    {fecha:'2026-06-23',organismo:'GAFI',tipo:'Internacional · AML/CFT',tema:'Recomendación 6, sanciones, activos virtuales',titulo:'Conclusiones del Plenario del GAFI',detalle:'Actualización de la Recomendación 6 de los Estándares del GAFI.',url:'https://www.argentina.gob.ar/noticias/conclusiones-del-plenario-del-gafi-4'},
+    {fecha:'2026-06-05',organismo:'IASB / NIIF',tipo:'Técnico · Criptoactivos',tema:'baja en cuentas, control, transferencia',titulo:'Material IASB/FASB sobre activos digitales',detalle:'El Board considerará aclaraciones sobre la baja en cuentas en acuerdos de transferencia de criptoactivos.',url:'https://www.ifrs.org/content/dam/ifrs/meetings/2026/june/fasb-iasb-education-meeting/ap39-40-digital-assets.pdf'},
+    {fecha:'2026-05-14',organismo:'ARCA',tipo:'Normativa · Argentina',tema:'activos virtuales, cuentas, régimen fiscal',titulo:'Resolución General 1139/2026',detalle:'Previsiones para el ingreso de activos mediante transferencia de activos virtuales.',url:'https://www.argentina.gob.ar/normativa/nacional/resoluci%C3%B3n-1139-2026-425786/texto'},
+    {fecha:'2026-02-20',organismo:'CNV',tipo:'Normativa · Argentina',tema:'PSAV, activos virtuales, mercado de capitales',titulo:'Resolución CNV 1108/2026',detalle:'Reglas aplicables a casos de ingreso de activos mediante transferencia de activos virtuales.',url:'https://www.argentina.gob.ar/normativa/nacional/resoluci%C3%B3n-1108-2026-423261/texto'},
+    {fecha:'2026-01-09',organismo:'UIF',tipo:'AML/CFT · Argentina',tema:'congelamiento, proliferación, activos',titulo:'Primer congelamiento administrativo informado por la UIF',detalle:'Medida vinculada al financiamiento de la proliferación de armas de destrucción masiva.',url:'https://www.argentina.gob.ar/noticias/la-uif-dispuso-el-primer-congelamiento-administrativo-de-activos-por-financiamiento-de-la'}
+  ];
+  const $ = id => document.getElementById(id);
+  const texto = r => [r.organismo,r.tipo,r.tema,r.titulo,r.detalle].join(' ').toLowerCase();
+  function fechaAR(f){return new Date(f+'T12:00:00').toLocaleDateString('es-AR');}
+  function render(){
+    const organismo=$('radar-organismo').value, desde=$('radar-desde').value, hasta=$('radar-hasta').value, busqueda=$('radar-busqueda').value.trim().toLowerCase();
+    const filtrados=registros.filter(r=>(!organismo||r.organismo===organismo)&&(!desde||r.fecha>=desde)&&(!hasta||r.fecha<=hasta)&&(!busqueda||texto(r).includes(busqueda)));
+    $('radar-estado').textContent=filtrados.length+' registro'+(filtrados.length===1?'':'s')+' encontrado'+(filtrados.length===1?'':'s');
+    $('radar-resultados').innerHTML=filtrados.length ? filtrados.map(r=>`<article class="radar-item"><div class="radar-meta">${fechaAR(r.fecha)} · ${r.organismo} · ${r.tipo}</div><h3>${r.titulo}</h3><p>${r.detalle}</p><p><strong>Tema:</strong> ${r.tema} · <a href="${r.url}" target="_blank" rel="noopener noreferrer">Fuente oficial</a></p></article>`).join('') : '<p>No hay registros que coincidan con los filtros.</p>';
+  }
+  ['radar-organismo','radar-desde','radar-hasta','radar-busqueda'].forEach(id => $(id).addEventListener('input',render));
+  $('radar-limpiar').addEventListener('click',()=>{ $('radar-filtros').reset(); render(); });
+  render();
+}());
+</script>
