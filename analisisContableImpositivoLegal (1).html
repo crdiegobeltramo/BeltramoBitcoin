@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Análisis Contable, Impositivo y Legal de Bitcoin y Criptoactivos — Diego Beltramo Bitcoin.">
+  <title>Análisis Contable, Impositivo y Legal | Diego Beltramo Bitcoin</title>
+
+  <!-- Se mantienen las integraciones originales -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC+5VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9484813243995286" crossorigin="anonymous"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HF5T5XFXDK"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-HF5T5XFXDK');
+  </script>
+
+  <style>
+    :root{
+      --navy:#061525;
+      --navy-2:#0a1d31;
+      --navy-3:#102b45;
+      --ink:#132236;
+      --gold:#f5a623;
+      --gold-2:#ffca58;
+      --orange:#f7931a;
+      --cream:#f5f7fa;
+      --white:#fff;
+      --muted:#718096;
+      --line:#dfe7ef;
+      --shadow:0 22px 60px rgba(4,18,35,.12);
+      --radius:24px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:#eef2f6;color:var(--ink);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.65}
+    a{color:inherit}
+    .site-shell{overflow:hidden;background:linear-gradient(#061525 0 620px,#eef2f6 620px 100%)}
+
+    /* NAV */
+    .topbar{position:sticky;top:0;z-index:1000;background:rgba(4,17,31,.96);border-bottom:1px solid rgba(255,255,255,.12);backdrop-filter:blur(18px)}
+    .topbar-inner{max-width:1500px;margin:auto;padding:12px 24px}
+    .brand{display:flex;align-items:center;gap:11px;text-decoration:none;min-width:220px}
+    .brand-mark{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(145deg,#ffca58,#f7931a);color:#081625;font-weight:900;font-size:25px;box-shadow:0 8px 24px rgba(247,147,26,.3)}
+    .brand-copy{line-height:1.02;color:white;font-family:Montserrat,sans-serif;font-size:12px;letter-spacing:.5px}.brand-copy b{display:block;font-size:14px}.brand-copy span{display:block;color:#f6b33d}
+    .main-nav{display:flex;gap:4px;align-items:center;justify-content:center;flex:1;flex-wrap:wrap}.main-nav a{font-size:11px;color:#e9eff6;text-decoration:none;padding:9px 8px;border-radius:8px;transition:.2s}.main-nav a:hover,.main-nav a.active{color:#fff;background:rgba(247,147,26,.13)}
+    .nav-actions{display:flex;gap:8px;align-items:center}.nav-btn{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.2px;text-decoration:none;padding:10px 13px;border-radius:8px;white-space:nowrap}.nav-btn.outline{color:white;border:1px solid #d99321}.nav-btn.gold{background:linear-gradient(135deg,#ffcf64,#f5a623);color:#172235;box-shadow:0 8px 18px rgba(245,166,35,.18)}
+    .nav-toggle{display:none;background:none;border:1px solid #496075;color:#fff;border-radius:9px;padding:8px 11px}
+
+    /* HERO */
+    .hero{position:relative;min-height:535px;background:radial-gradient(circle at 78% 40%,rgba(0,142,255,.18),transparent 27%),radial-gradient(circle at 58% 65%,rgba(247,147,26,.15),transparent 24%),linear-gradient(135deg,#061525,#071d31 55%,#061321);color:#fff;isolation:isolate}
+    .hero::before{content:"";position:absolute;inset:0;opacity:.5;background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);background-size:48px 48px;mask-image:linear-gradient(to right,black,transparent 90%)}
+    .hero-inner{max-width:1500px;margin:auto;padding:68px 38px 48px;display:grid;grid-template-columns:43% 57%;align-items:center;position:relative;z-index:1}
+    .eyebrow{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(255,194,85,.35);background:rgba(247,147,26,.08);color:#ffc75a;border-radius:999px;padding:7px 13px;font-size:11px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase}
+    .hero h1{font-family:Montserrat,sans-serif;font-size:clamp(42px,5.3vw,78px);line-height:.96;letter-spacing:-2.8px;margin:20px 0 18px;text-transform:uppercase}.hero h1 span{display:block;color:#ffbd3d}.hero-sub{max-width:550px;font-size:17px;color:#c7d4e1;margin:0 0 25px}.hero-badges{display:flex;gap:12px;flex-wrap:wrap}.hero-badge{display:flex;align-items:center;gap:8px;color:#e7edf4;font-size:11px}.hero-badge i{width:30px;height:30px;display:grid;place-items:center;border:1px solid rgba(255,194,85,.45);border-radius:50%;color:#ffc34e;background:rgba(255,255,255,.03)}
+
+    /* Hero illustration */
+    .hero-art{position:relative;height:410px;min-width:0}.network{position:absolute;inset:15px 0 0 0}.node{position:absolute;width:8px;height:8px;background:#6dd5ff;border-radius:50%;box-shadow:0 0 16px #6dd5ff}.node.n1{left:8%;top:30%}.node.n2{left:25%;top:11%}.node.n3{left:39%;top:28%}.node.n4{left:58%;top:9%}.node.n5{right:15%;top:22%}.node.n6{right:7%;top:51%}.node.n7{left:47%;bottom:9%}.node.n8{left:17%;bottom:21%}.node.n9{right:28%;bottom:18%}.network svg{position:absolute;inset:0;width:100%;height:100%}.coin{position:absolute;width:190px;height:190px;border-radius:50%;right:32%;top:24%;background:radial-gradient(circle at 34% 30%,#ffe9a8 0 7%,#ffca57 8% 24%,#f6a11d 47%,#d77805 75%,#9a4f00 100%);border:10px solid #f9b12d;box-shadow:0 0 0 5px rgba(255,196,72,.2),0 28px 55px rgba(0,0,0,.4),inset 0 0 25px rgba(255,255,255,.35);display:grid;place-items:center;transform:rotate(-8deg);z-index:3}.coin::after{content:"₿";font-family:Georgia,serif;font-weight:900;font-size:115px;color:#fff4ce;text-shadow:2px 4px 0 #d57c08}.coin-ring{position:absolute;inset:14px;border:2px dashed rgba(255,248,215,.55);border-radius:50%}
+    .scales{position:absolute;left:8%;bottom:27px;width:250px;height:250px;z-index:2}.scales .pole{position:absolute;left:50%;top:27px;width:10px;height:160px;background:linear-gradient(90deg,#7c4b13,#ffd36d,#8b5718);transform:translateX(-50%);border-radius:8px}.scales .beam{position:absolute;left:18px;right:18px;top:45px;height:9px;background:linear-gradient(#ffd36d,#9d6117);transform:rotate(-4deg);border-radius:9px}.scale-arm{position:absolute;width:105px;height:70px;top:45px;border-bottom:3px solid #f8ca62}.scale-arm.left{left:0}.scale-arm.right{right:0}.pan{position:absolute;width:72px;height:28px;border:3px solid #eab74f;border-top:none;border-radius:0 0 55px 55px;top:90px}.pan.left{left:12px}.pan.right{right:12px}.scales .base{position:absolute;bottom:20px;left:50%;width:125px;height:22px;transform:translateX(-50%);background:linear-gradient(#e9b94f,#7e4c16);border-radius:8px}.document{position:absolute;right:4%;bottom:43px;width:205px;height:265px;z-index:2;transform:rotate(7deg);background:linear-gradient(135deg,#f9fafb,#dbe2ea);color:#1d2b3c;border-radius:8px;padding:28px 23px;box-shadow:0 28px 50px rgba(0,0,0,.4)}.document::before{content:"TAX";font-family:Montserrat,sans-serif;font-size:33px;font-weight:900;display:block;margin-bottom:15px}.document .line{height:7px;background:#aab6c4;border-radius:4px;margin:12px 0}.document .chart{height:74px;display:flex;align-items:flex-end;gap:8px;border-bottom:2px solid #7c8b9a;margin-top:18px}.document .chart i{display:block;width:20px;background:#f3a323;border-radius:4px 4px 0 0}.document .chart i:nth-child(1){height:25%}.document .chart i:nth-child(2){height:48%}.document .chart i:nth-child(3){height:35%}.document .chart i:nth-child(4){height:70%}.document .chart i:nth-child(5){height:90%}
+    .calculator{position:absolute;left:29%;bottom:16px;width:115px;height:145px;background:#182b40;border:2px solid #a6b4c2;border-radius:10px;z-index:4;transform:rotate(-8deg);padding:12px;box-shadow:0 20px 30px rgba(0,0,0,.35)}.calculator .screen{height:27px;background:#dce9e0;border-radius:4px;margin-bottom:10px;text-align:right;padding:3px 6px;font-size:10px;color:#1e4230}.keys{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}.keys i{height:15px;border-radius:3px;background:#526477}.keys i:nth-child(3n){background:#e9a42b}
+    .floating-card{position:absolute;left:3%;top:8%;padding:11px 14px;background:rgba(7,26,44,.84);border:1px solid rgba(112,208,255,.25);border-radius:12px;box-shadow:0 12px 30px rgba(0,0,0,.2);font-size:10px;color:#dce8f2}.floating-card strong{display:block;color:#fff;font-size:12px}.floating-card.fc2{left:auto;right:7%;top:5%;}.floating-card.fc3{left:auto;right:1%;bottom:9%;top:auto}
+
+    /* MAIN */
+    .content-wrap{max-width:1500px;margin:-78px auto 0;position:relative;z-index:5;padding:0 24px 70px}.panel{background:rgba(255,255,255,.97);border:1px solid rgba(15,39,61,.08);box-shadow:var(--shadow);border-radius:var(--radius)}
+    .intro{padding:42px 45px 34px;display:grid;grid-template-columns:230px 1fr;gap:35px;align-items:center}.intro-illustration{height:180px;border-radius:18px;background:linear-gradient(145deg,#edf3f8,#fff);display:grid;place-items:center;position:relative;overflow:hidden}.mini-coin{width:88px;height:88px;border-radius:50%;background:linear-gradient(145deg,#ffd76b,#f7931a);display:grid;place-items:center;font-size:52px;font-weight:900;color:#fff7dd;box-shadow:0 15px 35px rgba(247,147,26,.25)}.mini-scales{position:absolute;bottom:19px;right:20px;font-size:70px;color:#d39a2c;opacity:.55}.intro h2{font-family:Montserrat,sans-serif;font-size:30px;margin:0 0 14px;color:#10243a}.intro p{margin:0 0 12px;color:#4c5e70;font-size:14px}.section-label{display:flex;align-items:center;gap:15px;margin:22px 0 20px;font-family:Montserrat,sans-serif;font-size:22px;text-transform:uppercase}.section-label::before,.section-label::after{content:"";height:2px;background:linear-gradient(90deg,transparent,#e3a126);width:70px}.section-label::after{background:linear-gradient(90deg,#e3a126,transparent)}
+    .areas{padding:0 24px 28px}.area-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:13px}.area-card{background:linear-gradient(150deg,#092039,#071729);border:1px solid rgba(245,166,35,.25);color:white;border-radius:16px;padding:24px 18px 20px;min-height:215px;display:flex;flex-direction:column;align-items:center;text-align:center;box-shadow:0 15px 35px rgba(5,20,36,.15);transition:.25s}.area-card:hover{transform:translateY(-7px);border-color:#f5a623;box-shadow:0 20px 45px rgba(5,20,36,.25)}.area-icon{width:65px;height:65px;border:1px solid rgba(245,166,35,.55);border-radius:16px;display:grid;place-items:center;font-size:31px;color:#ffbd40;margin-bottom:15px;background:rgba(247,147,26,.06)}.area-card h3{font-size:12px;letter-spacing:.5px;margin:0 0 8px;font-weight:800}.area-card p{font-size:11px;color:#b9c8d8;line-height:1.45;margin:0 0 16px;flex:1}.gold-link{display:inline-flex;align-items:center;gap:6px;padding:8px 12px;border:1px solid #f5a623;color:#ffc85c;border-radius:8px;text-decoration:none;font-size:10px;font-weight:800}.gold-link:hover{background:#f5a623;color:#172235}
+
+    .section{padding:26px 24px}.section h2{font-family:Montserrat,sans-serif;color:#10253a;font-size:27px;margin:0 0 16px}.section h3{font-family:Montserrat,sans-serif;font-size:20px;color:#10253a;margin:25px 0 10px}.section h4{font-size:17px;line-height:1.4}.section p,.section li{font-size:14px;color:#526476}.section strong{color:#1d3349}.section ul{padding-left:22px}.section li{margin-bottom:8px}.source-link{font-size:12px;color:#8a5a0b;word-break:break-word}.lead-copy{font-size:16px!important;color:#3d5062!important}.media-shell{background:linear-gradient(145deg,#071a2e,#0a243d);padding:20px;border-radius:18px;border:1px solid rgba(245,166,35,.25);box-shadow:0 18px 40px rgba(7,27,46,.16)}.media-shell iframe{width:100%;border:0;border-radius:12px;display:block}.video-frame{aspect-ratio:16/9;max-width:900px;margin:0 auto}.video-frame iframe{height:100%}
+
+    .two-col{display:grid;grid-template-columns:1.15fr .85fr;gap:18px}.dark-card{background:linear-gradient(145deg,#071a2e,#0b2943);color:white;border-radius:20px;padding:28px;border:1px solid rgba(245,166,35,.22);position:relative;overflow:hidden}.dark-card h2,.dark-card h3{color:#fff}.dark-card p,.dark-card li{color:#c1d0dd}.dark-card::after{content:"₿";position:absolute;right:-15px;bottom:-42px;font-size:170px;color:rgba(247,147,26,.06);font-weight:900}.dictamen{min-height:285px;background:linear-gradient(100deg,#06182b 35%,rgba(6,24,43,.78)),url('IMG/criptomonedas-en-argentina.jpg') center/cover}.dictamen .badge{display:inline-block;color:#ffc354;border:1px solid rgba(255,195,84,.45);border-radius:999px;padding:6px 10px;font-size:10px;font-weight:800}.dictamen h2{color:#ffc354;margin-top:13px}.global-art{min-height:285px;background:radial-gradient(circle at 75% 40%,rgba(33,191,255,.25),transparent 28%),linear-gradient(145deg,#071a2e,#0a2944)}.globe{position:absolute;right:25px;bottom:-20px;width:250px;height:250px;border-radius:50%;border:1px solid rgba(100,215,255,.55);box-shadow:0 0 60px rgba(0,175,255,.14),inset 0 0 40px rgba(0,175,255,.1)}.globe::before,.globe::after{content:"";position:absolute;inset:18px;border:1px solid rgba(100,215,255,.28);border-radius:50%}.globe::after{transform:rotate(90deg)}.globe-grid{position:absolute;left:50%;top:0;bottom:0;width:1px;background:rgba(100,215,255,.28);transform:translateX(-50%)}
+
+    .resource-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.resource{background:#fff;border:1px solid #dce5ed;border-radius:16px;padding:20px;display:flex;flex-direction:column;min-height:180px;box-shadow:0 10px 30px rgba(16,37,58,.05)}.resource .resource-icon{font-size:30px;color:#e39b20;margin-bottom:9px}.resource h3{font-size:14px;margin:0 0 7px}.resource p{font-size:12px;margin:0 0 15px;flex:1}.resource .gold-link{align-self:flex-start}
+    .image-card{display:grid;grid-template-columns:260px 1fr;gap:25px;align-items:center}.image-card img{width:100%;height:190px;object-fit:cover;border-radius:15px;box-shadow:0 12px 30px rgba(0,0,0,.13);background:#dfe7ef}.image-card .image-link{display:block}.image-card .image-link:hover{opacity:.9}
+    .button-row{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}.pill-btn{display:inline-flex;align-items:center;gap:7px;background:#0b2137;color:#fff;text-decoration:none;padding:10px 13px;border-radius:9px;font-size:11px;border:1px solid #29465f;transition:.2s}.pill-btn:hover{border-color:#f5a623;color:#ffc35b;transform:translateY(-2px)}
+
+    .contact-panel{margin-top:18px;background:linear-gradient(100deg,#061a2e,#0c2c48);color:#fff;border-radius:20px;padding:30px;display:grid;grid-template-columns:1fr 1fr;gap:20px;position:relative;overflow:hidden}.contact-panel::before{content:"⚖";position:absolute;right:36%;bottom:-55px;font-size:240px;color:rgba(100,211,255,.06)}.contact-box{position:relative;z-index:1}.contact-box h2{color:white;font-size:21px}.contact-box p{color:#c4d1dd;font-size:13px}.whatsapp{display:flex;align-items:center;justify-content:center;gap:14px}.wa-icon{width:60px;height:60px;border-radius:50%;display:grid;place-items:center;border:2px solid #72e05f;color:#72e05f;font-size:30px}
+
+    /* MEDIA */
+    .media-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.media-item{background:#071a2e;border-radius:18px;padding:14px;border:1px solid rgba(245,166,35,.2)}.media-item iframe{width:100%;border:0;border-radius:12px}.spotify{min-height:350px}.youtube{aspect-ratio:16/9}.youtube iframe{height:100%}
+
+    /* DISQUS / FOOTER */
+    .comments{padding:30px 24px}.comments-inner{background:#fff;border:1px solid #dce5ed;border-radius:18px;padding:24px;min-height:120px}.footer{background:#041321;color:#bac9d8;padding:48px 24px 20px}.footer-grid{max-width:1500px;margin:auto;display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr;gap:35px}.footer h3{font-family:Montserrat,sans-serif;color:#fff;font-size:13px;text-transform:uppercase;margin:0 0 14px}.footer p{font-size:11px;line-height:1.7}.footer a{font-size:11px;text-decoration:none;color:#b9c9d8;display:block;margin:7px 0}.footer a:hover{color:#ffc35b}.socials{display:flex;gap:8px;flex-wrap:wrap}.socials a{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:#0d2a43;border:1px solid #29455c;color:#fff;font-size:16px;margin:0}.footer-bottom{max-width:1500px;margin:28px auto 0;padding-top:17px;border-top:1px solid rgba(255,255,255,.1);font-size:10px;color:#7890a3}
+    .floating-wa{position:fixed;right:22px;bottom:22px;z-index:900;width:58px;height:58px;border-radius:50%;display:grid;place-items:center;background:#25d366;box-shadow:0 15px 30px rgba(0,0,0,.25);border:4px solid white}.floating-wa img{width:30px;height:30px;object-fit:contain}
+
+    /* RESPONSIVE */
+    @media(max-width:1200px){.main-nav a{font-size:10px;padding:8px 5px}.brand{min-width:190px}.nav-actions{display:none}.area-grid{grid-template-columns:repeat(3,1fr)}.hero-inner{grid-template-columns:1fr 1fr}.hero h1{font-size:55px}.hero-art{transform:scale(.9);transform-origin:center right}}
+    @media(max-width:900px){.topbar-inner{display:flex;justify-content:space-between;align-items:center}.nav-toggle{display:block}.main-nav{display:none;position:absolute;top:69px;left:0;right:0;background:#061525;padding:14px 20px;border-bottom:1px solid #203a50;box-shadow:0 20px 30px rgba(0,0,0,.25)}.main-nav.open{display:flex}.main-nav a{width:100%;text-align:center}.hero-inner{grid-template-columns:1fr;padding-top:45px}.hero-copy{text-align:center}.hero-sub{margin-left:auto;margin-right:auto}.hero-badges{justify-content:center}.hero-art{height:370px;transform:none}.content-wrap{margin-top:-45px}.intro{grid-template-columns:1fr;text-align:center}.intro-illustration{max-width:360px;margin:auto}.two-col,.contact-panel{grid-template-columns:1fr}.resource-grid{grid-template-columns:repeat(2,1fr)}.media-grid{grid-template-columns:1fr}.footer-grid{grid-template-columns:1fr 1fr}}
+    @media(max-width:600px){.brand-copy{display:none}.topbar-inner{padding:10px 14px}.hero{min-height:650px}.hero-inner{padding:38px 18px 20px}.hero h1{font-size:43px;letter-spacing:-1.5px}.hero-sub{font-size:14px}.hero-art{height:300px;transform:scale(.83);transform-origin:center}.coin{width:145px;height:145px;right:28%;top:25%}.coin::after{font-size:85px}.document{width:155px;height:205px;right:0}.scales{left:0;transform:scale(.78);transform-origin:left bottom}.calculator{left:26%;transform:scale(.8) rotate(-8deg)}.floating-card{display:none}.content-wrap{padding:0 12px 45px}.intro{padding:28px 20px}.areas,.section{padding-left:14px;padding-right:14px}.area-grid{grid-template-columns:1fr 1fr}.resource-grid{grid-template-columns:1fr}.image-card{grid-template-columns:1fr}.image-card img{height:210px}.media-grid{gap:12px}.footer-grid{grid-template-columns:1fr}.footer{padding-left:18px;padding-right:18px}.section h2{font-size:22px}.section h3{font-size:18px}.section p,.section li{font-size:13px}.floating-wa{right:14px;bottom:14px}}
+    @media(max-width:400px){.area-grid{grid-template-columns:1fr}.hero h1{font-size:38px}}
+  </style>
+</head>
+<body>
+<div class="site-shell">
+
+  <!-- =========================================================
+       HEADER — se conservan TODOS los enlaces originales
+       ========================================================= -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="/" aria-label="Diego Beltramo Bitcoin">
+        <span class="brand-mark">₿</span>
+        <span class="brand-copy"><b>DIEGO BELTRAMO</b><span>BITCOIN</span></span>
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+      <nav class="main-nav" id="mainNav">
+        <a class="active" href="index.html">Home</a>
+        <a href="quienesSomos.html">Quienes Somos</a>
+        <a href="capacitacionCripto.html">Capacitación</a>
+        <a href="noticiasCrypto.html">Noticias</a>
+        <a href="mineria.html">Minería</a>
+        <a href="metricasCrypto.html">Métricas</a>
+        <a href="exchanges.html">Exchanges</a>
+        <a href="galeriaVideos.html">Galeria de Videos</a>
+        <a href="libros.html">Libros</a>
+        <a href="DesarrolloBlockchainWeb3.html">Desarrollo Blockchain</a>
+        <a href="interesGeneral.html">Interés General</a>
+        <a href="wallets.html">Wallets</a>
+      </nav>
+      <div class="nav-actions">
+        <a class="nav-btn outline" href="https://old.errepar.com/core/suscripciones/17160040">Micrositio</a>
+        <a class="nav-btn gold" href="https://www.errepar.com/tratamiento-impositivo-de-las-criptomonedas-criptodivisas-y-criptoactivos">Errepar</a>
+        <a class="nav-btn gold" href="analisis-impositivo-buscador-avanzado (1).html">Buscador de Normas</a>
+        <a class="nav-btn gold" href="seccion-actualizacion-cripto.html">Boletín</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO / ILUSTRACIÓN -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-copy">
+        <span class="eyebrow">₿ Bitcoin · Blockchain · Finanzas</span>
+        <h1>ANÁLISIS <span>CONTABLE,</span><span>IMPOSITIVO</span><span>Y LEGAL</span></h1>
+        <p class="hero-sub">Información, análisis y herramientas para navegar el mundo de las criptomonedas con seguridad y cumplimiento.</p>
+        <div class="hero-badges">
+          <div class="hero-badge"><i>◉</i><span>Actualización<br>Constante</span></div>
+          <div class="hero-badge"><i>▥</i><span>Normativa<br>Argentina</span></div>
+          <div class="hero-badge"><i>◎</i><span>Enfoque<br>Global</span></div>
+          <div class="hero-badge"><i>⚖</i><span>Análisis<br>Profesional</span></div>
+        </div>
+      </div>
+
+      <div class="hero-art" aria-label="Ilustración conceptual de Bitcoin, tributación, contabilidad y marco legal">
+        <div class="network">
+          <svg viewBox="0 0 800 420" preserveAspectRatio="none" aria-hidden="true">
+            <g stroke="rgba(94,205,255,.25)" stroke-width="1.4" fill="none">
+              <path d="M60 130L210 46L315 120L465 40L650 92L735 215L555 285L375 375L145 335L60 130"/>
+              <path d="M210 46L375 375M315 120L555 285M465 40L555 285M650 92L375 375M60 130L555 285"/>
+            </g>
+          </svg>
+          <span class="node n1"></span><span class="node n2"></span><span class="node n3"></span><span class="node n4"></span><span class="node n5"></span><span class="node n6"></span><span class="node n7"></span><span class="node n8"></span><span class="node n9"></span>
+        </div>
+        <div class="floating-card"><strong>CONTABILIDAD</strong>Activos · Valuación · Auditoría</div>
+        <div class="floating-card fc2"><strong>REGULACIÓN</strong>CNV · UIF · FACPCE · NIIF</div>
+        <div class="floating-card fc3"><strong>TRIBUTACIÓN</strong>Ganancias · Bienes Personales · IVA</div>
+        <div class="scales" aria-hidden="true"><div class="pole"></div><div class="beam"></div><div class="scale-arm left"></div><div class="scale-arm right"></div><div class="pan left"></div><div class="pan right"></div><div class="base"></div></div>
+        <div class="calculator" aria-hidden="true"><div class="screen">$ 2.022</div><div class="keys"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+        <div class="coin" aria-hidden="true"><span class="coin-ring"></span></div>
+        <div class="document" aria-hidden="true"><div class="line"></div><div class="line" style="width:72%"></div><div class="chart"><i></i><i></i><i></i><i></i><i></i></div><div class="line" style="width:55%"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <main class="content-wrap">
+    <!-- INTRO -->
+    <section class="panel intro" id="introduccion">
+      <div class="intro-illustration" aria-hidden="true"><div class="mini-coin">₿</div><div class="mini-scales">⚖</div></div>
+      <div>
+        <h2>Análisis Contable, Impositivo y Legal</h2>
+        <p>Bienvenidos a la sección de "Análisis Impositivo" en nuestra página web de Bitcoin y criptoactivos. En esta área, exploraremos el complejo y en constante evolución mundo de la tributación de las criptomonedas, centrándonos tanto en Argentina como en el contexto global. Aquí, obtendrás información valiosa para entender tus obligaciones fiscales, así como estrategias legales para optimizar tus inversiones en el ámbito de las criptos.</p>
+        <p>Tributación en Argentina: Empezamos nuestro viaje en el corazón de Sudamérica, Argentina. Analizaremos en detalle cómo el país aborda la tributación de Bitcoin y otros criptoactivos. Te ofreceremos información actualizada sobre impuestos a las ganancias de capital, impuestos sobre el valor agregado (IVA) y otros aspectos fiscales que debes considerar. Nuestro objetivo es brindarte las herramientas necesarias para cumplir con tus responsabilidades fiscales y minimizar posibles riesgos legales.</p>
+        <p>El Contexto Global: Pero no nos quedaremos solo en Argentina. Exploraremos la tributación de criptomonedas en un contexto global. A medida que las criptos se vuelven más populares, los gobiernos de todo el mundo están estableciendo regulaciones fiscales específicas. Te proporcionaremos información sobre los diferentes enfoques de diversos países y cómo pueden afectar tus inversiones en criptoactivos.</p>
+        <p>Además, examinaremos posibles estrategias para minimizar tu carga fiscal de manera legal, aprovechando las diferencias en la legislación de cada país y los tratados internacionales. La planificación fiscal es esencial para cualquier inversor de criptomonedas, y aquí encontrarás orientación sobre cómo hacerlo de manera eficiente.</p>
+        <p>En la sección de "Análisis Impositivo," nuestro compromiso es empoderarte con conocimiento para tomar decisiones informadas y cumplir con las obligaciones tributarias. A medida que el mundo de la tributación de criptoactivos evoluciona, estaremos aquí para mantenerte actualizado y ayudarte a navegar con éxito este apasionante mundo financiero.</p>
+      </div>
+    </section>
+
+    <!-- AREAS -->
+    <section class="panel areas">
+      <div class="section-label">Áreas de análisis</div>
+      <div class="area-grid">
+        <article class="area-card"><div class="area-icon">▣</div><h3>CONTABILIDAD</h3><p>Contabilización, modelos, auditoría y desafíos profesionales.</p><a class="gold-link" href="#contabilidad">Ver más ↗</a></article>
+        <article class="area-card"><div class="area-icon">⌂</div><h3>MARCO REGULATORIO</h3><p>Leyes, resoluciones y proyectos que definen el escenario legal de los criptoactivos.</p><a class="gold-link" href="#regulacion">Ver más ↗</a></article>
+        <article class="area-card"><div class="area-icon">▤</div><h3>TRIBUTACIÓN</h3><p>Impuestos, alícuotas y tratamiento fiscal en Argentina y el mundo.</p><a class="gold-link" href="#tributacion">Ver más ↗</a></article>
+        <article class="area-card"><div class="area-icon">⚖</div><h3>TAX &amp; LEGAL</h3><p>Análisis legal especializado y estrategias para operar dentro del marco normativo.</p><a class="gold-link" href="#taxlegal">Ver más ↗</a></article>
+        <article class="area-card"><div class="area-icon">◇</div><h3>FORMACIÓN</h3><p>Cursos, diplomaturas y recursos para profesionales y entusiastas.</p><a class="gold-link" href="#formacion">Ver más ↗</a></article>
+      </div>
+    </section>
+
+    <!-- CONTABILIDAD -->
+    <section class="panel section" id="contabilidad">
+      <h2>El Impacto de las Criptomonedas en la Contabilidad Argentina</h2>
+      <div class="media-shell video-frame"><iframe src="https://www.youtube.com/embed/svePV-u2uO8?si=uL0ri424zaW_T5J5" title="El Impacto de las Criptomonedas en la Contabilidad Argentina" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+      <p class="lead-copy">Las criptomonedas están creando nuevos desafíos para los contadores públicos en Argentina. La intensificación del uso de criptomonedas trae aparejado nuevos desafíos para la profesión.</p>
+      <div class="two-col">
+        <div>
+          <h3>Contexto Económico</h3>
+          <p>La alta inflación y los controles cambiarios en Argentina han llevado a muchos ciudadanos a buscar refugio en las criptomonedas como una alternativa al peso argentino.</p>
+        </div>
+        <div>
+          <h3>Desafíos Contables</h3>
+          <ul>
+            <li><strong>Contabilización:</strong> Los contadores públicos deben aprender a contabilizar las criptomonedas correctamente.</li>
+            <li><strong>Modelos de Contabilidad:</strong> Es necesario desarrollar modelos de contabilidad basados en la tecnología Blockchain para poder auditar y controlar las transacciones de criptomonedas.</li>
+            <li><strong>Asesoramiento Tributario:</strong> Los clientes necesitan asesoramiento sobre las implicaciones fiscales de las operaciones con criptomonedas.</li>
+            <li><strong>Conocimientos de Auditoría:</strong> Los contadores públicos deben adquirir conocimientos de auditoría y control específicos para las criptomonedas.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- REGULACION / TRIBUTACION -->
+    <section class="panel section" id="regulacion">
+      <h2>Marco Regulatorio de las Criptomonedas en Argentina</h2>
+      <p><strong>Situación actual:</strong> La regulación de las criptomonedas en Argentina es limitada. El Banco Central Argentino (BCRA) considera **riesgoso operar con bitcoins** y las define como una representación digital de valor. Las criptomonedas no son consideradas dinero de curso legal y no están respaldadas por el gobierno. **Los sujetos obligados por la Ley 25.246 deben informar todas las operaciones con bitcoin.**</p>
+      <p class="source-link">[[1](https://www.researchgate.net/publication/379656288_EL_MARCO_REGULATORIO_DE_LAS_CRIPTOMONEDAS_EN_ARGENTINA_Marcos_Zocaro)]</p>
+      <p><strong>Evolución:</strong> En 2021, el BCRA y la Comisión Nacional de Valores (CNV) emitieron un comunicado donde reconocen el potencial de las criptomonedas para la eficiencia e innovación financiera. En marzo de 2024, <strong>la CNV comenzó el camino de las regulaciones al crear el Registro de Proveedores de Servicios de Activos Virtuales (PSAV).</strong> Tanto personas como empresas deben registrarse para poder operar con criptomonedas. La ley 27.739 introdujo modificaciones a la Ley 25.246 de Prevención del Lavado de Activos y Financiación del Terrorismo para incluir a los proveedores de servicios de activos virtuales como sujetos obligados.</p>
+      <h3 id="tributacion">Implicaciones Tributarias</h3>
+      <ul>
+        <li><strong>Impuesto a las Ganancias:</strong> Los resultados obtenidos por la enajenación de criptomonedas son gravados por el Impuesto a las Ganancias, independientemente de la habitualidad de la operación.</li>
+        <li>Las ganancias por la enajenación de criptomonedas pueden estar gravadas por el impuesto a las ganancias, las de fuente Argentina en el impuesto cedular y las de fuente extranjera por imposición global. La tenencia de criptomonedas está alcanzada por el Impuesto sobre los Bienes Personales según la opinión no vinculante del Fisco (ver Dictamen 2/2022).</li>
+        <li><strong>Cuestiones sin Resolver:</strong> Existen cuestiones tributarias sin resolver, como la definición de moneda digital para efectos fiscales y el tratamiento tributario de la minería de bitcoin.</li>
+      </ul>
+      <h3>Contabilidad de Criptomonedas</h3>
+      <ul>
+        <li><strong>Normas Contables Argentinas:</strong> No hay normas contables específicas para la contabilización de criptomonedas en Argentina.</li>
+        <li><strong>Posibles Encuadres:</strong> Las criptomonedas podrían ser consideradas como:
+          <ul>
+            <li><strong>Activos Intangibles:</strong> Si se las considera un activo inmaterial con valor de cambio y de uso.</li>
+            <li><strong>Inversiones:</strong> Si se las utiliza para obtener rentas independientes de la actividad principal.</li>
+          </ul>
+        </li>
+        <li><strong>Normas Internacionales:</strong> Las Normas Internacionales de Información Financiera (NIIF) sugieren considerar las criptomonedas como activos intangibles.</li>
+        <li><strong>Desafíos:</strong> La falta de normas contables específicas para criptomonedas presenta desafíos para la contabilidad.</li>
+        <li><strong>Oportunidades para los Contadores Públicos:</strong>
+          <ul>
+            <li><strong>Servicios de Asesoramiento:</strong> Los contadores públicos pueden brindar servicios de asesoramiento contable, tributario y de control a empresas y personas que operan con criptomonedas.</li>
+            <li><strong>Especialización en Blockchain:</strong> La tecnología Blockchain tiene el potencial de revolucionar la contabilidad, y los contadores públicos que se especialicen en esta área tendrán una ventaja competitiva.</li>
+          </ul>
+        </li>
+      </ul>
+      <div class="dark-card" style="margin-top:24px"><h3>La nueva frontera profesional</h3><p>Las criptomonedas están generando cambios significativos en el ámbito profesional del contador público en Argentina. Si bien el marco regulatorio y contable aún está en desarrollo, es fundamental que los profesionales se capaciten en esta nueva tecnología para poder brindar un servicio de calidad a sus clientes.</p></div>
+    </section>
+
+    <!-- FORMACIÓN -->
+    <section class="panel section" id="formacion">
+      <div class="section-label">Formación y recursos profesionales</div>
+      <div class="image-card">
+        <a class="image-link" href="https://sociales.unvm.edu.ar/inicia-el-ciclo-de-charlas-temas-actuales-en-ciencias-economicas/" target="_blank"><img loading="lazy" alt="Nexo" src="IMG/Ciclo de Charlas.jpeg"></a>
+        <div><h3 style="margin-top:0">Ciclo de charlas — Criptomonedas y Ciencias Económicas</h3><p>Accedé al material de la charla vinculada con criptomonedas y ciencias económicas.</p><a class="gold-link" href="https://drive.google.com/file/d/1cGFMVhl7qbzWZbX4PVRCL5UrA-Yv6iiq/view">Ingresar a la charla Criptomonedas y Ciencias Economicas ↗</a></div>
+      </div>
+      <div class="image-card" style="margin-top:22px">
+        <a class="image-link" href="https://www.colledge.social/course/view.php?id=39" target="_blank"><img loading="lazy" alt="Nexo" src="IMG/MasterClassTributacion.jfif"></a>
+        <div><h3 style="margin-top:0">Tax &amp; Legal</h3><p>Permite la caracterización legal e impositiva, para comprender el marco constitucional y civil del paradigma crypto, blockchain y DeFi. Posibilita la interpretación del mercado de capitales y financiero, la comprensión de políticas anti lavado de activos y el estudio de impuestos sobre resultados/tenencias y actividades de la cripto economía.</p><a class="gold-link" href="https://www.colledge.social/course/view.php?id=39">Ingresar a la Masterclass ↗</a></div>
+      </div>
+      <h3 id="taxlegal"><a href="https://www.errepar.com/cual-es-la-normativa-vinculada-criptoactivos-en-argentina" style="text-decoration:none">¿Cuál es la normativa vinculada a los criptoactivos en Argentina? ↗</a></h3>
+    </section>
+
+    <!-- DESTACADOS -->
+    <section class="panel section">
+      <div class="two-col">
+        <div class="dark-card dictamen">
+          <span class="badge">FACPCE · 11 DE MARZO DE 2022</span>
+          <h2>DICTAMEN 2/2022</h2>
+          <p>Tratamiento Contable de los Activos Virtuales y su impacto en los Estados Contables.</p>
+          <a class="gold-link" href="PDFs/DICTAMEN-2-2022.pdf">Ver dictamen 2/2022 ↓</a>
+        </div>
+        <div class="dark-card global-art">
+          <div class="globe"><div class="globe-grid"></div></div>
+          <h2>EL CONTEXTO GLOBAL</h2>
+          <p>Pero no nos quedaremos solo en Argentina. Exploraremos la tributación de criptomonedas en un contexto global y los diferentes enfoques regulatorios de diversos países.</p>
+          <a class="gold-link" href="#global">Explorar contexto global ↗</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ACTUALIZACION -->
+    <section class="panel section">
+      <a class="dark-card" href="https://site.zapia.com/s9kx4iws" target="_blank" rel="noopener noreferrer" aria-label="Abrir actualización normativa y técnica sobre Bitcoin y criptoactivos" style="display:flex;align-items:center;gap:18px;text-decoration:none;padding:20px 24px">
+        <span style="width:52px;height:52px;display:grid;place-items:center;border-radius:50%;background:#f7931a;color:#101a25;font-size:27px;font-weight:900;flex:none">₿</span>
+        <span style="flex:1"><strong style="display:block;font-size:17px;color:#fff">Actualización normativa cripto</strong><small style="color:#aebed0">ARCA · CNV · UIF · FACPCE · NIIF</small></span>
+        <span style="font-size:25px;color:#ffc55b">→</span>
+      </a>
+      <div class="button-row"><a class="pill-btn" href="analisis-impositivo-buscador-avanzado (1).html">⌕ Buscador de normas</a></div>
+    </section>
+
+    <!-- DICTAMEN / LIBRO / ENTREVISTAS -->
+    <section class="panel section">
+      <h3>Criptomonedas: dictamen (AFIP) 2/2022 y su tratamiento en bienes personales</h3>
+      <div class="button-row"><a class="gold-link" href="https://blog.errepar.com/criptomonedas-dictamen-2-2022-bienes-personales/">Leer análisis ↗</a><a class="gold-link" href="PDFs/DICTAMEN-2-2022.pdf">Ver dictamen 2/2022</a></div>
+      <div class="image-card" style="margin-top:18px">
+        <a class="image-link" href="https://tiendaonline.errepar.com/economia-administracion-y-finanzas/44463622-criptomonedas-en-argentina-9789870127192.html" target="_blank"><img loading="lazy" alt="Binance" src="IMG/criptomonedas-en-argentina.jpg"></a>
+        <div><h3 style="margin-top:0">Criptomonedas en Argentina</h3><p>Recurso editorial relacionado con la temática de criptomonedas y tributación.</p></div>
+      </div>
+      <div class="button-row">
+        <a class="pill-btn" href="https://www.youtube.com/watch?v=3LXPLm9ymP8">Entrevista1 ↗</a>
+        <a class="pill-btn" href="https://www.youtube.com/watch?v=7szBviDmQIQ">Entrevista1Actualizada2023 ↗</a>
+        <a class="pill-btn" href="https://www.youtube.com/watch?v=QOoQl6MXNXM&t=2073s">Entrevista2 ↗</a>
+        <a class="pill-btn" href="https://www.youtube.com/watch?v=m-urW9GfHNU">Entrevista3 ↗</a>
+      </div>
+      <h3><a href="https://www.errepar.com/que-sabe-afip-de-nuestras-criptos" style="text-decoration:none">¿Qué sabe AFIP de nuestras criptos? ↗</a></h3>
+      <h3><a href="https://documento.errepar.com/actualidad/bancos-criptomonedas" style="text-decoration:none">Un giro inesperado: las criptomonedas se integran en el sistema bancario ↗</a></h3>
+    </section>
+
+    <!-- VIDEOS -->
+    <section class="panel section">
+      <div class="section-label">Videos destacados</div>
+      <div class="media-grid">
+        <div class="media-item youtube"><iframe src="https://www.youtube.com/embed/h4AwR0osFcg?si=guXAKZQUkptQ5MV6" title="Video sobre análisis impositivo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+        <div class="media-item youtube"><iframe src="https://www.youtube.com/embed/JW19LOItDpM?si=zijv6gkxDpjInP8v" title="Video sobre análisis impositivo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+      </div>
+    </section>
+
+    <!-- CONTEXTO GLOBAL -->
+    <section class="panel section" id="global">
+      <h2>Contexto Global</h2>
+      <div class="button-row">
+        <a class="pill-btn" href="https://www.clcripto.com/">CLCRIPTO ↗</a>
+        <a class="pill-btn" href="https://www.youtube.com/@CLCripto">Canal CLCRIPTO ↗</a>
+        <a class="pill-btn" href="https://youtube.com/@abogadocripto?si=kqslnpIDUpWABfW-">Abogado Cripto ↗</a>
+      </div>
+      <div class="media-grid">
+        <div class="media-item spotify"><iframe src="https://open.spotify.com/embed/episode/2SEn5ReXiU4StlZsTOcxEi?utm_source=generator" height="352" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div>
+        <div class="media-item spotify"><iframe src="https://open.spotify.com/embed/episode/5r9v4GTTszUrSFMeRl1raj?utm_source=generator" height="352" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div>
+      </div>
+      <div class="media-item spotify" style="margin-top:18px"><iframe src="https://open.spotify.com/embed/episode/4iaFMDO6TyLV0V8Mb1FN33?utm_source=generator" height="352" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div>
+    </section>
+
+    <!-- PODCAST ORIGINAL -->
+    <section class="panel section">
+      <div class="section-label">Podcast destacado</div>
+      <div class="media-shell"><iframe src="https://open.spotify.com/embed/episode/0sObxhTTHU40UyZDnXJP18?utm_source=generator" height="232" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe></div>
+    </section>
+
+    <!-- JOTFORM ORIGINAL -->
+    <section class="panel section" id="consulta">
+      <div class="contact-panel">
+        <div class="contact-box"><h2>¿TENÉS DUDAS O CONSULTAS?</h2><p>Utilizá el formulario y nuestro equipo te responderá a la brevedad.</p><a class="gold-link" href="#jotform">Completar formulario →</a></div>
+        <div class="contact-box whatsapp"><div class="wa-icon">◔</div><div><h2 style="margin:0">WHATSAPP</h2><p>Contactanos directamente por WhatsApp.</p><a class="gold-link" href="https://wa.link/p2aj53" target="_blank">Ir a WhatsApp →</a></div></div>
+      </div>
+      <div id="jotform" class="media-shell" style="margin-top:22px;padding:8px">
+        <iframe id="JotFormIFrame-01957f5c986f7e1ca7edebd2539b79c35015" title="Diego Beltramo: Contador Público y Asesor" onload="window.parent.scrollTo(0,0)" allowtransparency="true" allow="geolocation; microphone; camera; fullscreen" src="https://agent.jotform.com/01957f5c986f7e1ca7edebd2539b79c35015/voice?embedMode=iframe&background=1&shadow=1" frameborder="0" style="min-width:100%;max-width:100%;height:688px;border:none;width:100%" scrolling="no"></iframe>
+      </div>
+    </section>
+  </main>
+
+  <!-- DISQUS ORIGINAL -->
+  <section class="comments">
+    <div class="comments-inner" id="disqus_thread"></div>
+    <script>
+      (function() {
+        var d = document, s = d.createElement('script');
+        s.src = 'https://https-diegobeltramobitcoin-netlify-app.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div>
+        <a class="brand" href="/" style="margin-bottom:15px"><span class="brand-mark">₿</span><span class="brand-copy"><b>DIEGO BELTRAMO</b><span>BITCOIN</span></span></a>
+        <p>Información, análisis y formación sobre Bitcoin, Blockchain y Criptoactivos.</p>
+        <p><strong style="color:#fff">Cr Diego Eduardo Beltramo</strong></p>
+      </div>
+      <div><h3>Navegación</h3><a href="index.html">Home</a><a href="quienesSomos.html">Quienes Somos</a><a href="capacitacionCripto.html">Capacitación</a><a href="noticiasCrypto.html">Noticias</a><a href="mineria.html">Minería</a><a href="metricasCrypto.html">Métricas</a><a href="exchanges.html">Exchanges</a></div>
+      <div><h3>Secciones</h3><a href="#contabilidad">Contabilidad</a><a href="#regulacion">Marco Regulatorio</a><a href="#tributacion">Tributación</a><a href="#taxlegal">Tax &amp; Legal</a><a href="#formacion">Formación</a><a href="#global">Contexto Global</a></div>
+      <div><h3>Seguinos</h3><div class="socials"><a href="https://www.facebook.com/diego.beltramo" aria-label="Facebook">f</a><a href="https://twitter.com/diego_beltramo" aria-label="Twitter">𝕏</a><a href="https://www.instagram.com/crdiegobeltramo/" aria-label="Instagram">◎</a><a href="https://www.linkedin.com/in/diego-eduardo-beltramo-027600127/" aria-label="LinkedIn">in</a><a href="https://www.youtube.com/@diegoeduardobeltramo5936" aria-label="YouTube">▶</a><a href="https://github.com/crdiegobeltramo" aria-label="GitHub">◖</a><a href="https://medium.com/@crdiegobeltramo" aria-label="Medium">M</a></div></div>
+    </div>
+    <div class="footer-bottom">
+      <p>Queremos enfatizar que toda la información proporcionada en este sitio web tiene únicamente fines educativos y de entretenimiento. En ningún caso debe considerarse como asesoramiento financiero o consejo de inversión. Las criptomonedas y los activos digitales son altamente volátiles y conllevan riesgos significativos. Antes de tomar cualquier decisión de inversión, es esencial realizar tu propio análisis exhaustivo e investigación. No nos hacemos responsables de ninguna pérdida o daño que pueda resultar de la confianza en la información presentada aquí. Te animamos a buscar asesoramiento profesional y a tomar decisiones informadas y responsables en relación con tus inversiones en criptoactivos.</p>
+      <span>© 2025 Diego Beltramo Bitcoin. Todos los derechos reservados.</span>
+    </div>
+  </footer>
+
+  <a class="floating-wa" href="https://wa.link/p2aj53" target="_blank" aria-label="Contactar por WhatsApp"><img src="IMG/WhatsappDiegoBeltramo.png" alt="WhatsApp"></a>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxgagwA5qk8XKQ" crossorigin="anonymous"></script>
+<script src='https://cdn.jotfor.ms/s/umd/latest/for-form-embed-handler.js'></script>
+<script>
+  window.jotformEmbedHandler("iframe[id='JotFormIFrame-01957f5c986f7e1ca7edebd2539b79c35015']", "https://www.jotform.com");
+  const toggle = document.getElementById('navToggle');
+  const nav = document.getElementById('mainNav');
+  toggle.addEventListener('click',()=>nav.classList.toggle('open'));
+  nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>nav.classList.remove('open')));
+</script>
+<script src="https://kit.fontawesome.com/183f2a4aef.js" crossorigin="anonymous"></script>
+</body>
+</html>
