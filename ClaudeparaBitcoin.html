@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Claude para Bitcoin — Inteligencia artificial aplicada a Bitcoin, mercados y soberanía financiera</title>
+<meta name="description" content="Serie de dos volúmenes: Claude para Bitcoin. Fundamentos, análisis, inversión, desarrollo y Bitcoin Intelligence con IA. De Diego Eduardo Beltramo."/>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+<style>
+
+/* ============================================================
+   CONFIGURACIÓN DE DISEÑO — tokens de color y tipografía
+   ============================================================ */
+:root{
+  --paper: #EDE6D6;
+  --paper-2: #E4DBC7;
+  --paper-line: rgba(27,36,48,0.10);
+  --ink: #1B2430;
+  --ink-soft: #45505F;
+  --rust: #8B3A2B;
+
+  --terminal: #0A0E12;
+  --terminal-2: #121922;
+  --terminal-line: rgba(242,169,59,0.14);
+  --amber: #F2A93B;
+  --amber-glow: #FFC876;
+  --amber-dim: #B9822F;
+  --paper-on-dark: #EDE6D6;
+
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+
+  --shadow-paper: 0 18px 40px -20px rgba(27,36,48,0.35);
+  --shadow-amber: 0 0 0 1px rgba(242,169,59,0.25), 0 20px 45px -18px rgba(242,169,59,0.35);
+}
+
+*{ box-sizing: border-box; }
+html{ scroll-behavior: smooth; }
+body{
+  margin:0;
+  font-family: var(--font-mono);
+  color: var(--ink);
+  background: var(--paper);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+h1,h2,h3{
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.08;
+  margin: 0;
+}
+p{ margin: 0 0 1em 0; }
+a{ color: inherit; }
+img{ max-width:100%; display:block; }
+.container{
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 28px;
+}
+.prose{
+  max-width: 640px;
+}
+.section{
+  padding: 110px 0;
+}
+.section--tight{ padding: 80px 0; }
+
+/* Botones ------------------------------------------------------ */
+.btn{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 15px 28px;
+  border-radius: 3px;
+  text-decoration:none;
+  cursor:pointer;
+  border: 1.5px solid transparent;
+  transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
+  letter-spacing: 0.01em;
+}
+.btn:focus-visible{ outline: 3px solid var(--amber); outline-offset: 3px; }
+.btn--amber{
+  background: var(--amber);
+  color: #1B1300;
+  box-shadow: var(--shadow-amber);
+}
+.btn--amber:hover{ transform: translateY(-2px); background: var(--amber-glow); }
+.btn--ink{
+  background: var(--ink);
+  color: var(--paper);
+}
+.btn--ink:hover{ transform: translateY(-2px); background: #232f40; }
+.btn--outline-paper{
+  background: transparent;
+  border-color: rgba(237,230,214,0.4);
+  color: var(--paper);
+}
+.btn--outline-paper:hover{ border-color: var(--amber); color: var(--amber-glow); transform: translateY(-2px); }
+.btn--outline-ink{
+  background: transparent;
+  border-color: rgba(27,36,48,0.35);
+  color: var(--ink);
+}
+.btn--outline-ink:hover{ border-color: var(--rust); color: var(--rust); transform: translateY(-2px); }
+.btn--small{ padding: 10px 18px; font-size: 0.82rem; }
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero{
+  position: relative;
+  min-height: 100vh;
+  display:flex;
+  flex-direction: column;
+}
+.hero-split{
+  position: relative;
+  display:flex;
+  flex: 1;
+  min-height: 640px;
+}
+.hero-half{
+  flex: 1 1 50%;
+  position: relative;
+  display:flex;
+  align-items:center;
+  overflow:hidden;
+}
+.hero-half--paper{
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0px, transparent 34px,
+      var(--paper-line) 34px, var(--paper-line) 35px
+    ),
+    var(--paper);
+  justify-content: flex-end;
+  padding: 40px 6vw 40px 8vw;
+  clip-path: polygon(
+    0 0, 92% 0, 88% 8%, 94% 16%, 86% 24%, 92% 33%, 87% 42%,
+    93% 52%, 85% 61%, 91% 70%, 86% 79%, 92% 88%, 88% 100%, 0 100%
+  );
+}
+.hero-half--terminal{
+  background:
+    radial-gradient(ellipse at 30% 20%, rgba(242,169,59,0.10), transparent 55%),
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0px, transparent 34px,
+      var(--terminal-line) 34px, var(--terminal-line) 35px
+    ),
+    var(--terminal);
+  color: var(--paper);
+  justify-content: flex-start;
+  padding: 40px 8vw 40px 8vw;
+  margin-left: -6vw;
+}
+.hero-seam{
+  position:absolute;
+  left: 50%;
+  top:0;
+  bottom:0;
+  width: 3px;
+  background: linear-gradient(to bottom, transparent, var(--amber) 8%, var(--amber-glow) 50%, var(--amber) 92%, transparent);
+  box-shadow: 0 0 24px 2px rgba(242,169,59,0.55);
+  transform: translateX(-50%) scaleY(0);
+  transform-origin: top;
+  animation: seam-draw 1000ms 300ms cubic-bezier(.2,.7,.2,1) forwards;
+  z-index: 5;
+}
+@keyframes seam-draw{ to{ transform: translateX(-50%) scaleY(1); } }
+
+.hero-line{
+  font-size: clamp(2.4rem, 6.4vw, 5.2rem);
+  white-space: nowrap;
+}
+.hero-line--top{
+  color: var(--ink);
+  text-align: right;
+  opacity: 0;
+  filter: blur(10px);
+  animation: ink-settle 800ms 1250ms ease forwards;
+}
+@keyframes ink-settle{ to{ opacity:1; filter: blur(0); } }
+
+.hero-line--bottom{
+  font-family: var(--font-mono);
+  font-weight: 600;
+  text-transform: lowercase;
+  color: var(--amber-glow);
+  display:inline-block;
+  overflow:hidden;
+  white-space: nowrap;
+  width: 0;
+  border-right: 3px solid var(--amber);
+  animation:
+    type-reveal 700ms 1650ms steps(13,end) forwards,
+    caret-blink 900ms 1650ms steps(1,end) 5;
+}
+@keyframes type-reveal{ to{ width: 12.1ch; } }
+@keyframes caret-blink{ 50%{ border-color: transparent; } }
+
+.hero-foot{
+  background: var(--ink);
+  color: var(--paper);
+  padding: 46px 0 54px;
+}
+.hero-foot .container{
+  display:flex;
+  flex-wrap: wrap;
+  gap: 28px;
+  align-items:flex-end;
+  justify-content: space-between;
+}
+.hero-sub{
+  max-width: 560px;
+  font-size: 1rem;
+  color: #C9D2DC;
+  margin:0;
+}
+.hero-ctas{
+  display:flex;
+  gap:14px;
+  flex-wrap: wrap;
+}
+
+/* ============================================================
+   PREMISA (manifiesto)
+   ============================================================ */
+.premise{
+  background: var(--paper);
+  text-align: center;
+}
+.premise blockquote{
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(1.5rem, 3.2vw, 2.3rem);
+  color: var(--ink);
+  max-width: 780px;
+  margin: 0 auto 28px;
+  line-height: 1.35;
+}
+.premise cite{
+  font-family: var(--font-mono);
+  font-style: normal;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  display:block;
+}
+.premise-rule{
+  width: 64px;
+  height: 3px;
+  background: var(--rust);
+  margin: 0 auto 34px;
+}
+.premise-body{
+  max-width: 620px;
+  margin: 34px auto 0;
+  color: var(--ink-soft);
+  text-align: left;
+}
+
+/* ============================================================
+   MÉTODO — B.I.T.C.O.I.N.
+   ============================================================ */
+.method{
+  background: var(--terminal);
+  color: var(--paper);
+}
+.method-head{
+  max-width: 620px;
+  margin-bottom: 56px;
+}
+.method-head h2{ color: var(--paper); font-size: clamp(1.8rem,3.4vw,2.6rem); margin-bottom: 14px; }
+.method-head p{ color: #A9B4C0; font-size: 1rem; }
+
+.terminal-window{
+  background: var(--terminal-2);
+  border: 1px solid rgba(242,169,59,0.18);
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 30px 60px -30px rgba(0,0,0,0.6);
+}
+.terminal-bar{
+  display:flex;
+  gap:7px;
+  padding: 12px 16px;
+  background: rgba(255,255,255,0.03);
+  border-bottom: 1px solid rgba(242,169,59,0.12);
+}
+.terminal-dot{ width:10px; height:10px; border-radius:50%; background:#3a4451; }
+.bitcoin-rows{ padding: 8px 0; }
+.bitcoin-row{
+  display:flex;
+  gap: 20px;
+  align-items: baseline;
+  padding: 16px 28px;
+  border-bottom: 1px solid rgba(242,169,59,0.08);
+  opacity: 0;
+  transform: translateX(-8px);
+}
+.bitcoin-row:last-child{ border-bottom:none; }
+.bitcoin-rows.is-visible .bitcoin-row{
+  animation: row-print 480ms ease forwards;
+}
+.bitcoin-rows.is-visible .bitcoin-row:nth-child(1){ animation-delay: 60ms; }
+.bitcoin-rows.is-visible .bitcoin-row:nth-child(2){ animation-delay: 240ms; }
+.bitcoin-rows.is-visible .bitcoin-row:nth-child(3){ animation-delay: 420ms; }
+.bitcoin-rows.is-visible .bitcoin-row:nth-child(4){ animation-delay: 600ms; }
+.bitcoin-rows.is-visible .bitcoin-row:nth-child(5){ animation-delay: 780ms; }
+.bitcoin-rows.is-visible .bitcoin-row:nth-child(6){ animation-delay: 960ms; }
+.bitcoin-rows.is-visible .bitcoin-row:nth-child(7){ animation-delay: 1140ms; }
+@keyframes row-print{ to{ opacity:1; transform: translateX(0); } }
+
+.bitcoin-letter{
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.6rem;
+  color: var(--amber);
+  width: 0.9em;
+  flex-shrink:0;
+}
+.bitcoin-word{
+  font-weight: 600;
+  color: var(--paper);
+  flex-shrink:0;
+  width: 190px;
+}
+.bitcoin-desc{ color: #93A0AC; font-size: 0.92rem; }
+
+/* ============================================================
+   VOLÚMENES
+   ============================================================ */
+.volumes{ background: var(--paper); }
+.volumes-head{ max-width: 660px; margin-bottom: 56px; }
+.volumes-head h2{ font-size: clamp(1.8rem,3.4vw,2.6rem); margin-bottom: 14px; }
+.volumes-head p{ color: var(--ink-soft); }
+
+.volumes-grid{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: stretch;
+}
+@media (max-width: 860px){ .volumes-grid{ grid-template-columns: 1fr; } }
+
+.vol-card{
+  display:flex;
+  flex-direction: column;
+  border-radius: 4px;
+  overflow:hidden;
+  transition: transform 220ms ease;
+}
+.vol-card:hover{ transform: translateY(-6px); }
+
+.vol-card--paper{
+  background: #F5F0E4;
+  border: 1px solid rgba(27,36,48,0.14);
+  box-shadow: var(--shadow-paper);
+}
+.vol-card--terminal{
+  background: var(--terminal-2);
+  border: 1px solid rgba(242,169,59,0.22);
+  box-shadow: var(--shadow-amber);
+  color: var(--paper);
+}
+
+.vol-media{
+  display:flex;
+  gap: 20px;
+  padding: 26px 26px 0;
+}
+.vol-cover{
+  width: 116px;
+  flex-shrink:0;
+  border-radius: 2px;
+  box-shadow: 0 12px 24px -10px rgba(0,0,0,0.45);
+}
+.vol-eyebrow{
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+.vol-card--paper .vol-eyebrow{ color: var(--rust); }
+.vol-card--terminal .vol-eyebrow{ color: var(--amber); }
+.vol-title{
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 6px 0 8px;
+}
+.vol-audience{ font-size: 0.85rem; }
+.vol-card--paper .vol-audience{ color: var(--ink-soft); }
+.vol-card--terminal .vol-audience{ color: #9AA6B2; }
+
+.vol-body{ padding: 20px 26px 28px; display:flex; flex-direction:column; flex:1; }
+.vol-list{ list-style:none; margin:0 0 20px; padding:0; font-size: 0.88rem; }
+.vol-list li{
+  padding: 7px 0;
+  border-top: 1px solid;
+}
+.vol-card--paper .vol-list li{ border-color: rgba(27,36,48,0.12); }
+.vol-card--terminal .vol-list li{ border-color: rgba(242,169,59,0.14); }
+.vol-list li:first-child{ border-top:none; }
+
+.vol-stats{
+  display:flex;
+  gap: 22px;
+  margin: 4px 0 22px;
+}
+.vol-stat b{
+  display:block;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  line-height:1;
+}
+.vol-card--terminal .vol-stat b{ color: var(--amber-glow); }
+.vol-stat span{ font-size: 0.72rem; }
+.vol-card--paper .vol-stat span{ color: var(--ink-soft); }
+.vol-card--terminal .vol-stat span{ color: #8B96A2; }
+
+.vol-actions{ margin-top:auto; display:flex; gap:10px; flex-wrap:wrap; }
+
+/* ============================================================
+   SKILL
+   ============================================================ */
+.skill{ background: var(--ink); color: var(--paper); }
+.skill-grid{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  align-items:center;
+}
+@media (max-width: 900px){ .skill-grid{ grid-template-columns: 1fr; gap:40px; } }
+.skill-copy h2{ color: var(--paper); font-size: clamp(1.8rem,3.4vw,2.6rem); margin-bottom:18px; }
+.skill-copy p{ color: #B9C2CC; }
+.skill-badges{ display:flex; gap:10px; flex-wrap:wrap; margin: 22px 0 26px; }
+.skill-badge{
+  font-size: 0.76rem;
+  border: 1px solid rgba(242,169,59,0.4);
+  color: var(--amber-glow);
+  padding: 6px 12px;
+  border-radius: 20px;
+}
+
+.skill-terminal{
+  background: #060A0E;
+  border-radius: 8px;
+  border: 1px solid rgba(242,169,59,0.2);
+  box-shadow: 0 30px 70px -25px rgba(0,0,0,0.7);
+  font-size: 0.82rem;
+  overflow:hidden;
+}
+.skill-terminal .terminal-bar{ background: rgba(255,255,255,0.03); }
+.skill-code{ padding: 20px 22px 26px; white-space: pre; overflow-x:auto; color:#C7D0D9; line-height:1.65; }
+.skill-code .c-key{ color: var(--amber-glow); }
+.skill-code .c-str{ color: #9CDCA0; }
+.skill-code .c-comment{ color: #5C6A78; font-style:italic; }
+.skill-code .c-file{ color: var(--paper); }
+
+/* ============================================================
+   FORMATOS
+   ============================================================ */
+.formats{ background: var(--paper); }
+.formats-head{ max-width: 640px; margin: 0 auto 50px; text-align:center; }
+.formats-head h2{ font-size: clamp(1.8rem,3.4vw,2.4rem); margin-bottom:12px; }
+.formats-head p{ color: var(--ink-soft); }
+.formats-row{
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+@media (max-width: 760px){ .formats-row{ grid-template-columns: 1fr; } }
+.format-card{
+  border: 1px solid rgba(27,36,48,0.16);
+  background: #F5F0E4;
+  padding: 30px 26px;
+  text-align:center;
+  border-radius: 4px;
+}
+.format-icon{
+  width: 46px; height:46px;
+  margin: 0 auto 18px;
+  border-radius:50%;
+  background: var(--ink);
+  color: var(--paper);
+  display:flex; align-items:center; justify-content:center;
+  font-family: var(--font-display);
+  font-weight:700;
+  font-size: 1.1rem;
+}
+.format-card h3{ font-size: 1.05rem; margin-bottom: 8px; }
+.format-card p{ font-size: 0.85rem; color: var(--ink-soft); margin:0; }
+
+/* ============================================================
+   PRICING / CTA
+   ============================================================ */
+.pricing{
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(242,169,59,0.12), transparent 60%),
+    var(--terminal);
+  color: var(--paper);
+  text-align:center;
+}
+.pricing h2{ font-size: clamp(1.9rem,3.6vw,2.8rem); margin-bottom:16px; color: var(--paper); }
+.pricing > .container > p{ color:#A9B4C0; max-width: 560px; margin: 0 auto 42px; }
+
+.pricing-options{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  max-width: 760px;
+  margin: 0 auto;
+}
+@media (max-width: 700px){ .pricing-options{ grid-template-columns: 1fr; } }
+.pricing-card{
+  background: var(--terminal-2);
+  border: 1px solid rgba(242,169,59,0.2);
+  border-radius: 6px;
+  padding: 34px 28px;
+}
+.pricing-card h3{ font-size: 1.15rem; color: var(--paper); margin-bottom: 8px; }
+.pricing-card p{ font-size: 0.85rem; color: #93A0AC; margin-bottom: 22px; }
+.pricing-card .btn{ width:100%; justify-content:center; }
+.pricing-note{
+  margin-top: 34px;
+  font-size: 0.78rem;
+  color: #7A8794;
+}
+
+/* ============================================================
+   AUTOR
+   ============================================================ */
+.author{ background: var(--paper); }
+.author-grid{
+  display:grid;
+  grid-template-columns: 160px 1fr;
+  gap: 36px;
+  align-items:center;
+}
+@media (max-width: 620px){ .author-grid{ grid-template-columns: 1fr; text-align:center; } }
+.author-photo{
+  width: 140px; height:140px;
+  border-radius:50%;
+  background: var(--ink);
+  color: var(--amber-glow);
+  display:flex; align-items:center; justify-content:center;
+  font-family: var(--font-display);
+  font-size: 2.4rem;
+  font-weight:700;
+  margin: 0 auto;
+}
+.author-name{ font-size: 1.3rem; margin-bottom: 6px; }
+.author-role{ font-size: 0.85rem; color: var(--rust); margin-bottom: 14px; }
+.author-bio{ color: var(--ink-soft); font-size: 0.92rem; max-width: 560px; }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer{
+  background: var(--ink);
+  color: #8592A0;
+  padding: 44px 0 34px;
+  font-size: 0.8rem;
+}
+footer .container{
+  display:flex;
+  flex-wrap:wrap;
+  gap: 16px;
+  justify-content: space-between;
+  align-items:center;
+}
+footer .disclaimer{ max-width: 640px; color: #6B7784; }
+
+/* Utilidades ---------------------------------------------------- */
+.section-tag{
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--amber-dim);
+  margin-bottom: 14px;
+  display:block;
+}
+.method .section-tag{ color: var(--amber); }
+
+@media (prefers-reduced-motion: reduce){
+  .hero-seam, .hero-line--top, .hero-line--bottom, .bitcoin-row{
+    animation: none !important;
+    opacity: 1 !important;
+    filter:none !important;
+    transform:none !important;
+    width: auto !important;
+    border-right: none !important;
+  }
+}
+
+@media (max-width: 780px){
+  .hero-split{ flex-direction: column; min-height: auto; }
+  .hero-half{ padding: 60px 8vw !important; margin-left:0 !important; clip-path:none !important; }
+  .hero-half--paper{ justify-content:flex-start; }
+  .hero-line--top, .hero-line--bottom{ white-space: normal; text-align:left !important; }
+  .hero-seam{ display:none; }
+  .section{ padding: 70px 0; }
+}
+</style>
+</head>
+<body>
+
+<!--
+============================================================================
+  CÓMO EDITAR LOS ENLACES DE COMPRA
+  Reemplazá las URLs de este objeto por tus páginas de venta reales de
+  Hotmart y Google Play Libros. Todos los botones de la página toman su
+  destino de acá — no hace falta tocar nada más en el HTML.
+============================================================================
+-->
+<script>
+  const PURCHASE_LINKS = {
+    bundleHotmart:     "https://pay.hotmart.com/EDITAR-CODIGO-PACK-COMPLETO",
+    bundleGooglePlay:  "https://play.google.com/store/books/collection/EDITAR-COLECCION",
+    vol1Hotmart:       "https://pay.hotmart.com/EDITAR-CODIGO-VOLUMEN-1",
+    vol1GooglePlay:    "https://play.google.com/store/books/details?id=EDITAR-ID-VOLUMEN-1",
+    vol2Hotmart:       "https://pay.hotmart.com/EDITAR-CODIGO-VOLUMEN-2",
+    vol2GooglePlay:    "https://play.google.com/store/books/details?id=EDITAR-ID-VOLUMEN-2"
+  };
+</script>
+
+<!-- ============================== HERO ============================== -->
+<header class="hero">
+  <div class="hero-split">
+    <div class="hero-seam" aria-hidden="true"></div>
+
+    <div class="hero-half hero-half--paper">
+      <h1 class="hero-line hero-line--top">De analista</h1>
+    </div>
+
+    <div class="hero-half hero-half--terminal">
+      <h1 class="hero-line hero-line--bottom">a_constructor</h1>
+    </div>
+  </div>
+
+  <div class="hero-foot">
+    <div class="container">
+      <p class="hero-sub">
+        <strong style="color:var(--paper);">Claude para Bitcoin</strong> — dos volúmenes para pensar
+        y construir con IA dentro del ecosistema Bitcoin. Sin promesas de precio.
+        Sin atajos. Con el mismo rigor con el que se lee un balance.
+      </p>
+      <div class="hero-ctas">
+        <a class="btn btn--amber" data-link="bundleHotmart" href="#">Comprar en Hotmart</a>
+        <a class="btn btn--outline-paper" data-link="bundleGooglePlay" href="#">Ver en Google Play Libros</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============================== PREMISA ============================== -->
+<section class="premise section">
+  <div class="container">
+    <blockquote>
+      "Claude no reemplaza al analista, inversor, programador o investigador.
+      Amplifica sus capacidades."
+    </blockquote>
+    <cite>— Filosofía central de la serie</cite>
+    <div class="premise-rule"></div>
+    <div class="premise-body">
+      <p>
+        <strong>Claude para Bitcoin</strong> es una serie de dos libros escrita por
+        Diego Eduardo Beltramo — Contador Público, Asesor Idóneo en el Mercado de
+        Capitales y Desarrollador Web Full Stack — para enseñar a usar Claude como
+        copiloto de investigación, análisis, inversión, programación y seguridad
+        dentro del ecosistema Bitcoin.
+      </p>
+      <p>
+        Cada capítulo distingue explícitamente HECHO de HIPÓTESIS, INFERENCIA,
+        ESCENARIO y PREDICCIÓN. Ningún capítulo da una cifra de precio como
+        certeza. Ningún ejemplo de seguridad usa datos reales. El método importa
+        tanto como el contenido.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== MÉTODO ============================== -->
+<section class="method section">
+  <div class="container">
+    <div class="method-head">
+      <span class="section-tag">El framework de la serie</span>
+      <h2>B.I.T.C.O.I.N.</h2>
+      <p>
+        Siete letras, un método propio de prompting para Bitcoin. Se enseña en el
+        Volumen 1 y se aplica, sin excepción, en cada capítulo de ambos libros —
+        incluso en el código que automatiza el análisis.
+      </p>
+    </div>
+
+    <div class="terminal-window">
+      <div class="terminal-bar">
+        <span class="terminal-dot"></span><span class="terminal-dot"></span><span class="terminal-dot"></span>
+      </div>
+      <div class="bitcoin-rows" id="bitcoinRows">
+        <div class="bitcoin-row"><span class="bitcoin-letter">B</span><span class="bitcoin-word">Background</span><span class="bitcoin-desc">el contexto que Claude necesita para no adivinar</span></div>
+        <div class="bitcoin-row"><span class="bitcoin-letter">I</span><span class="bitcoin-word">Intent</span><span class="bitcoin-desc">el objetivo real detrás del pedido</span></div>
+        <div class="bitcoin-row"><span class="bitcoin-letter">T</span><span class="bitcoin-word">Task</span><span class="bitcoin-desc">la acción concreta y acotada</span></div>
+        <div class="bitcoin-row"><span class="bitcoin-letter">C</span><span class="bitcoin-word">Constraints</span><span class="bitcoin-desc">límites y salvaguardas, sin excepción</span></div>
+        <div class="bitcoin-row"><span class="bitcoin-letter">O</span><span class="bitcoin-word">Output</span><span class="bitcoin-desc">el formato exacto de salida</span></div>
+        <div class="bitcoin-row"><span class="bitcoin-letter">I</span><span class="bitcoin-word">Information sources</span><span class="bitcoin-desc">de dónde sale la información, qué no inventar</span></div>
+        <div class="bitcoin-row"><span class="bitcoin-letter">N</span><span class="bitcoin-word">Next actions</span><span class="bitcoin-desc">qué sigue después de la respuesta</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== VOLÚMENES ============================== -->
+<section class="volumes section" id="volumenes">
+  <div class="container">
+    <div class="volumes-head">
+      <span class="section-tag" style="color:var(--rust);">La serie</span>
+      <h2>Dos libros, dos formas de trabajar</h2>
+      <p>El Volumen 1 se lee como un analista. El Volumen 2 se construye como un desarrollador. Podés empezar por cualquiera de los dos, pero juntos forman el sistema completo.</p>
+    </div>
+
+    <div class="volumes-grid">
+
+      <!-- VOLUMEN 1 -->
+      <article class="vol-card vol-card--paper">
+        <div class="vol-media">
+          <img class="vol-cover" src="IMG/cover-vol1.jpg" alt="Portada Claude para Bitcoin, Volumen 1"/>
+          <div>
+            <span class="vol-eyebrow">Volumen 1</span>
+            <h3 class="vol-title">Fundamentos, Análisis e Inversión</h3>
+            <p class="vol-audience">Para inversores, analistas y contadores. No requiere programar.</p>
+          </div>
+        </div>
+        <div class="vol-body">
+          <div class="vol-stats">
+            <div class="vol-stat"><b>20</b><span>Capítulos</span></div>
+            <div class="vol-stat"><b>6</b><span>Anexos</span></div>
+            <div class="vol-stat"><b>100+</b><span>Prompts</span></div>
+          </div>
+          <ul class="vol-list">
+            <li>Framework B.I.T.C.O.I.N. de prompting para Bitcoin</li>
+            <li>Análisis fundamental de nueve capas, macro y on-chain</li>
+            <li>Ciclos históricos sin determinismo ni predicciones</li>
+            <li>Tesis de inversión, cartera y trading disciplinado</li>
+            <li>Custodia, seguridad y amenazas de ingeniería social</li>
+          </ul>
+          <div class="vol-actions">
+            <a class="btn btn--ink btn--small" data-link="vol1Hotmart" href="#">Comprar Volumen 1</a>
+            <a class="btn btn--outline-ink btn--small" data-link="vol1GooglePlay" href="#">Google Play Libros</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- VOLUMEN 2 -->
+      <article class="vol-card vol-card--terminal">
+        <div class="vol-media">
+          <img class="vol-cover" src="IMG/cover-vol2.jpg" alt="Portada Claude para Bitcoin, Volumen 2"/>
+          <div>
+            <span class="vol-eyebrow">Volumen 2</span>
+            <h3 class="vol-title">Laboratorio, Desarrollo y Bitcoin Intelligence</h3>
+            <p class="vol-audience">Para desarrolladores y constructores. Nociones básicas de programación.</p>
+          </div>
+        </div>
+        <div class="vol-body">
+          <div class="vol-stats">
+            <div class="vol-stat"><b>15</b><span>Capítulos</span></div>
+            <div class="vol-stat"><b>4</b><span>Anexos</span></div>
+            <div class="vol-stat"><b>50</b><span>Proyectos</span></div>
+          </div>
+          <ul class="vol-list">
+            <li>Bitcoin Core, wallet educativa y Lightning Network</li>
+            <li>Auditoría de código y Red Team defensivo</li>
+            <li>Research Assistant, Investment Analyst y Dashboard</li>
+            <li>Trading bot en paper trading, nunca con fondos reales</li>
+            <li>Claude Skill, agentes y la Bitcoin Intelligence Platform</li>
+          </ul>
+          <div class="vol-actions">
+            <a class="btn btn--amber btn--small" data-link="vol2Hotmart" href="#">Comprar Volumen 2</a>
+            <a class="btn btn--outline-paper btn--small" data-link="vol2GooglePlay" href="#">Google Play Libros</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================== SKILL ============================== -->
+<section class="skill section">
+  <div class="container skill-grid">
+    <div class="skill-copy">
+      <span class="section-tag">Incluida en el Volumen 2</span>
+      <h2>Tu propia Claude Skill de Bitcoin</h2>
+      <p>
+        El Capítulo 11 te enseña a empaquetar todo el conocimiento de la serie en
+        una Skill reutilizable: conocimiento de referencia, scripts ejecutables y
+        las mismas salvaguardas que sostienen los 35 capítulos de ambos volúmenes.
+      </p>
+      <p>
+        Ninguna predicción de precio. Ninguna recomendación de inversión directa.
+        Ningún procesamiento de claves reales. Escrito en el archivo, no solo en
+        la intención.
+      </p>
+      <div class="skill-badges">
+        <span class="skill-badge">SKILL.md</span>
+        <span class="skill-badge">references/</span>
+        <span class="skill-badge">scripts/</span>
+        <span class="skill-badge">examples/</span>
+      </div>
+      <a class="btn btn--amber" href="#volumenes">Ver el Volumen 2</a>
+    </div>
+
+    <div class="skill-terminal">
+      <div class="terminal-bar">
+        <span class="terminal-dot"></span><span class="terminal-dot"></span><span class="terminal-dot"></span>
+      </div>
+      <pre class="skill-code"><span class="c-file">bitcoin-intelligence/</span>
+├── <span class="c-file">SKILL.md</span>
+├── <span class="c-file">references/</span>
+│   ├── nueve-capas.md
+│   ├── onchain.md
+│   └── security.md
+├── <span class="c-file">scripts/</span>
+│   ├── bitcoin_data.py
+│   └── analysis.py
+└── <span class="c-file">examples/</span>
+
+<span class="c-comment"># Principios no negociables</span>
+<span class="c-key">1.</span> Clasificar HECHO / HIPÓTESIS / INFERENCIA /
+   ESCENARIO / PREDICCIÓN
+<span class="c-key">2.</span> Nunca predicciones de precio
+<span class="c-key">3.</span> Nunca recomendaciones de inversión directas
+<span class="c-key">4.</span> Nunca procesar claves o seeds reales</pre>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== FORMATOS ============================== -->
+<section class="formats section">
+  <div class="container">
+    <div class="formats-head">
+      <span class="section-tag" style="color:var(--rust);">Disponibilidad</span>
+      <h2>Leelo donde ya leés</h2>
+      <p>Cada volumen se vende por separado, en los formatos que ya usás.</p>
+    </div>
+    <div class="formats-row">
+      <div class="format-card">
+        <div class="format-icon">FP</div>
+        <h3>EPUB</h3>
+        <p>Formato estándar, compatible con la mayoría de las apps de lectura.</p>
+      </div>
+      <div class="format-card">
+        <div class="format-icon">GP</div>
+        <h3>Google Play Libros</h3>
+        <p>Comprá y sincronizá tu lectura entre el celular, la tablet y la web.</p>
+      </div>
+      <div class="format-card">
+        <div class="format-icon">AK</div>
+        <h3>Amazon Kindle</h3>
+        <p>Disponible para tu dispositivo Kindle o la app de lectura de Amazon.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== PRICING / CTA ============================== -->
+<section class="pricing section">
+  <div class="container">
+    <span class="section-tag">Empezá hoy</span>
+    <h2>Elegí cómo lo querés leer</h2>
+    <p>Los dos volúmenes se consiguen por separado. Elegí la plataforma que prefieras — el contenido es exactamente el mismo.</p>
+
+    <div class="pricing-options">
+      <div class="pricing-card">
+        <h3>Hotmart</h3>
+        <p>Pago único, acceso inmediato al EPUB de cada volumen.</p>
+        <a class="btn btn--amber" data-link="bundleHotmart" href="#">Comprar en Hotmart</a>
+      </div>
+      <div class="pricing-card">
+        <h3>Google Play Libros</h3>
+        <p>Comprá desde tu cuenta de Google y leé en cualquier dispositivo.</p>
+        <a class="btn btn--outline-paper" data-link="bundleGooglePlay" href="#">Ver en Google Play</a>
+      </div>
+    </div>
+
+    <p class="pricing-note">Este material es educativo. No constituye asesoramiento financiero, legal ni fiscal.</p>
+  </div>
+</section>
+
+<!-- ============================== AUTOR ============================== -->
+<section class="author section section--tight">
+  <div class="container author-grid">
+    <div class="author-photo" aria-hidden="true">DB</div>
+    <div>
+      <h3 class="author-name">Diego Eduardo Beltramo</h3>
+      <p class="author-role">Contador Público · Asesor Idóneo en el Mercado de Capitales · Desarrollador Web Full Stack</p>
+      <p class="author-bio">
+        Combina formación financiera, regulatoria y técnica para escribir la
+        serie "Claude para Bitcoin": un manual de pensamiento estructurado y
+        construcción real, no de promesas. Este es el primer título de la serie
+        "Claude para..." aplicada a distintos dominios profesionales.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== FOOTER ============================== -->
+<footer>
+  <div class="container">
+    <p class="disclaimer">
+      © Diego Eduardo Beltramo. Claude para Bitcoin — Volumen 1 y Volumen 2.
+      Contenido educativo; ninguna parte constituye asesoramiento financiero,
+      legal o fiscal.
+    </p>
+    <p>Claude es una marca de Anthropic. Esta serie no está afiliada a Anthropic.</p>
+  </div>
+</footer>
+
+<script>
+  // Aplica los enlaces de compra configurados arriba a todos los botones
+  // marcados con data-link.
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('[data-link]').forEach((el) => {
+      const key = el.getAttribute('data-link');
+      if (PURCHASE_LINKS[key]) {
+        el.setAttribute('href', PURCHASE_LINKS[key]);
+        el.setAttribute('target', '_blank');
+        el.setAttribute('rel', 'noopener noreferrer');
+      }
+    });
+
+    // Reveal en una sola vez de la secuencia B.I.T.C.O.I.N. al entrar
+    // en el viewport (no se repite, no se aplica a otras secciones).
+    const bitcoinRows = document.getElementById('bitcoinRows');
+    if ('IntersectionObserver' in window && bitcoinRows) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            bitcoinRows.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.35 });
+      observer.observe(bitcoinRows);
+    } else if (bitcoinRows) {
+      bitcoinRows.classList.add('is-visible');
+    }
+  });
+</script>
+
+</body>
+</html>
