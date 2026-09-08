@@ -39,6 +39,92 @@ body, html {
             cursor: pointer;
         }
 </style>
+<script>
+  import { createTimeline, createTimer, utils } from 'animejs';
+import * as THREE from 'three';
+import 'animejs/adapters/three';
+
+// Three.js setup
+
+const [ $container ] = utils.$('.full-container');
+const color = utils.get($container, 'color');
+const { clientWidth: width, clientHeight: height } = $container;
+
+const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, preserveDrawingBuffer: true });
+renderer.shadowMap.enabled = true;
+renderer.setSize(width, height);
+renderer.setPixelRatio(window.devicePixelRatio);
+$container.appendChild(renderer.domElement);
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
+camera.position.set(0, 2.5, 6);
+camera.lookAt(0, 0, -3);
+scene.add(camera);
+
+const container = new THREE.Group();
+scene.add(container);
+
+const groundGeometry = new THREE.PlaneGeometry(12, 12);
+const groundMaterial = new THREE.MeshLambertMaterial({ color });
+const ground = new THREE.Mesh(groundGeometry, groundMaterial);
+ground.rotation.x = -Math.PI / 2;
+ground.receiveShadow = true;
+container.add(ground);
+
+const gridColorA = utils.get($container, '--hex-current-1');
+const gridColorB = utils.get($container, '--hex-current-3');
+const grid = new THREE.GridHelper(12, 24, gridColorA, gridColorB);
+grid.position.y = 0.001;
+container.add(grid);
+
+const cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
+const cubeMaterial = new THREE.MeshLambertMaterial({ color });
+const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+cube.position.y = 0.5;
+cube.castShadow = true;
+container.add(cube);
+
+const spot = new THREE.SpotLight(0xffffff, 100, 12, Math.PI / 5, 0.4);
+spot.position.set(0, 3, 0);
+spot.castShadow = true;
+spot.target = cube;
+container.add(new THREE.AmbientLight(0xffffff, 0.3));
+container.add(spot);
+
+const spotHelper = new THREE.SpotLightHelper(spot, color);
+container.add(spotHelper);
+
+// Animation with Three.js adapter
+
+createTimeline({ defaults: { duration: 5000, ease: 'linear', loop: true } })
+  .add(container, {
+    rotateY: 360, // map to container.rotation.y (degrees)
+    duration: 40000,
+  }, 0)
+  .add(spot, {
+    x: () => utils.random(-7, 7, 1), // map to spot.position.x
+    y: () => utils.random(3, 4, 1), // map to spot.position.y
+    z: () => utils.random(-7, 7, 1), // map to spot.position.z
+    duration: 3000,
+    ease: 'inOutSine',
+    onLoop: self => self.refresh(),
+  }, 0)
+  .add(cube, {
+    color: ['var(--hex-orange-1)', 'var(--hex-citrus-1)', 'var(--hex-green-1)'], // map to cube.material.color
+    x: [-4, 0, 4], // map to cube.position.x
+    y: {
+      to: [0, 4 * Math.PI], // map to cube.position.y (via modifier)
+      modifier: value => 0.5 * (Math.abs(Math.sin(value)) + Math.abs(Math.cos(value))),
+    },
+    rotateZ: [360, 0, -360], // map to cube.rotation.z (degrees)
+    alternate: true,
+    onUpdate: () => spotHelper.update(),
+  }, 0);
+
+createTimer({ onUpdate: () => renderer.render(scene, camera) });
+</script>
+<div class="full-container"></div>
 </head>
 <body>
 
