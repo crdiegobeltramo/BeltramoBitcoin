@@ -1,0 +1,625 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trading | Terminal Cripto</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9484813243995286" crossorigin="anonymous"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HF5T5XFXDK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-HF5T5XFXDK');
+</script>
+
+<style>
+  :root{
+    --bg:#060a14;
+    --bg-panel:#0b1120;
+    --bg-panel-alt:#10182c;
+    --line:rgba(148,163,196,.16);
+    --text:#e7ecf7;
+    --text-dim:#8a93ab;
+    --cyan:#21e6ff;
+    --violet:#8b5cf6;
+    --green:#22e6a1;
+    --red:#ff4d6a;
+    --amber:#ffb020;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Space Grotesk',sans-serif;
+    line-height:1.65;
+    overflow-x:hidden;
+  }
+  .mono{font-family:'JetBrains Mono',monospace;}
+  a{color:var(--cyan);text-decoration:none;}
+  a:hover{color:#fff;}
+  img{max-width:100%;display:block;}
+  h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif;font-weight:600;margin:0 0 .6em;color:var(--text);}
+  h1{font-size:clamp(2.4rem,6vw,4.4rem);line-height:1.05;}
+  h2{font-size:clamp(1.6rem,3vw,2.3rem);}
+  h3{font-size:1.35rem;}
+  h4{font-size:1.05rem;color:var(--cyan);}
+  p{color:#c6cede;max-width:74ch;}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 1.5rem;}
+  .panel{
+    position:relative;
+    background:var(--bg-panel);
+    border:1px solid var(--line);
+    padding:1.6rem;
+  }
+  .panel::before,.panel::after{
+    content:"";position:absolute;width:14px;height:14px;
+    border-color:var(--cyan);border-style:solid;opacity:.7;
+  }
+  .panel::before{top:-1px;left:-1px;border-width:2px 0 0 2px;}
+  .panel::after{bottom:-1px;right:-1px;border-width:0 2px 2px 0;}
+
+  /* NAV */
+  nav.topnav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(6,10,20,.9);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .navrow{display:flex;align-items:center;gap:1.2rem;padding:.8rem 1.5rem;max-width:1300px;margin:0 auto;flex-wrap:wrap;}
+  .brand{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--text);font-size:1rem;letter-spacing:.02em;white-space:nowrap;}
+  .brand span{color:var(--cyan);}
+  .navlinks{list-style:none;display:flex;gap:1.1rem;flex-wrap:wrap;margin:0;padding:0;flex:1;}
+  .navlinks a{color:var(--text-dim);font-size:.88rem;position:relative;padding-bottom:2px;}
+  .navlinks a:hover{color:var(--text);}
+  .navlinks a::after{content:"";position:absolute;left:0;bottom:-2px;width:0;height:1px;background:var(--cyan);transition:width .25s ease;}
+  .navlinks a:hover::after{width:100%;}
+  .navcta{display:flex;gap:.6rem;}
+  .btn{
+    font-family:'Space Grotesk',sans-serif;font-size:.85rem;font-weight:500;
+    padding:.55rem 1rem;border:1px solid var(--line);color:var(--text);
+    background:transparent;cursor:pointer;white-space:nowrap;
+    transition:border-color .2s,color .2s,box-shadow .2s;
+  }
+  .btn:hover{border-color:var(--cyan);color:var(--cyan);box-shadow:0 0 14px rgba(33,230,255,.25);}
+  .btn-solid{background:var(--cyan);color:#04121a;border-color:var(--cyan);font-weight:600;}
+  .btn-solid:hover{color:#04121a;background:#5cf0ff;}
+
+  /* TICKER */
+  .ticker{
+    background:var(--bg-panel-alt);border-bottom:1px solid var(--line);
+    overflow:hidden;white-space:nowrap;position:relative;
+  }
+  .ticker-track{display:inline-flex;gap:2.4rem;padding:.55rem 0;animation:scroll-left 40s linear infinite;}
+  .ticker-item{font-family:'JetBrains Mono',monospace;font-size:.85rem;display:inline-flex;gap:.5rem;color:var(--text-dim);}
+  .ticker-item b{color:var(--text);font-weight:600;}
+  @keyframes scroll-left{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+  /* HERO */
+  .hero{position:relative;padding:5rem 0 4rem;overflow:hidden;}
+  .hero::before{
+    content:"";position:absolute;inset:0;
+    background-image:
+      linear-gradient(var(--line) 1px,transparent 1px),
+      linear-gradient(90deg,var(--line) 1px,transparent 1px);
+    background-size:42px 42px;
+    mask-image:radial-gradient(ellipse at 30% 20%,black 10%,transparent 70%);
+    opacity:.5;
+  }
+  .hero::after{
+    content:"";position:absolute;left:0;right:0;height:2px;
+    background:linear-gradient(90deg,transparent,var(--cyan),transparent);
+    top:0;animation:scanline 6s ease-in-out infinite;box-shadow:0 0 20px var(--cyan);
+  }
+  @keyframes scanline{0%{top:0;opacity:0;}10%{opacity:1;}50%{top:100%;opacity:1;}60%{opacity:0;}100%{top:100%;opacity:0;}}
+  .hero-inner{position:relative;display:grid;grid-template-columns:1.2fr .8fr;gap:2.5rem;align-items:center;}
+  @media(max-width:860px){.hero-inner{grid-template-columns:1fr;}}
+  .eyebrow{font-family:'JetBrains Mono',monospace;color:var(--cyan);font-size:.8rem;margin-bottom:.8rem;}
+  .hero h1{background:linear-gradient(90deg,#fff,var(--cyan) 70%);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .hero-actions{display:flex;gap:.8rem;margin-top:1.6rem;flex-wrap:wrap;}
+  .candles{width:100%;height:auto;filter:drop-shadow(0 0 18px rgba(33,230,255,.15));}
+
+  /* SECTION */
+  section{padding:3.4rem 0;border-top:1px solid var(--line);}
+  .section-head{margin-bottom:1.8rem;}
+  .section-head .eyebrow{margin-bottom:.4rem;}
+
+  /* GRIDS */
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem;}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem;}
+  @media(max-width:900px){.grid3,.grid4{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:560px){.grid2,.grid3,.grid4{grid-template-columns:1fr;}}
+
+  .video-frame{border:1px solid var(--line);background:#000;}
+  .video-frame .bar{display:flex;gap:6px;padding:.5rem .7rem;background:var(--bg-panel-alt);border-bottom:1px solid var(--line);}
+  .video-frame .dot{width:8px;height:8px;border-radius:50%;background:#3a4257;}
+  .video-frame iframe{width:100%;aspect-ratio:16/9;height:auto;display:block;border:0;}
+
+  .stat{font-family:'JetBrains Mono',monospace;}
+  .stat .num{font-size:1.9rem;font-weight:700;color:var(--text);}
+  .stat .label{font-size:.8rem;color:var(--text-dim);}
+  .up{color:var(--green);}
+  .down{color:var(--red);}
+  .flash{animation:flash-bg .8s ease;}
+  @keyframes flash-bg{0%{background:rgba(33,230,255,.18);}100%{background:transparent;}}
+
+  .mover-row{display:flex;justify-content:space-between;align-items:center;padding:.5rem 0;border-bottom:1px solid var(--line);font-family:'JetBrains Mono',monospace;font-size:.88rem;}
+  .mover-row:last-child{border-bottom:0;}
+  .mover-row .coin{display:flex;align-items:center;gap:.5rem;color:var(--text);}
+  .mover-row img{width:18px;height:18px;border-radius:50%;}
+
+  .trend-list{list-style:none;margin:0;padding:0;}
+  .trend-list li{display:flex;align-items:center;gap:.6rem;padding:.5rem 0;border-bottom:1px solid var(--line);font-size:.9rem;}
+  .trend-list li:last-child{border-bottom:0;}
+  .trend-list img{width:20px;height:20px;border-radius:50%;}
+  .trend-rank{font-family:'JetBrains Mono',monospace;color:var(--violet);width:1.4em;}
+
+  .pill{display:inline-flex;align-items:center;border:1px solid var(--line);padding:.55rem 1rem;font-size:.85rem;margin:.25rem .4rem .25rem 0;transition:border-color .2s,color .2s;}
+  .pill:hover{border-color:var(--violet);color:var(--violet);}
+
+  .logo-link{border:1px solid var(--line);padding:1rem;display:flex;align-items:center;justify-content:center;background:var(--bg-panel);transition:border-color .2s,transform .2s;}
+  .logo-link:hover{border-color:var(--cyan);transform:translateY(-3px);}
+
+  details.readmore{border:1px solid var(--line);background:var(--bg-panel);padding:1rem 1.4rem;}
+  details.readmore summary{cursor:pointer;color:var(--cyan);font-family:'JetBrains Mono',monospace;font-size:.9rem;}
+  details.readmore p{margin-top:1rem;}
+
+  .crypto-error{color:var(--red);font-family:'JetBrains Mono',monospace;font-size:.85rem;}
+
+  footer.site-footer{background:#04070d;border-top:1px solid var(--line);padding:2.6rem 0 1.6rem;text-align:center;}
+  .social-row a{display:inline-flex;width:38px;height:38px;align-items:center;justify-content:center;border:1px solid var(--line);color:var(--text);margin:0 .3rem;transition:border-color .2s,color .2s;}
+  .social-row a:hover{border-color:var(--cyan);color:var(--cyan);}
+  footer.site-footer p{max-width:900px;margin:1.4rem auto 0;font-size:.8rem;color:var(--text-dim);}
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="navrow">
+    <a href="/" class="brand">DIEGO<span>BELTRAMO</span> · TRADING</a>
+    <ul class="navlinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="quienesSomos.html">Quienes Somos</a></li>
+      <li><a href="capacitacionCripto.html">Capacitación</a></li>
+      <li><a href="noticiasCrypto.html">Noticias</a></li>
+      <li><a href="mineria.html">Minería</a></li>
+      <li><a href="metricasCrypto.html">Métricas</a></li>
+      <li><a href="exchanges.html">Exchanges</a></li>
+      <li><a href="galeriaVideos.html">Galeria de Videos</a></li>
+      <li><a href="libros.html">Libros</a></li>
+      <li><a href="DesarrolloBlockchainWeb3.html">Desarrollo Blockchain</a></li>
+      <li><a href="interesGeneral.html">Interés General</a></li>
+      <li><a href="wallets.html">Wallets</a></li>
+    </ul>
+    <div class="navcta">
+      <a class="btn" href="https://es.investing.com/crypto/">Investing</a>
+      <a class="btn btn-solid" href="https://es.tradingview.com/?aff_id=122487">TradingView</a>
+    </div>
+  </div>
+</nav>
+
+<div class="ticker">
+  <div class="ticker-track mono" id="ticker-track">
+    <span class="ticker-item">Cargando cotizaciones…</span>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap hero-inner">
+    <div>
+      <div class="eyebrow mono">Terminal de trading cripto</div>
+      <h1>Trading</h1>
+      <p>Bienvenidos a nuestra sección de Trading en el emocionante mundo de Bitcoin y criptoactivos.</p>
+      <p>Aquí te sumergirás en el fascinante universo de las operaciones financieras con criptomonedas, donde el arte de tomar decisiones informadas se combina con la tecnología de vanguardia.</p>
+      <div class="hero-actions">
+        <a class="btn btn-solid" href="#pulso">Ver pulso del mercado</a>
+        <a class="btn" href="https://es.tradingview.com/?aff_id=122487">Abrir TradingView</a>
+      </div>
+    </div>
+    <div>
+      <svg class="candles" viewBox="0 0 260 160" xmlns="http://www.w3.org/2000/svg">
+        <g stroke="#3a4257" stroke-width="1">
+          <line x1="20" y1="10" x2="20" y2="150"/><line x1="50" y1="10" x2="50" y2="150"/>
+          <line x1="80" y1="10" x2="80" y2="150"/><line x1="110" y1="10" x2="110" y2="150"/>
+          <line x1="140" y1="10" x2="140" y2="150"/><line x1="170" y1="10" x2="170" y2="150"/>
+          <line x1="200" y1="10" x2="200" y2="150"/><line x1="230" y1="10" x2="230" y2="150"/>
+        </g>
+        <g>
+          <rect x="14" y="60" width="12" height="35" fill="#22e6a1"/><line x1="20" y1="45" x2="20" y2="105" stroke="#22e6a1"/>
+          <rect x="44" y="40" width="12" height="55" fill="#ff4d6a"/><line x1="50" y1="30" x2="50" y2="105" stroke="#ff4d6a"/>
+          <rect x="74" y="70" width="12" height="20" fill="#22e6a1"/><line x1="80" y1="55" x2="80" y2="100" stroke="#22e6a1"/>
+          <rect x="104" y="30" width="12" height="60" fill="#22e6a1"/><line x1="110" y1="15" x2="110" y2="100" stroke="#22e6a1"/>
+          <rect x="134" y="50" width="12" height="30" fill="#ff4d6a"/><line x1="140" y1="35" x2="140" y2="90" stroke="#ff4d6a"/>
+          <rect x="164" y="20" width="12" height="65" fill="#22e6a1"/><line x1="170" y1="8" x2="170" y2="95" stroke="#22e6a1"/>
+          <rect x="194" y="45" width="12" height="40" fill="#ff4d6a"/><line x1="200" y1="30" x2="200" y2="95" stroke="#ff4d6a"/>
+          <rect x="224" y="55" width="12" height="25" fill="#22e6a1"/><line x1="230" y1="42" x2="230" y2="90" stroke="#22e6a1"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="video-frame" style="max-width:560px;margin:2rem 0;">
+    <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+    <iframe src="https://www.youtube.com/embed/EOgUcbVdbWw?si=XbD3vByjtWATRe3-" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+  </div>
+  <p>Explora y domina este emocionante campo con nosotros.</p>
+</div>
+
+<!-- PULSO DEL MERCADO (CoinGecko en vivo) -->
+<section id="pulso">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow mono">Datos en vivo · CoinGecko API</div>
+      <h2>Pulso del mercado</h2>
+    </div>
+    <div class="grid3">
+      <div class="panel" id="pulse-btc">
+        <div class="stat"><div class="label">Bitcoin (BTC)</div><div class="num">…</div></div>
+      </div>
+      <div class="panel" id="pulse-global">
+        <div class="stat"><div class="label">Cap. de mercado global</div><div class="num">…</div></div>
+      </div>
+      <div class="panel" id="pulse-dominance">
+        <div class="stat"><div class="label">Dominancia BTC</div><div class="num">…</div></div>
+      </div>
+    </div>
+
+    <div class="grid2" style="margin-top:1.4rem;">
+      <div class="panel">
+        <h4>Mayores subas 24h</h4>
+        <div id="movers-up"><p class="crypto-error"></p></div>
+      </div>
+      <div class="panel">
+        <h4>Mayores bajas 24h</h4>
+        <div id="movers-down"></div>
+      </div>
+    </div>
+
+    <div class="panel" style="margin-top:1.4rem;">
+      <h4>Monedas en tendencia</h4>
+      <ul class="trend-list" id="trend-list"><li>Cargando…</li></ul>
+    </div>
+  </div>
+</section>
+
+<!-- PILARES -->
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow mono">Cuatro frentes de trabajo</div>
+      <h2>Lo que vas a encontrar acá</h2>
+    </div>
+    <div class="grid2">
+      <div class="panel">
+        <h4>Análisis técnico profundo</h4>
+        <p>Nuestra plataforma te brinda acceso a análisis técnicos exhaustivos, herramientas y recursos de TradingView, una de las principales fuentes para traders. Aprenderás a interpretar gráficos, identificar patrones, y anticipar movimientos del mercado a través de análisis fundamentales y técnicos actualizados.</p>
+      </div>
+      <div class="panel">
+        <h4>Trading algorítmico</h4>
+        <p>Adéntrate en el futuro del trading con algoritmos y bots. Descubre cómo automatizar tus estrategias, optimizar tus operaciones y mantener un control preciso sobre tus inversiones. Obtén información sobre los últimos avances en el trading algorítmico y cómo aplicarlos en el mercado de criptoactivos.</p>
+      </div>
+      <div class="panel">
+        <h4>Trading de futuros</h4>
+        <p>Si estás buscando más oportunidades y un mayor control de riesgos, el trading de futuros puede ser tu próximo paso. Aprende cómo funcionan los contratos de futuros en criptomonedas y cómo aprovechar su potencial para ganar en mercados alcistas y bajistas.</p>
+      </div>
+      <div class="panel">
+        <h4>Actualizaciones en tiempo real</h4>
+        <p>Mantente siempre actualizado con las últimas tendencias y noticias en tiempo real. Nuestros expertos en el mercado cripto están atentos a los eventos que impactan los precios y te brindan información oportuna y precisa.</p>
+      </div>
+    </div>
+    <p style="margin-top:1.6rem;">Entra en la sección de Trading y comienza tu viaje para convertirte en un trader de criptoactivos experto. Ya seas un principiante o un profesional, aquí encontrarás recursos valiosos y contenido informativo que te ayudará a alcanzar tus objetivos. La próxima gran operación está a solo un clic de distancia. ¡Vamos a hacer trading!</p>
+  </div>
+</section>
+
+<!-- CURSOS -->
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow mono">Formación en video</div>
+      <h2>Cursos de trading en video</h2>
+      <p>Se concentra en las bases estratégicas del trading, indicadores clave, robots algorítmicos de trading y programación para trading.</p>
+    </div>
+    <div class="grid2">
+      <div class="video-frame"><div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+        <iframe src="https://www.youtube.com/embed/r7qG-f4v9NI" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+      <div class="video-frame"><div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+        <iframe src="https://www.youtube.com/embed/wy4onaf39RA?si=xIKxnqdGTPIVx4vc" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+      <div class="video-frame"><div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+        <iframe src="https://www.youtube.com/embed/avuB1KgUa94" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+      <div class="video-frame"><div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+        <iframe src="https://www.youtube.com/embed/Z-11MBl5zkA?si=M0fJx683ErRV7QQE" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+    </div>
+    <div style="margin-top:1.6rem;">
+      <a class="btn btn-solid" href="https://youtube.com/playlist?list=PLtlK3quyjL7Lv9sGo9nYMNbgmMNV1oVbP&si=eyozqzIPXbfo9Eg0">De Cero a Trader</a>
+    </div>
+    <div style="margin-top:1.6rem;">
+      <a class="pill" href="https://finviz.com/crypto.ashx">Finviz</a>
+      <a class="pill" href="https://www.youtube.com/playlist?list=PLLn4FI-QwwqED_sk3t1wANB8U9yn7weHj">Análisis Técnico de los Mercados Financieros</a>
+      <a class="pill" href="https://colab.research.google.com/drive/1_1kxEiuh_Zt-WdxUUA-TfIWkDT9zLOeT#scrollTo=nrDs9oMGD3fG">Estudio de Estrategias</a>
+      <a class="pill" href="https://play.google.com/books/reader?id=kgNcEAAAQBAJ&pg=GBS.PA1">Python para Finanzas</a>
+      <a class="pill" href="https://www.youtube.com/@finanzascuantitativaspy8837">Python para Finanzas Quant</a>
+    </div>
+  </div>
+</section>
+
+<!-- MERCADO / TRADINGVIEW -->
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow mono">Gráficos en vivo</div>
+      <h2><a href="https://es.tradingview.com/markets/cryptocurrencies/">Mercado de criptomonedas</a></h2>
+    </div>
+    <h3><a href="https://es.tradingview.com/?aff_id=122487">TradingView: Tu Plataforma de Análisis Financiero en Tiempo Real</a></h3>
+    <p>TradingView es una de las herramientas más poderosas y versátiles para cualquier persona interesada en el análisis financiero y, en particular, en el mundo de las criptomonedas. Esta plataforma en línea te brinda la capacidad de explorar una amplia variedad de mercados, desde acciones y divisas hasta criptoactivos, y todo en tiempo real.</p>
+    <p>Una de las características sobresalientes de TradingView es su interfaz amigable y altamente personalizable. Puedes adaptar los gráficos y las herramientas a tus necesidades específicas, lo que facilita el análisis técnico y fundamental. Además, TradingView ofrece una comunidad activa de traders y analistas que comparten ideas, estrategias y análisis, lo que te permite aprender y mejorar tus habilidades.</p>
+    <p>En el contexto de las criptomonedas, TradingView se destaca por proporcionar datos actualizados y precisos de una amplia gama de exchanges. Esto te permite realizar un seguimiento en tiempo real de los precios y volúmenes de negociación, lo que es esencial para tomar decisiones informadas en un mercado tan volátil como el de las criptomonedas.</p>
+    <p>Ya seas un trader experimentado o un principiante que recién comienza a explorar el emocionante mundo de las criptomonedas, TradingView se convertirá en una herramienta esencial en tu arsenal. No importa si tu enfoque es el análisis técnico, el análisis fundamental o una combinación de ambos, esta plataforma te brindará las herramientas y los recursos necesarios para tomar decisiones inteligentes y, con suerte, obtener beneficios en los mercados financieros.</p>
+
+    <a href="https://es.tradingview.com/?aff_id=122487" target="_blank" class="logo-link" style="max-width:280px;margin:1.4rem 0;">
+      <img loading="lazy" alt="TradingView" src="IMG/TradingView.jfif">
+    </a>
+
+    <div class="panel">
+      <div class="bar" style="margin:-1.6rem -1.6rem 1rem;"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+      <script src="https://s3.tradingview.com/tv.js"></script>
+      <div class="tradingview-widget-container">
+        <div id="tradingview_123456"></div>
+      </div>
+      <script type="text/javascript">
+        new TradingView.widget({
+          "symbol": "BITSTAMP:BTCUSD",
+          "interval": "1",
+          "timezone": "Etc/UTC",
+          "theme": "dark",
+          "style": "1",
+          "locale": "en",
+          "toolbar_bg": "#0b1120",
+          "enable_publishing": false,
+          "allow_symbol_change": true,
+          "container_id": "tradingview_123456"
+        });
+      </script>
+    </div>
+  </div>
+</section>
+
+<!-- ALGORITMICO -->
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow mono">Automatización</div>
+      <h2>Trading algorítmico</h2>
+    </div>
+    <div class="grid2">
+      <div class="video-frame"><div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+        <iframe src="https://www.youtube.com/embed/ZG_Iujdo2ls" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+      <div class="video-frame"><div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+        <iframe src="https://www.youtube.com/embed/uZ_TI15T8No" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+    </div>
+
+    <h4 style="margin-top:2rem;">Libro Trading Algorítmico</h4>
+    <div class="grid2">
+      <a href="landing-claude-trading-algoritmico.html" target="_blank" class="logo-link">
+        <img loading="lazy" alt="Claude para el Trading" src="IMG/ClaudeparaelTrading.png">
+      </a>
+      <a href="https://play.google.com/books/reader?id=Y4zqEAAAQBAJ&hl=es_US" target="_blank" class="logo-link">
+        <img loading="lazy" alt="Trading Algorítmico" src="IMG/LibroTradingAlgoritmico.jpg">
+      </a>
+    </div>
+
+    <div style="margin-top:1.6rem;">
+      <a class="pill" href="https://www.mtrschool.com.ar/programa-de-formacion-en-trading-algoritmico/?gclid=EAIaIQobChMIw8qntJOZhQMVKVi4BB3bHAY4EAEYASAAEgKu__D_BwE">Programa de Formación en Trading Algorítmico MATBA ROFEX</a>
+      <a class="pill" href="https://geekflare.com/es/crypto-trading-bots/">16 mejores robots de comercio de criptomonedas para el comercio automatizado</a>
+      <a class="pill" href="https://ridian.io/">Ridian</a>
+    </div>
+
+    <details class="readmore" style="margin-top:1.8rem;">
+      <summary><a href="https://www.atpbot.com/es?utm_source=criptonoticias&utm_medium=pr&utm_campaign=20231206">ATPBot</a> — leer análisis completo</summary>
+      <p>En el vertiginoso mundo de los mercados financieros, la competencia es feroz. Los traders, tanto novatos como profesionales experimentados, buscan constantemente la ventaja que les dará la superioridad. Es aquí donde brilla ATPBot, una plataforma de comercio impulsada por la inteligencia artificial. Ha interrumpido el panorama tradicional del comercio al ofrecer un enfoque único que no solo compite con los traders experimentados, sino que a menudo los supera. En este artículo, exploraremos cómo ATPBot logra vencer a los profesionales en el ámbito del comercio.</p>
+      <p>Una de las áreas clave en las que sobresale ATPBot es en velocidad y precisión. Mientras que los traders humanos están limitados por sus tiempos de reacción, emociones y resistencia física, ATPBot opera las 24 horas del día, los 7 días de la semana, con una velocidad y precisión inigualables. Procesa instantáneamente vastas cantidades de datos, identifica oportunidades y ejecuta operaciones con una precisión en fracciones de segundo. Esta ventaja de velocidad permite a ATPBot explotar las ineficiencias del mercado que los traders humanos podrían pasar por alto.</p>
+      <p>La fortaleza de ATPBot radica en su capacidad para analizar conjuntos masivos de datos y reconocer patrones complejos. Puede procesar datos históricos del mercado y utilizar algoritmos de aprendizaje automático para identificar tendencias y anomalías que podrían escapar a la percepción humana. Aprende de sus experiencias y refina continuamente sus estrategias, adaptándose a las cambiantes condiciones del mercado.</p>
+      <p>Las emociones pueden nublar el juicio de un trader y llevar a decisiones impulsivas. El miedo y la avaricia pueden hacer que los traders mantengan posiciones perdedoras o salgan de operaciones ganadoras prematuramente. ATPBot, por otro lado, opera sin emociones. Sigue un conjunto predefinido de reglas y parámetros, ejecutando operaciones basadas únicamente en datos y algoritmos. Esta desconexión emocional es una ventaja significativa, especialmente en mercados volátiles.</p>
+      <p>ATPBot viene con características de gestión de riesgos integradas. Puede configurar automáticamente niveles de stop-loss y take-profit, asegurando que las pérdidas se minimicen y las ganancias estén protegidas. Esta gestión de riesgos disciplinada es crucial para el éxito a largo plazo en el comercio y ayuda a ATPBot a mantener un rendimiento constante.</p>
+      <p>Los traders humanos están limitados por la cantidad de operaciones que pueden gestionar activamente. ATPBot, sin embargo, puede manejar simultáneamente una multitud de pares de divisas y ejecutar un gran número de operaciones. Esta escalabilidad le permite diversificarse entre diferentes activos y estrategias, reduciendo el riesgo y optimizando los rendimientos.</p>
+      <p>ATPBot es una máquina que aprende y evoluciona. No descansa; está continuamente refinando sus estrategias, aprendiendo tanto de los éxitos como de los fracasos. Esta adaptabilidad es una herramienta poderosa para mantenerse a la vanguardia en el mundo en constante cambio de los mercados financieros.</p>
+      <p>Mientras que los humanos necesitan descansar y dormir, ATPBot opera las 24 horas del día, los 7 días de la semana, monitoreando las condiciones del mercado y ejecutando operaciones a medida que surgen oportunidades. Esta capacidad de estar alerta y responder en todo momento otorga a ATPBot una ventaja significativa.</p>
+      <p>ATPBot ofrece accesibilidad y transparencia que incluso los profesionales experimentados pueden no tener. Los usuarios pueden acceder a sus cuentas de trading en cualquier momento, revisar operaciones pasadas y supervisar el rendimiento de las estrategias elegidas. Este nivel de transparencia brinda a los usuarios un control total sobre sus inversiones.</p>
+      <p>En conclusión, el éxito de ATPBot en vencer a los profesionales del comercio se debe a su velocidad, precisión, operaciones sin emociones, gestión de riesgos, escalabilidad, aprendizaje continuo, monitoreo las 24 horas del día, los 7 días de la semana y accesibilidad. Si bien los traders humanos sin duda poseen habilidades e ideas valiosas, ATPBot complementa y mejora sus habilidades aprovechando el poder de la inteligencia artificial y la automatización. El resultado es una plataforma de comercio que no solo compite con los profesionales, sino que a menudo supera su rendimiento, convirtiéndose en una fuerza formidable en el mundo de los mercados financieros.</p>
+    </details>
+  </div>
+</section>
+
+<!-- PLATAFORMAS -->
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow mono">Exchanges y brokers</div>
+      <h2>Algunas plataformas de trading para empezar a operar</h2>
+    </div>
+    <div class="grid4">
+      <a href="https://accounts.binance.info/register?ref=11305529" target="_blank" class="logo-link">
+        <img loading="lazy" alt="Binance" src="IMG/Binance-tutorial-intercambios-criptomonedas-1.jpg.webp">
+      </a>
+      <a href="https://primexbt.com?signup=254484" target="_blank" class="logo-link">
+        <img loading="lazy" alt="PrimeXBT" src="IMG/PRIMEXBT.jfif">
+      </a>
+      <a href="https://www.bybit.com/invite?ref=J0R9EY" target="_blank" class="logo-link">
+        <img loading="lazy" alt="Bybit" src="IMG/BybitNextLevelTrading.png">
+      </a>
+      <a href="https://onelink.to/quantfury-es" target="_blank" class="logo-link">
+        <img loading="lazy" alt="Quantfury" src="IMG/Quantfury.jfif">
+      </a>
+    </div>
+
+    <div class="video-frame" style="max-width:560px;margin:1.8rem 0;">
+      <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+      <iframe src="https://www.youtube.com/embed/cG84eEghqtk?si=WpewMYIVftew9ZXY&amp;start=26" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    </div>
+
+    <p>Únete a Quantfury y ambos recibiremos una acción gratuita como AAPL o UBER. ¡Opera a precios spot de los exchanges globales en tiempo real y libre de comisiones! Descarga Quantfury <a href="https://onelink.to/quantfury-es">https://onelink.to/quantfury-es</a>, usa mi código de invitación: 9MZP7133</p>
+    <p>Opera e invierte SIN comisiones ni tarifas de préstamo a precios spot en tiempo real desde las bolsas NYSE, Nasdaq, CME, CBOE Europe, Binance y Coinbase.</p>
+
+    <iframe src="https://open.spotify.com/embed/episode/6OFhDMPNSS5nWB9jYhYgoO?utm_source=generator" width="100%" height="232" frameborder="0" style="margin-top:1.4rem;" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+
+    <p style="margin-top:1.8rem;"><a href="https://tradingdifferent.com/dashboard">Trading Different</a></p>
+    <p>En la era digital y financiera actual, las plataformas de herramientas de trading desempeñan un papel crucial en la participación de individuos y empresas en los mercados financieros. "TRADING DIFFERENT" es una de estas plataformas que busca facilitar el acceso al analisis de diversas opciones de inversión a través de sus herramientas de trading.</p>
+    <p>Una de las primeras impresiones al utilizar "TRADING DIFFERENT" es su interfaz y facilidad de uso. La plataforma ofrece una interfaz intuitiva y amigable para los usuarios, lo que facilita la navegación y el analisis de la información. La disposición de las funciones y herramientas es clara, lo que permite a los traders concentrarse en sus estrategias sin distracciones.</p>
+    <p>La provisión de herramientas de análisis y educación que ayuden a los traders a tomar decisiones informadas. "TRADING DIFFERENT" ofrece una variedad de herramientas de análisis técnico y fundamental, así como recursos educativos como webinars, tutoriales y artículos informativos. Estas herramientas y recursos son fundamentales para el desarrollo de habilidades y la comprensión del funcionamiento de los mercados financieros.</p>
+    <p>"TRADING DIFFERENT" es una plataforma de herramientas de trading que destaca por su interfaz intuitiva, variedad de activos, herramientas de análisis y educación, así como por su compromiso con la seguridad y la regulación. Si bien cada trader tiene necesidades y objetivos específicos, esta plataforma ofrece una sólida base para aquellos que buscan participar en los mercados financieros de manera efectiva y segura.</p>
+    <p><a href="https://www.youtube.com/@TradingDifferent/featured">Canal Trading Different</a></p>
+  </div>
+</section>
+
+<div class="wrap" style="padding:2rem 1.5rem;">
+  <div id="disqus_thread"></div>
+  <script>
+    (function() {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://https-diegobeltramobitcoin-netlify-app.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+<footer class="site-footer">
+  <div class="social-row">
+    <a href="https://www.facebook.com/diego.beltramo"><i class="fab fa-facebook-f"></i></a>
+    <a href="https://twitter.com/diego_beltramo"><i class="fab fa-twitter"></i></a>
+    <a href="https://www.instagram.com/crdiegobeltramo/"><i class="fab fa-instagram"></i></a>
+    <a href="https://www.linkedin.com/in/diego-eduardo-beltramo-027600127/"><i class="fab fa-linkedin"></i></a>
+    <a href="https://www.youtube.com/@diegoeduardobeltramo5936"><i class="fab fa-brands fa-youtube"></i></a>
+    <a href="https://github.com/crdiegobeltramo"><i class="fab fa-brands fa-github-alt"></i></a>
+    <a href="https://medium.com/@crdiegobeltramo"><i class="fab fa fa-brands fa-medium"></i></a>
+    <a href="https://wa.link/p2aj53" target="_blank"><img src="IMG/WhatsappDiegoBeltramo.png" width="20px" alt="WhatsApp"></a>
+  </div>
+  <p class="mono">Cr Diego Eduardo Beltramo</p>
+  <p>Queremos enfatizar que toda la información proporcionada en este sitio web tiene únicamente fines educativos y de entretenimiento. En ningún caso debe considerarse como asesoramiento financiero o consejo de inversión. Las criptomonedas y los activos digitales son altamente volátiles y conllevan riesgos significativos. Antes de tomar cualquier decisión de inversión, es esencial realizar tu propio análisis exhaustivo e investigación. No nos hacemos responsables de ninguna pérdida o daño que pueda resultar de la confianza en la información presentada aquí. Te animamos a buscar asesoramiento profesional y a tomar decisiones informadas y responsables en relación con tus inversiones en criptoactivos.</p>
+</footer>
+
+<script src="https://kit.fontawesome.com/183f2a4aef.js" crossorigin="anonymous"></script>
+
+<script>
+(function(){
+  const API = "https://api.coingecko.com/api/v3";
+
+  function fmtUSD(v, opts={}) {
+    if (v === null || v === undefined) return "-";
+    return new Intl.NumberFormat("en-US", { style:"currency", currency:"USD",
+      minimumFractionDigits: opts.min ?? (v < 1 ? 4 : 2),
+      maximumFractionDigits: opts.max ?? (v < 1 ? 6 : 2) }).format(v);
+  }
+  function fmtCompact(v) {
+    if (v === null || v === undefined) return "-";
+    return new Intl.NumberFormat("en-US", { style:"currency", currency:"USD", notation:"compact", maximumFractionDigits:1 }).format(v);
+  }
+  function fmtPct(v) {
+    if (v === null || v === undefined) return "-";
+    return `${v >= 0 ? "+" : ""}${v.toFixed(2)}%`;
+  }
+  function flash(el){ el.classList.remove("flash"); void el.offsetWidth; el.classList.add("flash"); }
+
+  const TICKER_IDS = ["bitcoin","ethereum","tether","binancecoin","solana","ripple","tron","dogecoin"];
+
+  async function renderTicker() {
+    const track = document.getElementById("ticker-track");
+    try {
+      const url = `${API}/simple/price?ids=${TICKER_IDS.join(",")}&vs_currencies=usd&include_24hr_change=true`;
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(res.status);
+      const data = await res.json();
+      const items = TICKER_IDS.map(id => {
+        const d = data[id];
+        if (!d) return "";
+        const cls = d.usd_24h_change >= 0 ? "up" : "down";
+        return `<span class="ticker-item"><b>${id.toUpperCase().slice(0,3)}</b> ${fmtUSD(d.usd)} <span class="${cls}">${fmtPct(d.usd_24h_change)}</span></span>`;
+      }).join("");
+      track.innerHTML = items + items; // duplicado para loop continuo
+    } catch (err) {
+      track.innerHTML = `<span class="ticker-item crypto-error">No se pudo cargar la cotización en vivo.</span>`;
+    }
+  }
+
+  async function renderPulse() {
+    const btcBox = document.querySelector("#pulse-btc .stat");
+    const globalBox = document.querySelector("#pulse-global .stat");
+    const domBox = document.querySelector("#pulse-dominance .stat");
+    try {
+      const [btcRes, globalRes] = await Promise.all([
+        fetch(`${API}/coins/markets?vs_currency=usd&ids=bitcoin&price_change_percentage=24h`),
+        fetch(`${API}/global`)
+      ]);
+      const btc = (await btcRes.json())[0];
+      const global = (await globalRes.json()).data;
+
+      const cls = btc.price_change_percentage_24h >= 0 ? "up" : "down";
+      btcBox.innerHTML = `<div class="label">Bitcoin (BTC)</div><div class="num">${fmtUSD(btc.current_price)}</div><div class="${cls}">${fmtPct(btc.price_change_percentage_24h)} 24h</div>`;
+      globalBox.innerHTML = `<div class="label">Cap. de mercado global</div><div class="num">${fmtCompact(global.total_market_cap.usd)}</div><div class="label">${global.active_cryptocurrencies} monedas activas</div>`;
+      domBox.innerHTML = `<div class="label">Dominancia BTC</div><div class="num">${global.market_cap_percentage.btc.toFixed(1)}%</div><div class="label">ETH ${global.market_cap_percentage.eth.toFixed(1)}%</div>`;
+      [btcBox, globalBox, domBox].forEach(flash);
+    } catch (err) {
+      btcBox.innerHTML = `<p class="crypto-error">No se pudieron cargar los datos.</p>`;
+    }
+  }
+
+  async function renderMovers() {
+    const upBox = document.getElementById("movers-up");
+    const downBox = document.getElementById("movers-down");
+    try {
+      const url = `${API}/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=60&page=1&price_change_percentage=24h`;
+      const res = await fetch(url);
+      const coins = (await res.json()).filter(c => c.price_change_percentage_24h !== null);
+      const sorted = [...coins].sort((a,b) => b.price_change_percentage_24h - a.price_change_percentage_24h);
+      const gainers = sorted.slice(0,5);
+      const losers = sorted.slice(-5).reverse();
+
+      const row = c => `
+        <div class="mover-row">
+          <span class="coin"><img src="${c.image}" alt=""> ${c.name}</span>
+          <span class="${c.price_change_percentage_24h >= 0 ? "up" : "down"}">${fmtPct(c.price_change_percentage_24h)}</span>
+        </div>`;
+      upBox.innerHTML = gainers.map(row).join("");
+      downBox.innerHTML = losers.map(row).join("");
+    } catch (err) {
+      upBox.innerHTML = `<p class="crypto-error">No se pudieron cargar los datos.</p>`;
+      downBox.innerHTML = "";
+    }
+  }
+
+  async function renderTrending() {
+    const list = document.getElementById("trend-list");
+    try {
+      const res = await fetch(`${API}/search/trending`);
+      const data = await res.json();
+      list.innerHTML = data.coins.slice(0,8).map((c,i) => `
+        <li><span class="trend-rank mono">${i+1}</span>
+          <img src="${c.item.small}" alt="">
+          <span>${c.item.name} <span class="mono" style="color:var(--text-dim);">(${c.item.symbol.toUpperCase()})</span></span>
+        </li>`).join("");
+    } catch (err) {
+      list.innerHTML = `<li class="crypto-error">No se pudieron cargar las tendencias.</li>`;
+    }
+  }
+
+  function init() {
+    renderTicker(); renderPulse(); renderMovers(); renderTrending();
+    setInterval(renderTicker, 60 * 1000);
+    setInterval(renderPulse, 5 * 60 * 1000);
+    setInterval(renderMovers, 5 * 60 * 1000);
+    setInterval(renderTrending, 5 * 60 * 1000);
+  }
+  document.addEventListener("DOMContentLoaded", init);
+})();
+</script>
+</body>
+</html>
