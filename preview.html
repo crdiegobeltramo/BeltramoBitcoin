@@ -1,0 +1,360 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Así era descargar el cliente y minar Bitcoin en 2009: una mirada a los primeros días de Bitcoin.">
+    <title>Así era realmente descargar y minar Bitcoin en 2009</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.8;
+            color: #333;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 20px;
+        }
+
+        article {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 30px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        h1, h2 {
+            color: #e67e22;
+        }
+
+        h1 {
+            font-size: 2rem;
+            line-height: 1.4;
+        }
+
+        h2 {
+            font-size: 1.4rem;
+            margin-top: 35px;
+            border-bottom: 2px solid #f1c27d;
+            padding-bottom: 8px;
+        }
+
+        ul, ol {
+            padding-left: 25px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        a {
+            color: #d97706;
+            overflow-wrap: anywhere;
+        }
+
+        pre {
+            background: #222;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+        }
+
+        code {
+            font-family: Consolas, monospace;
+        }
+
+        .intro {
+            font-size: 1.1rem;
+        }
+
+        .highlight {
+            background: #fff4e5;
+            border-left: 5px solid #f39c12;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .conclusion {
+            font-size: 1.15rem;
+            font-weight: bold;
+            color: #b45309;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+
+            article {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<article>
+
+    <header>
+        <h1>🧡 Así era realmente en 2009 descargar el cliente y minar Bitcoin</h1>
+
+        <p class="intro">
+            En 2009 no existían pools, no existían ASICs, no existían GPUs,
+            no existía ni siquiera un instalador bonito.
+        </p>
+
+        <p>Bitcoin era literalmente:</p>
+
+        <ul>
+            <li>👉 Un archivo ZIP</li>
+            <li>👉 Con un ejecutable único: <code>bitcoin.exe</code></li>
+            <li>👉 Que tenía wallet + nodo + minero CPU incorporado</li>
+        </ul>
+
+        <div class="highlight">
+            <strong>El mismo software hacía todo.</strong>
+            <p>Era tan simple que hoy parece chiste.</p>
+        </div>
+    </header>
+
+    <section>
+        <h2>🗂️ 1. DESCARGAR EL CLIENTE (2009)</h2>
+
+        <p>En 2009 se hacía así:</p>
+
+        <p>✔ Desde SourceForge (oficial en ese momento)</p>
+
+        <p>La página original fue:</p>
+
+        <p>
+            <a href="https://sourceforge.net/p/bitcoin/news/2009/01/bitcoin-v01-released---p2p-e-cash/"
+               target="_blank"
+               rel="noopener noreferrer">
+                https://sourceforge.net/projects/bitcoin/
+            </a>
+        </p>
+
+        <p>Allí estaba el archivo:</p>
+
+        <p>
+            <a href="http://bitcoin-0.1.0-win32.zip"
+               target="_blank"
+               rel="noopener noreferrer">
+                http://bitcoin-0.1.0-win32.zip
+            </a>
+        </p>
+
+        <p>Se descargaba el ZIP → se descomprimía → aparecía algo así:</p>
+
+        <pre><code>bitcoin.exe
+README.txt</code></pre>
+
+        <ul>
+            <li>No había instalador.</li>
+            <li>No había dependencias.</li>
+            <li>No había nada extra.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>💼 2. ABRIR EL PROGRAMA</h2>
+
+        <p>Simplemente hacías doble clic en:</p>
+
+        <pre><code>bitcoin.exe</code></pre>
+
+        <p>
+            Y aparecía una ventanita muy simple
+            (la primera GUI de Satoshi).
+        </p>
+
+        <p>Dentro incluía:</p>
+
+        <ul>
+            <li>Tu dirección Bitcoin (autogenerada)</li>
+            <li>Saldos</li>
+            <li>Registro de transacciones</li>
+            <li>Botón de minería por CPU</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>⛏️ 3. CÓMO SE MINABA BITCOIN EN 2009 (REAL)</h2>
+
+        <p>
+            La minería se hacía desde la GUI, o desde la consola, así:
+        </p>
+
+        <p>✔ En la interfaz gráfica (lo más usado en 2009):</p>
+
+        <p>Había una opción:</p>
+
+        <pre><code>[Generate Coins]</code></pre>
+
+        <p>Solo eso.</p>
+
+        <p>Un checkbox.</p>
+
+        <p>
+            Marcabas Generate → y tu CPU empezaba a minar.
+        </p>
+
+        <div class="highlight">
+            <strong>No hacía falta configurar nada.</strong>
+            <p>¡Todito era automático!</p>
+        </div>
+    </section>
+
+    <section>
+        <h2>💻 4. MINERÍA POR LÍNEA DE COMANDOS (2009)</h2>
+
+        <p>
+            La versión original ya tenía flags para generar bloques.
+        </p>
+
+        <p>Se abría la consola y se ejecutaba:</p>
+
+        <pre><code>bitcoin.exe -gen</code></pre>
+
+        <p>O si querías limitar CPUs:</p>
+
+        <pre><code>bitcoin.exe -gen=1</code></pre>
+
+        <p>Eso activaba el minado con tu procesador.</p>
+    </section>
+
+    <section>
+        <h2>📜 5. CÓMO FUNCIONABA LA MINERÍA DE CPU EN ESA ÉPOCA</h2>
+
+        <p>En 2009:</p>
+
+        <ul>
+            <li>Cualquier PC minaba.</li>
+            <li>Era solo CPU (GPU todavía NO existía).</li>
+            <li>La dificultad era extremadamente baja.</li>
+            <li>Un usuario podía encontrar bloques cada pocos minutos.</li>
+            <li>Cada bloque pagaba 50 BTC.</li>
+        </ul>
+
+        <p>
+            Había gente que generó miles de bitcoins sin saberlo,
+            dejando la PC prendida por la noche.
+        </p>
+    </section>
+
+    <section>
+        <h2>🗄️ 6. A DÓNDE IBAN LOS BTC MINADOS</h2>
+
+        <p>El cliente guardaba todo en:</p>
+
+        <pre><code>wallet.dat</code></pre>
+
+        <p>Ese archivo contenía:</p>
+
+        <ul>
+            <li>Claves privadas</li>
+            <li>Direcciones</li>
+            <li>Saldos</li>
+            <li>Transacciones</li>
+        </ul>
+
+        <p>Satoshi recomendaba respaldarlo en un pendrive.</p>
+    </section>
+
+    <section>
+        <h2>🚫 7. NO EXISTÍA TODAVÍA</h2>
+
+        <p>Para que tengas idea de lo primitivo (y hermoso):</p>
+
+        <ul>
+            <li>❌ No existían exchanges.</li>
+            <li>❌ No existían pools.</li>
+            <li>❌ No existían seeds.</li>
+            <li>❌ No existían fees dinámicos.</li>
+            <li>❌ No existían direcciones SegWit.</li>
+            <li>
+                ❌ No existía
+                <a href="http://blockchain.com"
+                   target="_blank"
+                   rel="noopener noreferrer">
+                    http://blockchain.com
+                </a>
+            </li>
+            <li>❌ No existía minería profesional.</li>
+        </ul>
+
+        <div class="highlight">
+            Era tu PC directamente conectada a un puñado de nodos.
+        </div>
+    </section>
+
+    <section>
+        <h2>🧪 8. RESUMEN REAL DEL PROCESO EN 2009</h2>
+
+        <ol>
+            <li>
+                <strong>Paso 1</strong>
+                <p>Entrar a SourceForge y descargar:</p>
+
+                <p>
+                    <a href="https://sourceforge.net/p/bitcoin/news/2009/01/bitcoin-v01-released---p2p-e-cash/"
+                       target="_blank"
+                       rel="noopener noreferrer">
+                        http://bitcoin-0.1.x-win32.zip
+                    </a>
+                </p>
+            </li>
+
+            <li>
+                <strong>Paso 2</strong>
+                <p>Descomprimir → Ejecutar <code>bitcoin.exe</code></p>
+            </li>
+
+            <li>
+                <strong>Paso 3</strong>
+                <p>El programa creaba tu wallet automáticamente.</p>
+            </li>
+
+            <li>
+                <strong>Paso 4</strong>
+                <p>Activar minería con:</p>
+
+                <ul>
+                    <li>Checkbox “Generate Coins”, o</li>
+                    <li><code>bitcoin.exe -gen</code></li>
+                </ul>
+            </li>
+
+            <li>
+                <strong>Paso 5</strong>
+                <p>Dejar la PC encendida.</p>
+                <p>→ Iban llegando bloques.</p>
+                <p>→ Iban apareciendo 50 BTC por bloque en tu wallet.</p>
+            </li>
+        </ol>
+    </section>
+
+    <footer>
+        <div class="highlight">
+            <p class="conclusion">
+                Así de fácil.
+                <br>
+                Demasiado fácil para ser verdad… pero así fue.
+            </p>
+        </div>
+    </footer>
+
+</article>
+
+</body>
+</html>
