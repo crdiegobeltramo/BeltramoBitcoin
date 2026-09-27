@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>IA para el Inversor — Servidor MCP</title>
+<style>
+:root{
+  --bg:#0a0e17; --bg2:#0f1524; --card:#141b2e; --card-border:#232c45;
+  --text:#e8ecf7; --muted:#8b94ad; --accent:#5ee3b0; --accent2:#7c9bff;
+  --accent3:#ff8a6b; --danger:#ff6b6b;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    --bg:#f5f7fb; --bg2:#eef1f8; --card:#ffffff; --card-border:#e2e6f0;
+    --text:#141a2b; --muted:#5b6480; --accent:#0ea472; --accent2:#3b5fe0; --accent3:#d9642f;
+  }
+}
+:root[data-theme="dark"]{ --bg:#0a0e17; --bg2:#0f1524; --card:#141b2e; --card-border:#232c45; --text:#e8ecf7; --muted:#8b94ad; }
+*{box-sizing:border-box;}
+html{scroll-padding-top:env(safe-area-inset-top,0px); scroll-behavior:smooth;}
+html,body{height:100%;}
+body{
+  margin:0; background:var(--bg); color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  overflow-x:hidden;
+}
+a{color:inherit;}
+
+/* ---------- animated background ---------- */
+.bg-orbs{position:fixed; inset:0; z-index:0; overflow:hidden; pointer-events:none;}
+.orb{position:absolute; border-radius:50%; filter:blur(80px); opacity:.35; animation:float 18s ease-in-out infinite;}
+.orb1{width:420px;height:420px; background:var(--accent); top:-120px; left:-100px; animation-delay:0s;}
+.orb2{width:380px;height:380px; background:var(--accent2); bottom:-140px; right:-80px; animation-delay:-6s;}
+.orb3{width:300px;height:300px; background:var(--accent3); top:40%; left:60%; animation-delay:-11s;}
+@keyframes float{
+  0%,100%{ transform:translate(0,0) scale(1); }
+  50%{ transform:translate(40px,-30px) scale(1.08); }
+}
+@media (prefers-reduced-motion: reduce){ .orb{animation:none;} html{scroll-behavior:auto;} }
+
+.wrap{position:relative; z-index:1; max-width:980px; margin:0 auto; padding:0 20px;}
+
+/* ---------- nav ---------- */
+nav{position:sticky; top:env(safe-area-inset-top,0px); z-index:10; backdrop-filter:blur(10px);
+  background:color-mix(in srgb, var(--bg) 75%, transparent); border-bottom:1px solid var(--card-border);}
+nav .wrap{display:flex; align-items:center; justify-content:space-between; padding:14px 20px;}
+.brand{display:flex; align-items:center; gap:10px; font-weight:700; letter-spacing:.2px;}
+.brand .dot{width:10px;height:10px;border-radius:50%; background:var(--accent); box-shadow:0 0 12px var(--accent);}
+nav .cta{font-size:14px; padding:8px 14px; border-radius:20px; background:var(--accent); color:#04150e; font-weight:700; text-decoration:none; white-space:nowrap;}
+
+/* ---------- hero ---------- */
+.hero{padding:72px 0 40px; text-align:center;}
+.eyebrow{display:inline-block; font-size:12px; letter-spacing:1.5px; text-transform:uppercase; color:var(--accent);
+  border:1px solid var(--card-border); padding:6px 14px; border-radius:999px; margin-bottom:22px; opacity:0; animation:rise .7s ease forwards;}
+h1{font-size:clamp(32px,6vw,54px); line-height:1.08; margin:0 0 18px; opacity:0; animation:rise .7s ease forwards .1s;
+  background:linear-gradient(90deg,var(--text),var(--accent2) 60%,var(--accent)); -webkit-background-clip:text; background-clip:text; color:transparent;}
+.sub{font-size:clamp(15px,2.2vw,19px); color:var(--muted); max-width:640px; margin:0 auto 34px; opacity:0; animation:rise .7s ease forwards .2s;}
+@keyframes rise{ from{opacity:0; transform:translateY(16px);} to{opacity:1; transform:translateY(0);} }
+
+.hero-actions{display:flex; gap:14px; justify-content:center; flex-wrap:wrap; opacity:0; animation:rise .7s ease forwards .3s;}
+.btn{display:inline-flex; align-items:center; gap:10px; padding:14px 26px; border-radius:14px; font-weight:700; font-size:15px;
+  text-decoration:none; border:1px solid transparent; cursor:pointer; transition:transform .15s ease, box-shadow .15s ease;}
+.btn:active{transform:scale(.97);}
+.btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent2)); color:#04150e; box-shadow:0 8px 30px -8px color-mix(in srgb, var(--accent) 60%, transparent);}
+.btn-primary:hover{box-shadow:0 12px 34px -6px color-mix(in srgb, var(--accent) 70%, transparent); transform:translateY(-2px);}
+.btn-ghost{background:transparent; border-color:var(--card-border); color:var(--text);}
+.btn-ghost:hover{border-color:var(--accent2); color:var(--accent2);}
+.hint{margin-top:14px; font-size:13px; color:var(--muted);}
+
+/* ---------- section shell ---------- */
+section{padding:52px 0; position:relative;}
+.section-head{text-align:center; margin-bottom:34px;}
+.section-head h2{font-size:clamp(24px,3.6vw,32px); margin:0 0 10px;}
+.section-head p{color:var(--muted); max-width:600px; margin:0 auto; font-size:15px;}
+.reveal{opacity:0; transform:translateY(22px); transition:opacity .6s ease, transform .6s ease;}
+.reveal.show{opacity:1; transform:translateY(0);}
+
+/* ---------- what is mcp ---------- */
+.mcp-flow{display:flex; align-items:center; justify-content:center; gap:10px; flex-wrap:wrap; margin:26px 0 8px;}
+.flow-node{background:var(--card); border:1px solid var(--card-border); border-radius:14px; padding:14px 18px; font-size:14px; font-weight:600; min-width:140px; text-align:center;}
+.flow-arrow{color:var(--accent); font-size:20px;}
+
+/* ---------- feature grid ---------- */
+.grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:16px;}
+.card{background:var(--card); border:1px solid var(--card-border); border-radius:18px; padding:22px; transition:transform .2s ease, border-color .2s ease;}
+.card:hover{transform:translateY(-4px); border-color:var(--accent2);}
+.card .icon{width:42px;height:42px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:20px; margin-bottom:14px;}
+.card h3{margin:0 0 8px; font-size:17px;}
+.card p{margin:0; color:var(--muted); font-size:14px; line-height:1.5;}
+.icon.i1{background:color-mix(in srgb, var(--accent) 18%, transparent); color:var(--accent);}
+.icon.i2{background:color-mix(in srgb, var(--accent2) 18%, transparent); color:var(--accent2);}
+.icon.i3{background:color-mix(in srgb, var(--accent3) 18%, transparent); color:var(--accent3);}
+
+/* ---------- tools table ---------- */
+.table-wrap{overflow-x:auto; border:1px solid var(--card-border); border-radius:16px; background:var(--card);}
+table{width:100%; border-collapse:collapse; font-size:14px; min-width:480px;}
+th,td{text-align:left; padding:14px 16px; border-bottom:1px solid var(--card-border);}
+th{color:var(--muted); font-weight:600; font-size:12px; text-transform:uppercase; letter-spacing:.5px;}
+tr:last-child td{border-bottom:none;}
+code{background:color-mix(in srgb, var(--accent2) 14%, transparent); color:var(--accent2); padding:2px 7px; border-radius:6px; font-size:13px;}
+
+/* ---------- install tabs ---------- */
+.tabs{display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin-bottom:24px;}
+.tab-btn{background:var(--card); border:1px solid var(--card-border); color:var(--muted); padding:10px 18px; border-radius:12px; font-weight:600; font-size:14px; cursor:pointer;}
+.tab-btn.active{background:var(--accent); color:#04150e; border-color:var(--accent);}
+.tab-panel{display:none; background:var(--card); border:1px solid var(--card-border); border-radius:18px; padding:26px;}
+.tab-panel.active{display:block; animation:fadeIn .35s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+.tab-panel h3{margin-top:0;}
+.tab-panel ol{padding-left:20px; line-height:1.9; font-size:14.5px;}
+.tab-panel pre{background:var(--bg2); border:1px solid var(--card-border); border-radius:12px; padding:16px; overflow-x:auto; font-size:13px; line-height:1.6;}
+.badge{display:inline-block; font-size:11px; font-weight:700; padding:3px 9px; border-radius:999px; margin-left:8px; vertical-align:middle;}
+.badge.remote{background:color-mix(in srgb, var(--accent2) 20%, transparent); color:var(--accent2);}
+.badge.local{background:color-mix(in srgb, var(--accent) 20%, transparent); color:var(--accent);}
+.note{font-size:13.5px; color:var(--muted); border-left:3px solid var(--accent3); padding:10px 14px; background:color-mix(in srgb, var(--accent3) 8%, transparent); border-radius:0 10px 10px 0; margin-top:14px;}
+
+/* ---------- footer ---------- */
+footer{padding:44px 0 60px; text-align:center; color:var(--muted); font-size:13px; border-top:1px solid var(--card-border);}
+
+@media (max-width:600px){
+  .hero{padding:56px 0 30px;}
+  section{padding:38px 0;}
+}
+</style>
+</head>
+<body>
+
+<div class="bg-orbs"><div class="orb orb1"></div><div class="orb orb2"></div><div class="orb orb3"></div></div>
+
+<nav>
+  <div class="wrap">
+    <div class="brand"><span class="dot"></span> IA para el Inversor · MCP</div>
+    <a class="cta" href="#descargar">Descargar</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <section class="hero">
+    <span class="eyebrow">Model Context Protocol · Open Source</span>
+    <h1>Llevá tu copiloto de inversiones<br>a Claude, ChatGPT, Gemini o Grok</h1>
+    <p class="sub">Un servidor MCP que conecta tu IA favorita con tu cartera real de IOL Inversiones:
+    optimización de Markowitz, stress testing, simulaciones "what if" y seguimiento de tesis de inversión.</p>
+    <div class="hero-actions">
+      <a href="#descargar" class="btn btn-primary">⬇ Descargar el MCP (.zip)</a>
+      <a href="#instalar" class="btn btn-ghost">Ver instrucciones de instalación</a>
+    </div>
+    <p class="hint">Gratis · Código abierto · Corre en tu propia máquina, tus datos no salen de tu control</p>
+  </section>
+
+  <section id="que-es" class="reveal">
+    <div class="section-head">
+      <h2>¿Qué es un servidor MCP?</h2>
+      <p>MCP (Model Context Protocol) es el estándar abierto que le permite a un asistente de IA
+      usar herramientas externas reales durante la conversación, en lugar de responder solo con lo que sabe de memoria.</p>
+    </div>
+    <div class="mcp-flow">
+      <div class="flow-node">🤖 Tu asistente<br>(Claude / ChatGPT / Gemini / Grok)</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node">🔌 Este servidor MCP</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node">📈 Tu cuenta de IOL Inversiones</div>
+    </div>
+  </section>
+
+  <section id="funciones" class="reveal">
+    <div class="section-head">
+      <h2>Qué puede hacer tu asistente con esto</h2>
+      <p>Seis capacidades de análisis de inversiones, disponibles como herramientas que tu IA puede invocar directamente.</p>
+    </div>
+    <div class="grid">
+      <div class="card"><div class="icon i1">💼</div><h3>Portfolio Manager</h3><p>Trae tu cartera actual, saldos, cotizaciones y series históricas directo desde IOL.</p></div>
+      <div class="card"><div class="icon i2">📐</div><h3>Optimización de Markowitz</h3><p>Calcula la cartera de máximo Sharpe o de mínima varianza para un retorno objetivo.</p></div>
+      <div class="card"><div class="icon i3">⚡</div><h3>Stress Testing</h3><p>Simulá shocks porcentuales (una caída, una devaluación) y mirá el impacto en tu cartera.</p></div>
+      <div class="card"><div class="icon i1">🔄</div><h3>Portfolio What If</h3><p>Simulá rebalancear a nuevos pesos objetivo sin mover un peso real todavía.</p></div>
+      <div class="card"><div class="icon i2">📝</div><h3>Thesis Tracker</h3><p>Registrá y consultá tus tesis de inversión por activo, con precio objetivo y horizonte.</p></div>
+      <div class="card"><div class="icon i3">🧭</div><h3>Resumen tipo copiloto</h3><p>Composición, concentración por activo y alertas automáticas de tu cartera.</p></div>
+    </div>
+  </section>
+
+  <section id="herramientas" class="reveal">
+    <div class="section-head">
+      <h2>Herramientas expuestas por el servidor</h2>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Herramienta</th><th>Qué hace</th></tr></thead>
+        <tbody>
+          <tr><td><code>get_portfolio</code></td><td>Cartera actual desde IOL</td></tr>
+          <tr><td><code>get_account_status</code></td><td>Saldos y estado de cuenta</td></tr>
+          <tr><td><code>get_quote</code></td><td>Cotización actual de un título</td></tr>
+          <tr><td><code>get_historical_prices</code></td><td>Serie histórica de precios</td></tr>
+          <tr><td><code>optimize_portfolio_markowitz</code></td><td>Cartera óptima (Sharpe / mín. varianza)</td></tr>
+          <tr><td><code>run_stress_test</code></td><td>Impacto de shocks % sobre la cartera</td></tr>
+          <tr><td><code>simulate_what_if</code></td><td>Rebalanceo simulado a nuevos pesos</td></tr>
+          <tr><td><code>add_investment_thesis</code> / <code>list_investment_thesis</code></td><td>Registrar y consultar tesis de inversión</td></tr>
+          <tr><td><code>get_portfolio_summary</code></td><td>Composición, concentración y alertas</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="descargar" class="reveal">
+    <div class="section-head">
+      <h2>Descargá el servidor</h2>
+      <p>Un único archivo .zip con el código Python, listo para instalar.</p>
+    </div>
+    <div style="text-align:center;">
+      <a id="download-link" class="btn btn-primary" download="iol-investment-mcp.zip" href="#">⬇ Descargar iol-investment-mcp.zip</a>
+      <p class="hint">Requiere Python 3.9+ y una cuenta activa en IOL Inversiones con API habilitada.</p>
+    </div>
+  </section>
+
+  <section id="instalar" class="reveal">
+    <div class="section-head">
+      <h2>Cómo instalarlo</h2>
+      <p>Elegí tu asistente. Cada uno conecta MCP servers de forma distinta.</p>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="claude">Claude</button>
+      <button class="tab-btn" data-tab="gemini">Gemini</button>
+      <button class="tab-btn" data-tab="grok">Grok</button>
+      <button class="tab-btn" data-tab="chatgpt">ChatGPT</button>
+    </div>
+
+    <div class="tab-panel active" id="panel-claude">
+      <h3>Claude Desktop <span class="badge local">servidor local</span></h3>
+      <ol>
+        <li>Descomprimí el .zip y, adentro de la carpeta, instalá dependencias: <code>pip install -r requirements.txt</code></li>
+        <li>Copiá <code>.env.example</code> a <code>.env</code> y completá tu usuario y clave de IOL.</li>
+        <li>Abrí la configuración de Claude Desktop: <strong>Settings → Developer → Edit Config</strong> (abre <code>claude_desktop_config.json</code>).</li>
+        <li>Agregá esta entrada, con las rutas completas a tu instalación:</li>
+      </ol>
+      <pre>{
+  "mcpServers": {
+    "ia-para-el-inversor": {
+      "command": "/ruta/completa/.venv/bin/python",
+      "args": ["/ruta/completa/iol-investment-mcp/server.py"],
+      "env": {
+        "IOL_USERNAME": "tu_usuario_iol",
+        "IOL_PASSWORD": "tu_password_iol"
+      }
+    }
+  }
+}</pre>
+      <ol start="5">
+        <li>Reiniciá Claude Desktop. Deberías ver el conector activo y sus herramientas disponibles en el chat.</li>
+      </ol>
+    </div>
+
+    <div class="tab-panel" id="panel-gemini">
+      <h3>Gemini CLI / Antigravity <span class="badge local">servidor local</span></h3>
+      <ol>
+        <li>Instalá dependencias igual que en el paso 1 de Claude, y configurá tu <code>.env</code>.</li>
+        <li>Editá <code>~/.gemini/settings.json</code> (o el equivalente de Antigravity) y agregá el servidor en <code>mcpServers</code>:</li>
+      </ol>
+      <pre>{
+  "mcpServers": {
+    "ia-para-el-inversor": {
+      "command": "/ruta/completa/.venv/bin/python",
+      "args": ["/ruta/completa/iol-investment-mcp/server.py"],
+      "env": {
+        "IOL_USERNAME": "tu_usuario_iol",
+        "IOL_PASSWORD": "tu_password_iol"
+      }
+    }
+  }
+}</pre>
+      <p class="note">Google migró Gemini CLI gratuito a Antigravity durante 2026; el bloque de configuración de MCP es prácticamente el mismo en ambos. Revisá la documentación oficial vigente si la ruta del archivo cambió.</p>
+    </div>
+
+    <div class="tab-panel" id="panel-grok">
+      <h3>Grok CLI / Grok Build <span class="badge local">servidor local</span></h3>
+      <ol>
+        <li>Instalá dependencias y configurá tu <code>.env</code> como en los casos anteriores.</li>
+        <li>Desde la terminal, registrá el servidor:</li>
+      </ol>
+      <pre>grok mcp add ia-para-el-inversor --scope user \
+  -- /ruta/completa/.venv/bin/python /ruta/completa/iol-investment-mcp/server.py</pre>
+      <p class="note">Esto aplica a Grok CLI / Grok Build, el agente de terminal de xAI. El Grok conversacional dentro de X no ofrece hoy una forma pública de conectar servidores MCP propios.</p>
+    </div>
+
+    <div class="tab-panel" id="panel-chatgpt">
+      <h3>ChatGPT <span class="badge remote">requiere servidor remoto</span></h3>
+      <p class="note">ChatGPT solo se conecta a servidores MCP remotos (HTTPS), no ejecuta servidores locales como este directamente. Para usarlo ahí primero hay que desplegarlo en un hosting propio (por ejemplo un VPS o servicio cloud) detrás de HTTPS.</p>
+      <ol>
+        <li>Desplegá <code>server.py</code> en un servidor con HTTPS accesible públicamente.</li>
+        <li>En ChatGPT: <strong>Settings → Connectors → Advanced → activar Developer mode</strong> (disponible en planes Plus/Pro/Team/Enterprise).</li>
+        <li>Agregá tu conector con la URL pública de tu servidor.</li>
+      </ol>
+    </div>
+  </section>
+
+  <footer>
+    Construido sobre el Model Context Protocol. Uso educativo/personal — no ejecuta operaciones de compra/venta.
+    <div style="margin-top:10px; color:var(--text); font-weight:600;">
+      Creado por Diego Eduardo Beltramo — Contador Público y Asesor Idóneo en el Mercado de Capitales CNV
+    </div>
+  </footer>
+</div>
+
+<script>
+// tabs
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('panel-'+btn.dataset.tab).classList.add('active');
+  });
+});
+// reveal on scroll
+try{
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('show'); } });
+  }, {threshold:.15});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+}catch(e){}
+// embedded download (data URI, no network needed)
+try{
+  const b64 = "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";
+  const link = document.getElementById('download-link');
+  link.href = "data:application/zip;base64," + b64;
+}catch(e){}
+</script>
+</body>
+</html>
