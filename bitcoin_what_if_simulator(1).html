@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bitcoin What If Simulator | Diego Beltramo Bitcoin</title>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            btc: {
+              DEFAULT: '#f7931a',
+              hover: '#e08313',
+              light: 'rgba(247, 147, 26, 0.15)',
+              glow: 'rgba(247, 147, 26, 0.4)'
+            },
+            sp500: '#3b82f6',
+            gold: '#eab308',
+            fiat: '#ef4444',
+            dark: {
+              bg: '#0b0f19',
+              card: '#111827',
+              border: '#1f2937',
+              inner: '#0d1322'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+    
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background-color: #0b0f19;
+      color: #f3f4f6;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0b0f19;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1f2937;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #374151;
+    }
+
+    canvas {
+      touch-action: none;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between antialiased selection:bg-btc selection:text-black">
+
+  <header class="border-b border-dark-border bg-dark-card/90 backdrop-blur-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-col md:flex-row justify-between items-center gap-4">
+      
+      <!-- Branding & Creator Profile -->
+      <div class="flex items-center gap-3">
+        <a href="https://diegobeltramobitcoin.netlify.app/" target="_blank" class="flex items-center gap-3 group">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-btc to-amber-600 flex items-center justify-center text-black font-extrabold text-xl shadow-lg group-hover:scale-105 transition-transform">
+            <i class="fa-bold fa-bitcoin text-2xl text-slate-950"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="font-bold text-lg tracking-tight text-white group-hover:text-btc transition-colors">Diego Beltramo</span>
+              <span class="text-xs bg-btc/20 text-btc px-2 py-0.5 rounded-full font-semibold border border-btc/30">Bitcoin</span>
+            </div>
+            <p class="text-xs text-gray-400">Simulador Macrofinanciero & Comparador de Activos</p>
+          </div>
+        </a>
+      </div>
+
+      <!-- Live Ticker Header -->
+      <div class="flex items-center gap-4 bg-dark-inner border border-dark-border px-4 py-2 rounded-xl text-sm w-full md:w-auto justify-between md:justify-end">
+        <div class="flex items-center gap-2">
+          <span class="relative flex h-2.5 w-2.5">
+            <span id="ping-indicator" class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+            <span id="dot-indicator" class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+          </span>
+          <span class="text-gray-400 font-medium">BTC/USDT:</span>
+          <span id="live-price" class="font-bold text-white text-base">Cargando...</span>
+        </div>
+
+        <div class="h-4 w-px bg-gray-700 hidden sm:block"></div>
+
+        <div class="hidden sm:flex items-center gap-3 text-xs">
+          <div>
+            <span class="text-gray-400">24h:</span>
+            <span id="live-change" class="font-semibold text-gray-300">--%</span>
+          </div>
+          <div>
+            <span class="text-gray-400">Vol:</span>
+            <span id="live-volume" class="font-semibold text-gray-300">--</span>
+          </div>
+        </div>
+
+        <span id="api-status-badge" class="text-[10px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 px-2 py-0.5 rounded font-mono">
+          Binance API
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full space-y-8">
+    
+    <!-- Hero / Header Banner -->
+    <section class="bg-gradient-to-r from-dark-card via-slate-900 to-dark-card border border-dark-border rounded-2xl p-6 sm:p-8 relative overflow-hidden">
+      <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-btc/10 rounded-full blur-3xl pointer-events-none"></div>
+      
+      <div class="relative z-10 max-w-4xl space-y-3">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-btc/10 border border-btc/30 text-btc text-xs font-semibold">
+          <i class="fa-solid fa-scale-balanced"></i> Simulador Multiactivo Avanzado
+        </div>
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+          Bitcoin <span class="text-transparent bg-clip-text bg-gradient-to-r from-btc via-amber-400 to-yellow-500">What If</span> Macro Simulator
+        </h1>
+        <p class="text-gray-300 text-sm sm:text-base leading-relaxed">
+          Simula estrategias DCA e inversión lump sum a diferentes plazos (<strong class="text-white">1, 3, 5 y 10 años</strong>) comparando el rendimiento real proyectado de <strong class="text-btc">Bitcoin</strong> contra el <strong class="text-blue-400">S&P 500</strong>, el <strong class="text-amber-400">Oro</strong> y la <strong class="text-red-400">devaluación por inflación del dinero fiat</strong>.
+        </p>
+      </div>
+    </section>
+
+    <!-- NAVIGATION TABS -->
+    <div class="flex flex-wrap gap-2 border-b border-dark-border pb-2">
+      <button onclick="switchTab('multi')" id="tab-btn-multi" class="tab-btn active px-4 py-2.5 rounded-xl font-medium text-sm flex items-center gap-2 transition-all bg-btc text-black font-bold shadow-lg">
+        <i class="fa-solid fa-chart-line"></i> Comparativa Multiactivo (BTC vs S&P500 vs Oro vs Cash)
+      </button>
+      <button onclick="switchTab('inflation')" id="tab-btn-inflation" class="tab-btn px-4 py-2.5 rounded-xl font-medium text-sm text-gray-400 hover:text-white hover:bg-dark-card flex items-center gap-2 transition-all">
+        <i class="fa-solid fa-fire text-red-400"></i> Pérdida de Poder Adquisitivo (Fiat Decay)
+      </button>
+      <button onclick="switchTab('target')" id="tab-btn-target" class="tab-btn px-4 py-2.5 rounded-xl font-medium text-sm text-gray-400 hover:text-white hover:bg-dark-card flex items-center gap-2 transition-all">
+        <i class="fa-solid fa-bullseye"></i> Escenario Precio Objetivo ("What If $X")
+      </button>
+      <button onclick="switchTab('market')" id="tab-btn-market" class="tab-btn px-4 py-2.5 rounded-xl font-medium text-sm text-gray-400 hover:text-white hover:bg-dark-card flex items-center gap-2 transition-all">
+        <i class="fa-solid fa-globe"></i> Capitalización de Mercado Global
+      </button>
+    </div>
+
+    <section id="tab-content-multi" class="tab-content space-y-6">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        <!-- Controls Panel -->
+        <div class="lg:col-span-4 bg-dark-card border border-dark-border rounded-2xl p-6 space-y-5">
+          <h2 class="text-lg font-bold text-white flex items-center gap-2">
+            <i class="fa-solid fa-sliders text-btc"></i> Parámetros de la Simulación
+          </h2>
+
+          <div class="space-y-4 text-sm">
+            
+            <!-- Tenencia Inicial en Bitcoin (BTC) -->
+            <div class="bg-btc/5 border border-btc/20 p-3.5 rounded-xl space-y-1.5">
+              <label for="initial-btc" class="block text-btc font-bold text-xs uppercase tracking-wider flex items-center gap-1.5">
+                <i class="fa-bold fa-bitcoin"></i> Tenencia Inicial en Bitcoin (BTC)
+              </label>
+              <div class="relative">
+                <input type="number" id="initial-btc" value="0.10" min="0" step="0.01" oninput="updateInitialBtcUsdEquivalent(); runMultiAssetSimulation();"
+                  class="w-full bg-dark-inner border border-btc/40 rounded-xl pl-3 pr-14 py-2.5 text-white font-bold text-base focus:outline-none focus:border-btc transition-colors">
+                <span class="absolute right-3 top-3 text-xs font-bold text-btc">BTC</span>
+              </div>
+              <p id="initial-btc-usd-hint" class="text-xs text-amber-400 font-semibold flex items-center gap-1">
+                <i class="fa-solid fa-coins"></i> Equivale a $0.00 USD
+              </p>
+              <p class="text-[11px] text-gray-400">Cantidad preexistente de BTC que posees antes de iniciar.</p>
+            </div>
+
+            <!-- Inversión Inicial Fiat Adicional -->
+            <div>
+              <label for="initial-capital" class="block text-gray-300 font-medium mb-1.5">
+                Inversión Inicial en Cash / Fiat ($ USD)
+              </label>
+              <div class="relative">
+                <span class="absolute left-3 top-2.5 text-gray-500 font-bold">$</span>
+                <input type="number" id="initial-capital" value="1000" min="0" step="100" onchange="runMultiAssetSimulation()"
+                  class="w-full bg-dark-inner border border-dark-border rounded-xl pl-8 pr-4 py-2.5 text-white font-semibold focus:outline-none focus:border-btc transition-colors">
+              </div>
+              <p class="text-xs text-gray-500 mt-1">Capital en efectivo adicional invertido al inicio.</p>
+            </div>
+
+            <!-- Aporte Mensual DCA -->
+            <div>
+              <label for="monthly-dca" class="block text-gray-300 font-medium mb-1.5">
+                Aporte Mensual Recurrente (DCA $ USD)
+              </label>
+              <div class="relative">
+                <span class="absolute left-3 top-2.5 text-gray-500 font-bold">$</span>
+                <input type="number" id="monthly-dca" value="100" min="0" step="10" onchange="runMultiAssetSimulation()"
+                  class="w-full bg-dark-inner border border-dark-border rounded-xl pl-8 pr-4 py-2.5 text-white font-semibold focus:outline-none focus:border-btc transition-colors">
+              </div>
+              <p class="text-xs text-gray-500 mt-1">Estrategia Dollar-Cost Averaging mensual.</p>
+            </div>
+
+            <!-- Horizonte Temporal / Plazo -->
+            <div>
+              <label for="timeframe-years" class="block text-gray-300 font-medium mb-1.5">
+                Horizonte Temporal de la Simulación
+              </label>
+              <select id="timeframe-years" onchange="runMultiAssetSimulation()"
+                class="w-full bg-dark-inner border border-dark-border rounded-xl px-3 py-2.5 text-white font-semibold focus:outline-none focus:border-btc transition-colors">
+                <option value="1">1 Año (12 Meses)</option>
+                <option value="3" selected>3 Años (36 Meses)</option>
+                <option value="5">5 Años (60 Meses)</option>
+                <option value="10">10 Años (120 Meses)</option>
+              </select>
+            </div>
+
+            <!-- Hipótesis Rendimiento / Precio Objetivo BTC -->
+            <div>
+              <label for="btc-cagr" class="block text-gray-300 font-medium mb-1.5">
+                Precio Objetivo de BTC o Tasa de Crecimiento Asumida
+              </label>
+              <select id="btc-cagr" onchange="runMultiAssetSimulation()"
+                class="w-full bg-dark-inner border border-dark-border rounded-xl px-3 py-2.5 text-white font-semibold focus:outline-none focus:border-btc transition-colors">
+                <optgroup label="-- Escenarios de Precio Objetivo --">
+                  <option value="target-100k">Precio Objetivo $100,000 USD</option>
+                  <option value="target-150k">Precio Objetivo $150,000 USD</option>
+                  <option value="target-250k">Precio Objetivo $250,000 USD</option>
+                  <option value="target-500k">Precio Objetivo $500,000 USD</option>
+                  <option value="target-1000k">Precio Objetivo $1,000,000 USD (Hiperbitcoinización I)</option>
+                  <option value="target-2000k">Precio Objetivo $2,000,000 USD (Hiperbitcoinización II)</option>
+                </optgroup>
+                <optgroup label="-- Tasas de Crecimiento Anual (CAGR) --">
+                  <option value="cagr-25">Conservador (25% Anual)</option>
+                  <option value="cagr-45" selected>Moderado / Tendencia Histórica (45% Anual)</option>
+                  <option value="cagr-75">Optimista Ciclo Halving (75% Anual)</option>
+                  <option value="cagr-100">Exponencial Adopción (100% Anual)</option>
+                </optgroup>
+              </select>
+              <p id="btc-cagr-info" class="text-xs text-btc font-medium mt-1.5"></p>
+            </div>
+
+            <!-- Inflación Fiat Anual -->
+            <div>
+              <label for="fiat-inflation-rate" class="block text-gray-300 font-medium mb-1.5">
+                Tasa de Inflación Fiat Estimada (% Anual USD)
+              </label>
+              <div class="relative">
+                <input type="number" id="fiat-inflation-rate" value="4.0" step="0.5" min="0" max="100" onchange="runMultiAssetSimulation()"
+                  class="w-full bg-dark-inner border border-dark-border rounded-xl pl-3 pr-8 py-2.5 text-white font-semibold focus:outline-none focus:border-btc transition-colors">
+                <span class="absolute right-3 top-2.5 text-gray-500 font-bold">%</span>
+              </div>
+              <p class="text-xs text-gray-500 mt-1">Refleja la pérdida de poder de compra del dinero en efectivo.</p>
+            </div>
+
+            <button onclick="runMultiAssetSimulation()" 
+              class="w-full bg-gradient-to-r from-btc to-amber-500 hover:from-btc-hover hover:to-amber-600 text-slate-950 font-bold py-3 px-4 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2">
+              <i class="fa-solid fa-calculator"></i> Ejecutar Simulación Multiactivo
+            </button>
+
+          </div>
+        </div>
+
+        <!-- Metrics & Interactive Canvas Chart -->
+        <div class="lg:col-span-8 space-y-6">
+          
+          <!-- Summary Comparison Cards -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            
+            <!-- Bitcoin Card -->
+            <div class="bg-dark-card border border-btc/40 p-4 rounded-xl relative overflow-hidden">
+              <div class="flex items-center justify-between mb-1">
+                <span class="text-xs font-bold text-btc flex items-center gap-1">
+                  <i class="fa-bold fa-bitcoin"></i> Bitcoin
+                </span>
+                <span id="badge-btc-roi" class="text-[10px] bg-btc/20 text-btc px-1.5 py-0.5 rounded font-mono font-bold">+0%</span>
+              </div>
+              <span id="res-val-btc" class="text-lg font-black text-white block mt-1">$0.00</span>
+              <span id="res-btc-accum" class="text-[11px] text-gray-400 block mt-0.5">0.0000 BTC</span>
+            </div>
+
+            <!-- S&P 500 Card -->
+            <div class="bg-dark-card border border-blue-500/40 p-4 rounded-xl">
+              <div class="flex items-center justify-between mb-1">
+                <span class="text-xs font-bold text-blue-400 flex items-center gap-1">
+                  <i class="fa-solid fa-chart-line"></i> S&P 500
+                </span>
+                <span id="badge-sp-roi" class="text-[10px] bg-blue-500/20 text-blue-400 px-1.5 py-0.5 rounded font-mono font-bold">+0%</span>
+              </div>
+              <span id="res-val-sp" class="text-lg font-black text-white block mt-1">$0.00</span>
+              <span class="text-[11px] text-gray-400 block mt-0.5">Rendimiento ~10% Anual</span>
+            </div>
+
+            <!-- Gold Card -->
+            <div class="bg-dark-card border border-amber-500/40 p-4 rounded-xl">
+              <div class="flex items-center justify-between mb-1">
+                <span class="text-xs font-bold text-amber-400 flex items-center gap-1">
+                  <i class="fa-solid fa-coins"></i> Oro Global
+                </span>
+                <span id="badge-gold-roi" class="text-[10px] bg-amber-500/20 text-amber-400 px-1.5 py-0.5 rounded font-mono font-bold">+0%</span>
+              </div>
+              <span id="res-val-gold" class="text-lg font-black text-white block mt-1">$0.00</span>
+              <span class="text-[11px] text-gray-400 block mt-0.5">Rendimiento ~7.5% Anual</span>
+            </div>
+
+            <!-- Cash / Inflation Card -->
+            <div class="bg-dark-card border border-red-500/40 p-4 rounded-xl">
+              <div class="flex items-center justify-between mb-1">
+                <span class="text-xs font-bold text-red-400 flex items-center gap-1">
+                  <i class="fa-solid fa-money-bill-wave"></i> Fiat en Efectivo
+                </span>
+                <span id="badge-fiat-loss" class="text-[10px] bg-red-500/20 text-red-400 px-1.5 py-0.5 rounded font-mono font-bold">-0%</span>
+              </div>
+              <span id="res-val-fiat" class="text-lg font-black text-white block mt-1">$0.00</span>
+              <span id="res-fiat-nominal" class="text-[11px] text-gray-400 block mt-0.5">Base Inicial + DCA: $0</span>
+            </div>
+
+          </div>
+
+          <!-- Multi-Line Canvas Chart Card -->
+          <div class="bg-dark-card border border-dark-border rounded-2xl p-5 space-y-4">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+              <div>
+                <h3 class="font-bold text-white text-base">Evolución Comparativa Multiactivo en el Tiempo</h3>
+                <p class="text-xs text-gray-400">Proyección ajustada a valor futuro nominal y poder de compra.</p>
+              </div>
+
+              <!-- Interactive Chart Legend -->
+              <div class="flex flex-wrap items-center gap-3 text-xs font-semibold">
+                <div class="flex items-center gap-1.5">
+                  <span class="w-3 h-3 rounded-full bg-btc inline-block"></span>
+                  <span class="text-gray-200">Bitcoin</span>
+                </div>
+                <div class="flex items-center gap-1.5">
+                  <span class="w-3 h-3 rounded-full bg-blue-500 inline-block"></span>
+                  <span class="text-gray-200">S&P 500</span>
+                </div>
+                <div class="flex items-center gap-1.5">
+                  <span class="w-3 h-3 rounded-full bg-amber-400 inline-block"></span>
+                  <span class="text-gray-200">Oro</span>
+                </div>
+                <div class="flex items-center gap-1.5">
+                  <span class="w-3 h-3 rounded-full bg-red-500 inline-block"></span>
+                  <span class="text-gray-200">Efectivo Fiat (Real)</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Canvas Element -->
+            <div class="relative h-[360px] w-full bg-dark-inner rounded-xl border border-dark-border p-2">
+              <canvas id="multiCanvas" class="w-full h-full block"></canvas>
+            </div>
+
+            <div class="flex justify-between items-center text-xs text-gray-400">
+              <div id="multi-winner-banner" class="font-bold text-btc flex items-center gap-1.5">
+                <i class="fa-solid fa-trophy"></i> Calculando mejor estrategia...
+              </div>
+              <div>
+                <i class="fa-solid fa-hand-pointer text-gray-500"></i> Pasa el cursor o toca el gráfico para ver detalle mes a mes.
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section id="tab-content-inflation" class="tab-content hidden space-y-6">
+      <div class="bg-dark-card border border-dark-border rounded-2xl p-6 sm:p-8 space-y-6">
+        <div>
+          <h2 class="text-xl font-bold text-white mb-1 flex items-center gap-2">
+            <i class="fa-solid fa-fire text-red-500"></i> Calculadora de Inflación Fiat vs Bitcoin (Efecto Impuesto Silencioso)
+          </h2>
+          <p class="text-gray-400 text-sm">
+            El dinero en efectivo no remunera y pierde poder adquisitivo año a año por la emisión monetaria. Descubre cómo afecta la inflación tus ahorros guardados en USD o moneda local frente a activos duros.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          
+          <div class="bg-dark-inner border border-dark-border p-5 rounded-xl space-y-4">
+            <div>
+              <label class="block text-gray-300 font-medium text-sm mb-1.5">Capital en Efectivo Guardado ($ USD)</label>
+              <div class="relative">
+                <span class="absolute left-3 top-2.5 text-gray-500 font-bold">$</span>
+                <input type="number" id="inf-capital" value="10000" min="100" step="500" oninput="calculateInflationDecay()"
+                  class="w-full bg-dark-card border border-dark-border rounded-xl pl-8 pr-3 py-2.5 text-white font-bold text-base focus:outline-none focus:border-red-500">
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-gray-300 font-medium text-sm mb-1.5">Años Guardado sin Invertir</label>
+              <input type="range" id="inf-years" min="1" max="20" value="5" oninput="calculateInflationDecay()"
+                class="w-full accent-red-500 bg-dark-card rounded-lg cursor-pointer">
+              <div class="flex justify-between text-xs text-gray-400 font-bold mt-1">
+                <span>1 Año</span>
+                <span id="inf-years-label" class="text-red-400 font-extrabold text-sm">5 Años</span>
+                <span>20 Años</span>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-gray-300 font-medium text-sm mb-1.5">Tasa de Inflación Anual Promedio (% p.a.)</label>
+              <select id="inf-rate-preset" onchange="calculateInflationDecay()"
+                class="w-full bg-dark-card border border-dark-border rounded-xl px-3 py-2.5 text-white font-bold text-sm focus:outline-none focus:border-red-500">
+                <option value="3">3% Anual (Promedio Inflación USD Histórico)</option>
+                <option value="5.5" selected>5.5% Anual (Promedio USD Reciente 2021-2024)</option>
+                <option value="12">12% Anual (Monedas Emergentes Moderadas)</option>
+                <option value="50">50% Anual (Monedas de Alta Devaluación)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="md:col-span-2 space-y-4">
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div class="bg-dark-inner border border-red-500/30 p-5 rounded-xl">
+                <span class="text-xs text-gray-400 font-medium">Poder Adquisitivo Real Resultante</span>
+                <h3 id="inf-real-power" class="text-2xl font-black text-red-400 mt-1">$0.00</h3>
+                <p id="inf-loss-percent" class="text-xs text-red-500 font-semibold mt-2">-0% de Poder de Compra Perdido</p>
+              </div>
+
+              <div class="bg-dark-inner border border-btc/30 p-5 rounded-xl">
+                <span class="text-xs text-gray-400 font-medium">Equivalente si hubiese estado en BTC (CAGR ~45%)</span>
+                <h3 id="inf-btc-equiv" class="text-2xl font-black text-btc mt-1">$0.00</h3>
+                <p id="inf-btc-multiple" class="text-xs text-emerald-400 font-semibold mt-2">0.0x vs Mantener Efectivo</p>
+              </div>
+            </div>
+
+            <div class="bg-dark-inner border border-dark-border p-5 rounded-xl space-y-3">
+              <span class="text-xs text-gray-400 font-medium block">Curva de Destrucción de Valor Fiat vs Crecimiento de Bitcoin</span>
+              <div class="relative h-[200px] w-full">
+                <canvas id="inflationCanvas" class="w-full h-full block"></canvas>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section id="tab-content-target" class="tab-content hidden space-y-6">
+      <div class="bg-dark-card border border-dark-border rounded-2xl p-6 sm:p-8 space-y-6">
+        
+        <div>
+          <h2 class="text-xl font-bold text-white mb-1">
+            Simulador de Escenarios Futuros: <span class="text-btc">"¿Qué pasaría si Bitcoin llega a $X?"</span>
+          </h2>
+          <p class="text-gray-400 text-sm">
+            Evalúa el valor hipotético de tu tenencia de Bitcoin y el valor de mercado total de la red según diferentes objetivos de precio.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          
+          <!-- Inputs -->
+          <div class="bg-dark-inner border border-dark-border p-5 rounded-xl space-y-4">
+            <div>
+              <label class="block text-gray-300 font-medium text-sm mb-1.5">Tu Tenencia de Bitcoin (BTC)</label>
+              <div class="relative">
+                <input type="number" id="target-holdings-btc" value="0.25" step="0.01" min="0" oninput="calculateTargetScenario()"
+                  class="w-full bg-dark-card border border-dark-border rounded-xl px-3 py-2.5 text-white font-bold text-base focus:outline-none focus:border-btc">
+                <span class="absolute right-3 top-3 text-xs text-btc font-semibold">BTC</span>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-gray-300 font-medium text-sm mb-1.5">Precio Objetivo Hipotético ($ USD)</label>
+              <div class="relative">
+                <span class="absolute left-3 top-2.5 text-gray-500 font-bold">$</span>
+                <input type="number" id="target-price-usd" value="150000" step="5000" min="1000" oninput="calculateTargetScenario()"
+                  class="w-full bg-dark-card border border-dark-border rounded-xl pl-8 pr-3 py-2.5 text-white font-bold text-base focus:outline-none focus:border-btc">
+              </div>
+            </div>
+
+            <!-- Quick Presets -->
+            <div>
+              <span class="text-xs text-gray-400 block mb-2 font-medium">Ajustes Rápidos de Precio:</span>
+              <div class="grid grid-cols-3 gap-2">
+                <button onclick="setTargetPrice(100000)" class="px-2 py-1.5 bg-dark-card hover:bg-btc/20 border border-dark-border hover:border-btc text-xs text-gray-300 hover:text-btc rounded-lg font-semibold transition-all">$100k</button>
+                <button onclick="setTargetPrice(150000)" class="px-2 py-1.5 bg-dark-card hover:bg-btc/20 border border-dark-border hover:border-btc text-xs text-gray-300 hover:text-btc rounded-lg font-semibold transition-all">$150k</button>
+                <button onclick="setTargetPrice(250000)" class="px-2 py-1.5 bg-dark-card hover:bg-btc/20 border border-dark-border hover:border-btc text-xs text-gray-300 hover:text-btc rounded-lg font-semibold transition-all">$250k</button>
+                <button onclick="setTargetPrice(500000)" class="px-2 py-1.5 bg-dark-card hover:bg-btc/20 border border-dark-border hover:border-btc text-xs text-gray-300 hover:text-btc rounded-lg font-semibold transition-all">$500k</button>
+                <button onclick="setTargetPrice(1000000)" class="px-2 py-1.5 bg-dark-card hover:bg-btc/20 border border-dark-border hover:border-btc text-xs text-gray-300 hover:text-btc rounded-lg font-semibold transition-all">$1M (Hiper)</button>
+                <button onclick="setTargetPrice(2000000)" class="px-2 py-1.5 bg-dark-card hover:bg-btc/20 border border-dark-border hover:border-btc text-xs text-gray-300 hover:text-btc rounded-lg font-semibold transition-all">$2M (Hiper)</button>
+              </div>
+            </div>
+
+            <button onclick="calculateTargetScenario()" 
+              class="w-full bg-btc hover:bg-btc-hover text-slate-950 font-bold py-2.5 rounded-xl transition-all">
+              Calcular Resultados
+            </button>
+          </div>
+
+          <!-- Output Cards & Gauge Canvas -->
+          <div class="md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            
+            <div class="bg-dark-inner border border-dark-border p-5 rounded-xl flex flex-col justify-between">
+              <div>
+                <span class="text-xs text-gray-400 font-medium">Valor de tu Tenencia al Precio Objetivo</span>
+                <h3 id="target-portfolio-val" class="text-2xl font-black text-white mt-2">$0.00</h3>
+              </div>
+              <div id="target-portfolio-gain" class="mt-4 text-xs font-semibold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1.5 rounded-lg w-fit">
+                +0.00% vs Precio Actual
+              </div>
+            </div>
+
+            <div class="bg-dark-inner border border-dark-border p-5 rounded-xl flex flex-col justify-between">
+              <div>
+                <span class="text-xs text-gray-400 font-medium">Capitalización de Mercado Resultante</span>
+                <h3 id="target-mcap-val" class="text-2xl font-black text-btc mt-2">$0.00 Trillones</h3>
+              </div>
+              <p class="text-xs text-gray-400 mt-2 leading-relaxed">
+                Basado en la oferta circulante emitida de ~19.7 millones de BTC.
+              </p>
+            </div>
+
+            <div class="sm:col-span-2 bg-dark-inner border border-dark-border p-5 rounded-xl space-y-3">
+              <span class="text-xs text-gray-400 font-medium block">Distancia desde el Precio Actual hacia el Objetivo</span>
+              
+              <div class="relative h-[110px] w-full">
+                <canvas id="gaugeCanvas" class="w-full h-full block"></canvas>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <section id="tab-content-market" class="tab-content hidden space-y-6">
+      <div class="bg-dark-card border border-dark-border rounded-2xl p-6 sm:p-8 space-y-6">
+        <div>
+          <h2 class="text-xl font-bold text-white mb-1">
+            Comparativa Global de Capitalización de Mercado y Oferta Monetaria
+          </h2>
+          <p class="text-gray-400 text-sm">
+            Compara la capitalización de Bitcoin con los grandes activos globales, mercados accionarios, el oro y la oferta monetaria M2 mundial para dimensionar su potencial de penetración.
+          </p>
+        </div>
+
+        <div class="relative h-[380px] w-full bg-dark-inner rounded-xl border border-dark-border p-4">
+          <canvas id="marketCapCanvas" class="w-full h-full block"></canvas>
+        </div>
+
+        <!-- Metric Table -->
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-sm text-gray-300">
+            <thead class="bg-dark-inner text-xs uppercase text-gray-400 border-b border-dark-border">
+              <tr>
+                <th class="py-3 px-4">Activo / Mercado</th>
+                <th class="py-3 px-4">Categoría Macro</th>
+                <th class="py-3 px-4">Market Cap Estimado</th>
+                <th class="py-3 px-4">Múltiplo vs Bitcoin</th>
+              </tr>
+            </thead>
+            <tbody id="mcap-table-body" class="divide-y divide-dark-border">
+              <!-- Dynamically Populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="bg-dark-card border border-dark-border rounded-2xl p-6 space-y-3">
+        <div class="w-10 h-10 rounded-lg bg-btc/10 text-btc flex items-center justify-center font-bold text-lg">
+          <i class="fa-solid fa-layer-group"></i>
+        </div>
+        <h3 class="font-bold text-white text-base">¿Qué es DCA y Lump Sum?</h3>
+        <p class="text-xs text-gray-400 leading-relaxed">
+          DCA (Dollar-Cost Averaging) es la estrategia de compras periódicas para mitigar volatilidad. Lump Sum es la inversión de un único capital inicial completo.
+        </p>
+      </div>
+
+      <div class="bg-dark-card border border-dark-border rounded-2xl p-6 space-y-3">
+        <div class="w-10 h-10 rounded-lg bg-blue-500/10 text-blue-400 flex items-center justify-center font-bold text-lg">
+          <i class="fa-solid fa-chart-line"></i>
+        </div>
+        <h3 class="font-bold text-white text-base">Benchmark S&P 500 y Oro</h3>
+        <p class="text-xs text-gray-400 leading-relaxed">
+          El S&P 500 ha promediado ~10% de retorno anual compuesto históricamente, mientras que el Oro promedia ~7.5% anual como reserva física tradicional.
+        </p>
+      </div>
+
+      <div class="bg-dark-card border border-dark-border rounded-2xl p-6 space-y-3">
+        <div class="w-10 h-10 rounded-lg bg-red-500/10 text-red-400 flex items-center justify-center font-bold text-lg">
+          <i class="fa-solid fa-shield-halved"></i>
+        </div>
+        <h3 class="font-bold text-white text-base">Reserva de Valor Absoluta</h3>
+        <p class="text-xs text-gray-400 leading-relaxed">
+          Con un límite matemático de 21 millones de unidades, Bitcoin elimina el riesgo de dilución por emisión presente en las monedas fiat fiduciarias.
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="border-t border-dark-border bg-dark-card/90 mt-12 py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+      
+      <div class="flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-gray-400">
+        <div>
+          <span class="font-bold text-white">Diego Beltramo Bitcoin</span> &copy; <span id="year"></span> | 
+          <a href="https://diegobeltramobitcoin.netlify.app/" target="_blank" class="text-btc hover:underline">diegobeltramobitcoin.netlify.app</a>
+        </div>
+
+        <div class="flex items-center gap-4">
+          <span>Proveedores de datos:</span>
+          <span class="bg-dark-inner border border-dark-border px-2 py-1 rounded text-gray-300 font-mono text-[11px]">Binance API</span>
+          <span class="bg-dark-inner border border-dark-border px-2 py-1 rounded text-gray-300 font-mono text-[11px]">Coinbase API</span>
+        </div>
+      </div>
+
+      <div class="bg-dark-inner border border-dark-border/80 rounded-xl p-4 text-[11px] text-gray-500 leading-relaxed">
+        <strong>Aviso Educativo y Exención de Responsabilidad:</strong> La aplicación <em>Bitcoin What If Macro Simulator</em> es una herramienta pedagógica e informativa creada por Diego Beltramo. Los cálculos se basan en simulaciones matemáticas, datos históricos y supuestos de rendimiento financiero. No constituyen recomendación de inversión ni asesoramiento financiero bajo ninguna circunstancia.
+      </div>
+
+    </div>
+  </footer>
+
+  <script>
+    // Global State
+    let currentBtcPrice = 65000;
+    let btc24hChange = 0;
+    let btc24hVolume = 0;
+    let activeTab = 'multi';
+    let multiHoverIndex = -1;
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // -------------------------------------------------------------
+    // 1. DATA FETCHING (Binance API + Fallback)
+    // -------------------------------------------------------------
+    async function fetchLiveTicker() {
+      try {
+        const res = await fetch('https://api.binance.com/api/v3/ticker/24hr?symbol=BTCUSDT');
+        if (!res.ok) throw new Error("Binance API error");
+        const data = await res.json();
+
+        currentBtcPrice = parseFloat(data.lastPrice);
+        btc24hChange = parseFloat(data.priceChangePercent);
+        btc24hVolume = parseFloat(data.volume);
+
+        updateTickerUI(currentBtcPrice, btc24hChange, btc24hVolume, "Binance API", "emerald");
+        updateInitialBtcUsdEquivalent();
+        return;
+      } catch (err) {
+        console.warn("Binance ticker error, calling Coinbase fallback...", err);
+      }
+
+      try {
+        const res = await fetch('https://api.coinbase.com/v2/prices/BTC-USD/spot');
+        if (!res.ok) throw new Error("Coinbase error");
+        const data = await res.json();
+
+        currentBtcPrice = parseFloat(data.data.amount);
+        updateTickerUI(currentBtcPrice, 0, 0, "Coinbase API", "amber");
+        updateInitialBtcUsdEquivalent();
+      } catch (err) {
+        console.error("All ticker calls failed:", err);
+        updateTickerUI(65000, 0, 0, "Modo Respaldo", "red");
+        updateInitialBtcUsdEquivalent();
+      }
+    }
+
+    function updateTickerUI(price, change, volume, sourceName, colorTheme) {
+      document.getElementById('live-price').textContent = `$${price.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+      
+      const changeElem = document.getElementById('live-change');
+      changeElem.textContent = `${change >= 0 ? '+' : ''}${change.toFixed(2)}%`;
+      changeElem.className = `font-semibold ${change >= 0 ? 'text-emerald-400' : 'text-rose-400'}`;
+
+      if (volume > 0) {
+        document.getElementById('live-volume').textContent = `${(volume / 1000).toFixed(1)}k BTC`;
+      }
+
+      const statusBadge = document.getElementById('api-status-badge');
+      statusBadge.textContent = sourceName;
+      statusBadge.className = `text-[10px] bg-${colorTheme}-500/10 text-${colorTheme}-400 border border-${colorTheme}-500/30 px-2 py-0.5 rounded font-mono`;
+    }
+
+    // Helper to calculate & show USD value of Initial BTC holding
+    function updateInitialBtcUsdEquivalent() {
+      const btcInput = document.getElementById('initial-btc');
+      const hint = document.getElementById('initial-btc-usd-hint');
+      if (!btcInput || !hint) return;
+
+      const btcAmount = parseFloat(btcInput.value) || 0;
+      const usdEquivalent = btcAmount * currentBtcPrice;
+
+      hint.innerHTML = `<i class="fa-solid fa-coins"></i> Equivale a <span class="font-extrabold">$${usdEquivalent.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} USD</span> (a $${Math.round(currentBtcPrice).toLocaleString()} / BTC)`;
+    }
+
+    // -------------------------------------------------------------
+    // 2. MULTI-ASSET SIMULATION ENGINE
+    // -------------------------------------------------------------
+    function runMultiAssetSimulation() {
+      const initialBtcHolding = parseFloat(document.getElementById('initial-btc').value) || 0;
+      const initialFiatCap = parseFloat(document.getElementById('initial-capital').value) || 0;
+      const monthlyDCA = parseFloat(document.getElementById('monthly-dca').value) || 0;
+      const years = parseInt(document.getElementById('timeframe-years').value) || 3;
+      const btcModelVal = document.getElementById('btc-cagr').value;
+      const fiatInflation = parseFloat(document.getElementById('fiat-inflation-rate').value) / 100 || 0.04;
+
+      // Equivalent USD value of pre-existing BTC
+      const initialBtcUsdValue = initialBtcHolding * currentBtcPrice;
+      
+      // Total initial portfolio value at t=0 across all benchmark comparisons
+      const totalInitialPortfolioUSD = initialBtcUsdValue + initialFiatCap;
+
+      let btcCAGR = 0.45;
+      const infoElem = document.getElementById('btc-cagr-info');
+
+      if (btcModelVal.startsWith('target-')) {
+        const targetK = parseFloat(btcModelVal.replace('target-', ''));
+        const targetPrice = targetK * 1000;
+        const startPrice = currentBtcPrice || 65000;
+        
+        // Calculate required CAGR to hit target price within selected years
+        btcCAGR = Math.pow(targetPrice / startPrice, 1 / years) - 1;
+        
+        if (infoElem) {
+          infoElem.textContent = `Tasa implícita: ${(btcCAGR * 100).toFixed(1)}% anual para alcanzar $${targetPrice.toLocaleString()} USD en ${years} ${years === 1 ? 'año' : 'años'}.`;
+        }
+      } else {
+        const cagrVal = btcModelVal.replace('cagr-', '');
+        btcCAGR = parseFloat(cagrVal) / 100 || 0.45;
+        if (infoElem) {
+          infoElem.textContent = `Tasa de crecimiento fija seleccionada: ${(btcCAGR * 100).toFixed(0)}% anual.`;
+        }
+      }
+
+      const totalMonths = years * 12;
+
+      // Compound Monthly Rates
+      const rBTC = Math.pow(1 + btcCAGR, 1 / 12) - 1;
+      const rSP = Math.pow(1 + 0.10, 1 / 12) - 1;     // S&P 500 (~10% CAGR)
+      const rGold = Math.pow(1 + 0.075, 1 / 12) - 1;   // Gold (~7.5% CAGR)
+      const rInf = Math.pow(1 + fiatInflation, 1 / 12) - 1; // Inflation erosion
+
+      let simSeries = [];
+
+      let valBTC = totalInitialPortfolioUSD;
+      let valSP = totalInitialPortfolioUSD;
+      let valGold = totalInitialPortfolioUSD;
+      let totalNominalFiat = totalInitialPortfolioUSD;
+      
+      let accumBTC = initialBtcHolding + (initialFiatCap > 0 ? initialFiatCap / currentBtcPrice : 0);
+
+      // Initial state month 0
+      simSeries.push({
+        month: 0,
+        label: 'Inicio',
+        nominalFiat: totalNominalFiat,
+        valBTC: valBTC,
+        valSP: valSP,
+        valGold: valGold,
+        realFiat: totalNominalFiat,
+        accumBTC: accumBTC
+      });
+
+      for (let m = 1; m <= totalMonths; m++) {
+        // Apply monthly growth to existing balances
+        valBTC *= (1 + rBTC);
+        valSP *= (1 + rSP);
+        valGold *= (1 + rGold);
+
+        // Add monthly DCA buy
+        if (monthlyDCA > 0) {
+          totalNominalFiat += monthlyDCA;
+          
+          valBTC += monthlyDCA;
+          valSP += monthlyDCA;
+          valGold += monthlyDCA;
+
+          // Estimate BTC accumulated
+          const currentSimBtcPrice = currentBtcPrice * Math.pow(1 + rBTC, m);
+          accumBTC += monthlyDCA / currentSimBtcPrice;
+        }
+
+        // Purchasing power of accumulated cash adjusted for inflation
+        const realFiatValue = totalNominalFiat / Math.pow(1 + rInf, m);
+
+        simSeries.push({
+          month: m,
+          label: m % 12 === 0 ? `Año ${m/12}` : `M${m}`,
+          nominalFiat: totalNominalFiat,
+          valBTC: valBTC,
+          valSP: valSP,
+          valGold: valGold,
+          realFiat: realFiatValue,
+          accumBTC: accumBTC
+        });
+      }
+
+      // Final Results Render
+      const final = simSeries[simSeries.length - 1];
+      
+      const roiBTC = totalNominalFiat > 0 ? ((final.valBTC - totalNominalFiat) / totalNominalFiat) * 100 : 0;
+      const roiSP = totalNominalFiat > 0 ? ((final.valSP - totalNominalFiat) / totalNominalFiat) * 100 : 0;
+      const roiGold = totalNominalFiat > 0 ? ((final.valGold - totalNominalFiat) / totalNominalFiat) * 100 : 0;
+      const lossFiat = totalNominalFiat > 0 ? ((final.realFiat - totalNominalFiat) / totalNominalFiat) * 100 : 0;
+
+      document.getElementById('res-val-btc').textContent = `$${Math.round(final.valBTC).toLocaleString()}`;
+      document.getElementById('res-btc-accum').textContent = `${final.accumBTC.toFixed(4)} BTC Acumulados`;
+      document.getElementById('badge-btc-roi').textContent = `${roiBTC >= 0 ? '+' : ''}${roiBTC.toFixed(1)}%`;
+
+      document.getElementById('res-val-sp').textContent = `$${Math.round(final.valSP).toLocaleString()}`;
+      document.getElementById('badge-sp-roi').textContent = `${roiSP >= 0 ? '+' : ''}${roiSP.toFixed(1)}%`;
+
+      document.getElementById('res-val-gold').textContent = `$${Math.round(final.valGold).toLocaleString()}`;
+      document.getElementById('badge-gold-roi').textContent = `${roiGold >= 0 ? '+' : ''}${roiGold.toFixed(1)}%`;
+
+      document.getElementById('res-val-fiat').textContent = `$${Math.round(final.realFiat).toLocaleString()}`;
+      document.getElementById('res-fiat-nominal').textContent = `Base + DCA Total: $${Math.round(totalNominalFiat).toLocaleString()}`;
+      document.getElementById('badge-fiat-loss').textContent = `${lossFiat.toFixed(1)}% Real`;
+
+      // Winner Banner
+      const winnerBanner = document.getElementById('multi-winner-banner');
+      const btcVsSpDiff = (final.valBTC / (final.valSP || 1)).toFixed(1);
+      winnerBanner.innerHTML = `<i class="fa-solid fa-trophy text-btc"></i> Bitcoin genera <span class="text-white font-extrabold mx-1">${btcVsSpDiff}x más riqueza</span> que el S&P 500 en ${years} años en este escenario.`;
+
+      drawMultiAssetCanvas(simSeries);
+    }
+
+    // -------------------------------------------------------------
+    // 3. CANVAS RENDER ENGINE: MULTI-ASSET
+    // -------------------------------------------------------------
+    function drawMultiAssetCanvas(series) {
+      const canvas = document.getElementById('multiCanvas');
+      if (!canvas) return;
+
+      const ctx = canvas.getContext('2d');
+      const dpr = window.devicePixelRatio || 1;
+      const rect = canvas.parentElement.getBoundingClientRect();
+
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      ctx.scale(dpr, dpr);
+
+      const w = rect.width;
+      const h = rect.height;
+      const padding = { top: 25, right: 20, bottom: 35, left: 65 };
+
+      ctx.clearRect(0, 0, w, h);
+
+      if (!series || series.length === 0) return;
+
+      const maxVal = Math.max(...series.map(s => Math.max(s.valBTC, s.valSP, s.valGold, s.nominalFiat))) * 1.1;
+      const minVal = 0;
+
+      const getX = (i) => padding.left + (i / (series.length - 1)) * (w - padding.left - padding.right);
+      const getY = (v) => h - padding.bottom - ((v - minVal) / (maxVal - minVal)) * (h - padding.top - padding.bottom);
+
+      // Grid & Y-Axis Labels
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
+      ctx.fillStyle = '#6b7280';
+      ctx.font = '11px Inter, sans-serif';
+      ctx.textAlign = 'right';
+
+      const steps = 4;
+      for (let i = 0; i <= steps; i++) {
+        const val = minVal + (maxVal - minVal) * (i / steps);
+        const y = getY(val);
+
+        ctx.beginPath();
+        ctx.moveTo(padding.left, y);
+        ctx.lineTo(w - padding.right, y);
+        ctx.stroke();
+
+        ctx.fillText(`$${Math.round(val).toLocaleString()}`, padding.left - 8, y + 4);
+      }
+
+      // Helper function to draw series line
+      const drawLine = (key, color, width = 2, dash = []) => {
+        ctx.beginPath();
+        ctx.setLineDash(dash);
+        series.forEach((s, i) => {
+          const x = getX(i);
+          const y = getY(s[key]);
+          if (i === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        });
+        ctx.strokeStyle = color;
+        ctx.lineWidth = width;
+        ctx.stroke();
+        ctx.setLineDash([]);
+      };
+
+      // Draw Lines
+      drawLine('realFiat', '#ef4444', 2, [3, 3]); // Fiat Loss
+      drawLine('valGold', '#eab308', 2);           // Gold
+      drawLine('valSP', '#3b82f6', 2.5);          // S&P 500
+      drawLine('valBTC', '#f7931a', 3);           // Bitcoin
+
+      // Area Fill under BTC
+      const grad = ctx.createLinearGradient(0, padding.top, 0, h - padding.bottom);
+      grad.addColorStop(0, 'rgba(247, 147, 26, 0.25)');
+      grad.addColorStop(1, 'rgba(247, 147, 26, 0.0)');
+      
+      ctx.beginPath();
+      series.forEach((s, i) => {
+        const x = getX(i);
+        const y = getY(s.valBTC);
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      });
+      ctx.lineTo(getX(series.length - 1), h - padding.bottom);
+      ctx.lineTo(padding.left, h - padding.bottom);
+      ctx.closePath();
+      ctx.fillStyle = grad;
+      ctx.fill();
+
+      // X-Axis Date Labels
+      ctx.textAlign = 'center';
+      ctx.fillStyle = '#6b7280';
+      const labelInterval = Math.max(1, Math.floor(series.length / 5));
+      series.forEach((s, i) => {
+        if (i % labelInterval === 0 || i === series.length - 1) {
+          ctx.fillText(s.label, getX(i), h - 12);
+        }
+      });
+
+      // Interactive Crosshair Mouse / Touch
+      if (multiHoverIndex >= 0 && multiHoverIndex < series.length) {
+        const item = series[multiHoverIndex];
+        const hx = getX(multiHoverIndex);
+        const hyBTC = getY(item.valBTC);
+
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+        ctx.setLineDash([2, 2]);
+        ctx.beginPath();
+        ctx.moveTo(hx, padding.top);
+        ctx.lineTo(hx, h - padding.bottom);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // Highlight Dots
+        [
+          { val: item.valBTC, col: '#f7931a' },
+          { val: item.valSP, col: '#3b82f6' },
+          { val: item.valGold, col: '#eab308' },
+          { val: item.realFiat, col: '#ef4444' }
+        ].forEach(pt => {
+          ctx.fillStyle = pt.col;
+          ctx.beginPath();
+          ctx.arc(hx, getY(pt.val), 5, 0, Math.PI * 2);
+          ctx.fill();
+        });
+
+        // Tooltip Box
+        const t1 = `Mes ${item.month}: BTC: $${Math.round(item.valBTC).toLocaleString()}`;
+        const t2 = `S&P500: $${Math.round(item.valSP).toLocaleString()} | Gold: $${Math.round(item.valGold).toLocaleString()}`;
+        
+        ctx.font = 'bold 11px Inter, sans-serif';
+        const tw = Math.max(ctx.measureText(t1).width, ctx.measureText(t2).width) + 16;
+        let tx = hx - tw / 2;
+        tx = Math.max(padding.left, Math.min(w - padding.right - tw, tx));
+
+        ctx.fillStyle = '#111827';
+        ctx.strokeStyle = '#374151';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.roundRect(tx, hyBTC - 45, tw, 36, 6);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.fillStyle = '#f7931a';
+        ctx.textAlign = 'left';
+        ctx.fillText(t1, tx + 8, hyBTC - 28);
+        ctx.fillStyle = '#9ca3af';
+        ctx.fillText(t2, tx + 8, hyBTC - 14);
+      }
+
+      if (!canvas.dataset.listenerAttached) {
+        canvas.addEventListener('mousemove', (e) => {
+          const r = canvas.getBoundingClientRect();
+          const mouseX = e.clientX - r.left;
+          multiHoverIndex = Math.round(((mouseX - padding.left) / (r.width - padding.left - padding.right)) * (series.length - 1));
+          drawMultiAssetCanvas(series);
+        });
+        canvas.addEventListener('mouseleave', () => {
+          multiHoverIndex = -1;
+          drawMultiAssetCanvas(series);
+        });
+        canvas.dataset.listenerAttached = "true";
+      }
+    }
+
+    // -------------------------------------------------------------
+    // 4. INFLATION DECAY CALCULATOR
+    // -------------------------------------------------------------
+    function calculateInflationDecay() {
+      const capital = parseFloat(document.getElementById('inf-capital').value) || 10000;
+      const years = parseInt(document.getElementById('inf-years').value) || 5;
+      const rate = parseFloat(document.getElementById('inf-rate-preset').value) / 100 || 0.055;
+
+      document.getElementById('inf-years-label').textContent = `${years} ${years === 1 ? 'Año' : 'Años'}`;
+
+      // Inflation loss calculation
+      const realPower = capital / Math.pow(1 + rate, years);
+      const lossPct = ((realPower - capital) / capital) * 100;
+
+      // BTC Equivalent Growth (~45% CAGR)
+      const btcVal = capital * Math.pow(1 + 0.45, years);
+      const btcMultiple = (btcVal / realPower).toFixed(1);
+
+      document.getElementById('inf-real-power').textContent = `$${Math.round(realPower).toLocaleString()}`;
+      document.getElementById('inf-loss-percent').textContent = `${lossPct.toFixed(1)}% de Poder de Compra Perdido`;
+
+      document.getElementById('inf-btc-equiv').textContent = `$${Math.round(btcVal).toLocaleString()}`;
+      document.getElementById('inf-btc-multiple').textContent = `${btcMultiple}x mayor preservación de riqueza vs Efectivo`;
+
+      drawInflationCanvas(capital, years, rate);
+    }
+
+    function drawInflationCanvas(capital, years, rate) {
+      const canvas = document.getElementById('inflationCanvas');
+      if (!canvas) return;
+
+      const ctx = canvas.getContext('2d');
+      const dpr = window.devicePixelRatio || 1;
+      const rect = canvas.parentElement.getBoundingClientRect();
+
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      ctx.scale(dpr, dpr);
+
+      const w = rect.width;
+      const h = rect.height;
+      const padding = { top: 15, right: 20, bottom: 25, left: 55 };
+
+      ctx.clearRect(0, 0, w, h);
+
+      let pts = [];
+      for (let y = 0; y <= years; y++) {
+        const fiatPwr = capital / Math.pow(1 + rate, y);
+        const btcPwr = capital * Math.pow(1 + 0.45, y);
+        pts.push({ year: y, fiat: fiatPwr, btc: btcPwr });
+      }
+
+      const maxVal = Math.max(...pts.map(p => p.btc));
+      const minVal = 0;
+
+      const getX = (y) => padding.left + (y / years) * (w - padding.left - padding.right);
+      const getY = (v) => h - padding.bottom - ((v - minVal) / (maxVal - minVal)) * (h - padding.top - padding.bottom);
+
+      // Grid
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
+      ctx.beginPath();
+      for (let i = 0; i <= 3; i++) {
+        const y = getY((maxVal / 3) * i);
+        ctx.moveTo(padding.left, y);
+        ctx.lineTo(w - padding.right, y);
+      }
+      ctx.stroke();
+
+      // Fiat Decay Line (Red)
+      ctx.beginPath();
+      pts.forEach((p, i) => {
+        const x = getX(p.year);
+        const y = getY(p.fiat);
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      });
+      ctx.strokeStyle = '#ef4444';
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+
+      // BTC Growth Line (Orange)
+      ctx.beginPath();
+      pts.forEach((p, i) => {
+        const x = getX(p.year);
+        const y = getY(p.btc);
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      });
+      ctx.strokeStyle = '#f7931a';
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+
+      // Labels
+      ctx.fillStyle = '#6b7280';
+      ctx.font = '10px Inter, sans-serif';
+      ctx.textAlign = 'center';
+      pts.forEach(p => {
+        ctx.fillText(`Año ${p.year}`, getX(p.year), h - 8);
+      });
+    }
+
+    // -------------------------------------------------------------
+    // 5. TARGET PRICE SCENARIO ENGINE ("WHAT IF BTC = $X")
+    // -------------------------------------------------------------
+    function setTargetPrice(val) {
+      document.getElementById('target-price-usd').value = val;
+      calculateTargetScenario();
+    }
+
+    function calculateTargetScenario() {
+      const btcHoldings = parseFloat(document.getElementById('target-holdings-btc').value) || 0;
+      const targetPrice = parseFloat(document.getElementById('target-price-usd').value) || 0;
+      const currentPrice = currentBtcPrice || 65000;
+
+      const futurePortfolioVal = btcHoldings * targetPrice;
+      const gainPercent = ((targetPrice - currentPrice) / currentPrice) * 100;
+
+      const circulatingSupply = 19700000;
+      const targetMarketCap = (targetPrice * circulatingSupply) / 1e12; // Trillions USD
+
+      document.getElementById('target-portfolio-val').textContent = `$${futurePortfolioVal.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+      
+      const gainElem = document.getElementById('target-portfolio-gain');
+      gainElem.textContent = `${gainPercent >= 0 ? '+' : ''}${gainPercent.toFixed(1)}% vs Precio Actual ($${Math.round(currentPrice).toLocaleString()})`;
+      gainElem.className = `mt-4 text-xs font-semibold px-3 py-1.5 rounded-lg w-fit ${gainPercent >= 0 ? 'text-emerald-400 bg-emerald-500/10 border border-emerald-500/20' : 'text-rose-400 bg-rose-500/10 border border-rose-500/20'}`;
+
+      document.getElementById('target-mcap-val').textContent = `$${targetMarketCap.toFixed(2)} Trillones USD`;
+
+      drawGaugeCanvas(currentPrice, targetPrice);
+    }
+
+    function drawGaugeCanvas(current, target) {
+      const canvas = document.getElementById('gaugeCanvas');
+      if (!canvas) return;
+
+      const ctx = canvas.getContext('2d');
+      const dpr = window.devicePixelRatio || 1;
+      const rect = canvas.parentElement.getBoundingClientRect();
+
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      ctx.scale(dpr, dpr);
+
+      const w = rect.width;
+      const h = rect.height;
+
+      ctx.clearRect(0, 0, w, h);
+
+      const barY = 40;
+      const barHeight = 16;
+      const margin = 20;
+      const barWidth = w - (margin * 2);
+
+      // Track Bar Background
+      ctx.fillStyle = '#1f2937';
+      ctx.beginPath();
+      ctx.roundRect(margin, barY, barWidth, barHeight, 8);
+      ctx.fill();
+
+      // Filled Progress
+      const maxRange = Math.max(current, target) * 1.15;
+      const currentX = margin + (current / maxRange) * barWidth;
+      const targetX = margin + (target / maxRange) * barWidth;
+
+      ctx.fillStyle = '#f7931a';
+      ctx.beginPath();
+      ctx.roundRect(margin, barY, Math.max(10, currentX - margin), barHeight, 8);
+      ctx.fill();
+
+      // Target Pin Line
+      ctx.strokeStyle = '#10b981';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(targetX, barY - 8);
+      ctx.lineTo(targetX, barY + barHeight + 8);
+      ctx.stroke();
+
+      // Labels
+      ctx.font = '11px Inter, sans-serif';
+      ctx.fillStyle = '#f7931a';
+      ctx.fillText(`Precio Actual: $${Math.round(current).toLocaleString()}`, margin, barY - 12);
+
+      ctx.fillStyle = '#10b981';
+      ctx.textAlign = 'right';
+      ctx.fillText(`Objetivo: $${Math.round(target).toLocaleString()}`, w - margin, barY - 12);
+    }
+
+    // -------------------------------------------------------------
+    // 6. GLOBAL MARKET CAP COMPARISON
+    // -------------------------------------------------------------
+    const marketCapAssets = [
+      { name: "Bienes Raíces Globales", category: "Real Estate", mcap: 330.0, color: "#818cf8" },
+      { name: "Oferta Monetaria Global M2", category: "Dinero Fiat", mcap: 105.0, color: "#ef4444" },
+      { name: "S&P 500 Market Cap", category: "Acciones EE.UU.", mcap: 45.5, color: "#3b82f6" },
+      { name: "Oro (Gold)", category: "Commodity Hard Money", mcap: 16.5, color: "#eab308" },
+      { name: "Apple Inc.", category: "Empresa Tech", mcap: 3.4, color: "#38bdf8" },
+      { name: "Bitcoin (Actual)", category: "Criptoactivo Hard Money", mcap: 1.3, color: "#f7931a" }
+    ];
+
+    function drawMarketCapChart() {
+      const canvas = document.getElementById('marketCapCanvas');
+      if (!canvas) return;
+
+      const ctx = canvas.getContext('2d');
+      const dpr = window.devicePixelRatio || 1;
+      const rect = canvas.parentElement.getBoundingClientRect();
+
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      ctx.scale(dpr, dpr);
+
+      const w = rect.width;
+      const h = rect.height;
+
+      ctx.clearRect(0, 0, w, h);
+
+      // Update Bitcoin Market Cap based on current price
+      const btcLiveMcap = ((currentBtcPrice || 65000) * 19700000) / 1e12;
+      const assets = marketCapAssets.map(a => a.name.includes("Bitcoin") ? { ...a, mcap: btcLiveMcap } : a);
+      
+      assets.sort((a, b) => b.mcap - a.mcap);
+
+      const maxMcap = assets[0].mcap * 1.1;
+      const padding = { top: 20, right: 30, bottom: 20, left: 160 };
+      const barGap = 10;
+      const barHeight = (h - padding.top - padding.bottom - (assets.length - 1) * barGap) / assets.length;
+
+      assets.forEach((item, i) => {
+        const y = padding.top + i * (barHeight + barGap);
+        const barWidth = (item.mcap / maxMcap) * (w - padding.left - padding.right);
+
+        // Bar Fill
+        ctx.fillStyle = item.color;
+        ctx.beginPath();
+        ctx.roundRect(padding.left, y, Math.max(4, barWidth), barHeight, 6);
+        ctx.fill();
+
+        // Asset Name Label
+        ctx.fillStyle = '#f3f4f6';
+        ctx.font = 'bold 11px Inter, sans-serif';
+        ctx.textAlign = 'right';
+        ctx.fillText(item.name, padding.left - 10, y + barHeight / 2 + 4);
+
+        // Value Label
+        ctx.textAlign = 'left';
+        ctx.fillStyle = '#9ca3af';
+        ctx.font = '11px Inter, sans-serif';
+        ctx.fillText(`$${item.mcap.toFixed(2)} Trillones`, padding.left + barWidth + 8, y + barHeight / 2 + 4);
+      });
+
+      // Populate Table
+      const btcMcapVal = assets.find(a => a.name.includes("Bitcoin")).mcap;
+      const tbody = document.getElementById('mcap-table-body');
+      tbody.innerHTML = assets.map(a => `
+        <tr class="hover:bg-dark-inner/50 transition-colors">
+          <td class="py-3 px-4 font-bold flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full" style="background-color: ${a.color}"></span>
+            ${a.name}
+          </td>
+          <td class="py-3 px-4 text-gray-400 text-xs">${a.category}</td>
+          <td class="py-3 px-4 font-semibold text-white">$${a.mcap.toFixed(2)} Trillones USD</td>
+          <td class="py-3 px-4 text-xs font-mono text-gray-300">${(a.mcap / btcMcapVal).toFixed(2)}x</td>
+        </tr>
+      `).join('');
+    }
+
+    // -------------------------------------------------------------
+    // 7. UI TAB SWITCHING LOGIC
+    // -------------------------------------------------------------
+    function switchTab(tabId) {
+      activeTab = tabId;
+      
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.className = "tab-btn px-4 py-2.5 rounded-xl font-medium text-sm text-gray-400 hover:text-white hover:bg-dark-card flex items-center gap-2 transition-all";
+      });
+
+      const activeContent = document.getElementById(`tab-content-${tabId}`);
+      if (activeContent) activeContent.classList.remove('hidden');
+
+      const activeBtn = document.getElementById(`tab-btn-${tabId}`);
+      if (activeBtn) {
+        activeBtn.className = "tab-btn active px-4 py-2.5 rounded-xl font-medium text-sm text-black bg-btc font-bold shadow-lg flex items-center gap-2 transition-all";
+      }
+
+      setTimeout(() => {
+        if (tabId === 'multi') runMultiAssetSimulation();
+        if (tabId === 'inflation') calculateInflationDecay();
+        if (tabId === 'target') calculateTargetScenario();
+        if (tabId === 'market') drawMarketCapChart();
+      }, 50);
+    }
+
+    // -------------------------------------------------------------
+    // 8. INITIALIZATION
+    // -------------------------------------------------------------
+    async function initApp() {
+      await fetchLiveTicker();
+      updateInitialBtcUsdEquivalent();
+      runMultiAssetSimulation();
+      calculateInflationDecay();
+      calculateTargetScenario();
+      drawMarketCapChart();
+
+      // Poll ticker every 20 seconds
+      setInterval(fetchLiveTicker, 20000);
+
+      window.addEventListener('resize', () => {
+        if (activeTab === 'multi') runMultiAssetSimulation();
+        if (activeTab === 'inflation') calculateInflationDecay();
+        if (activeTab === 'target') calculateTargetScenario();
+        if (activeTab === 'market') drawMarketCapChart();
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', initApp);
+  </script>
+</body>
+</html>
